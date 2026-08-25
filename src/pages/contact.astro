@@ -10,41 +10,41 @@ import Footer from '../components/Footer.astro';
     <section class="section section-light" style="min-height: calc(100vh - 80px);">
       <div class="container">
         <div class="section-header">
-          <span class="section-subtitle">Contact Us</span>
-          <h2 class="section-title">Let's Work Together</h2>
+          <span class="section-subtitle">Hubungi Kami</span>
+          <h2 class="section-title">Mari Bekerja Sama</h2>
         </div>
         
         <div class="contact-grid">
           <div class="contact-info">
-            <h3>Get In Touch</h3>
+            <h3>Hubungi Kami</h3>
             <div class="info-item">
               <div class="info-icon">📍</div>
               <div class="info-text">
-                <h4>Our Location</h4>
-                <p>Jakarta, Indonesia</p>
+                <h4>Lokasi Kami</h4>
+                <p>Kota Malang, Indonesia</p>
               </div>
             </div>
             <div class="info-item">
               <div class="info-icon">📧</div>
               <div class="info-text">
-                <h4>Email Us</h4>
-                <p>info@bolean.com</p>
+                <h4>Email Kami</h4>
+                <p>infobolean.id@gmail.com</p>
               </div>
             </div>
             <div class="info-item">
               <div class="info-icon">📞</div>
               <div class="info-text">
-                <h4>Call Us</h4>
-                <p>+62 123 4567 890</p>
+                <h4>Telepon Kami</h4>
+                <p>+62 812-5914-5879</p>
               </div>
             </div>
           </div>
           
           <div class="contact-form-wrapper">
             <div id="form-success" class="text-center py-8" style="display: none;">
-              <h3 style="color: var(--color-primary); margin-bottom: 1rem;">Message Sent!</h3>
-              <p>We will get back to you shortly.</p>
-              <button id="btn-reset" class="btn btn-secondary" style="margin-top: 2rem;">Send Another</button>
+              <h3 style="color: var(--color-primary); margin-bottom: 1rem;">Pesan Terkirim!</h3>
+              <p>Kami akan segera menghubungi Anda kembali.</p>
+              <button id="btn-reset" class="btn btn-secondary" style="margin-top: 2rem;">Kirim Lagi</button>
             </div>
             
             <form id="contact-form">
@@ -53,7 +53,7 @@ import Footer from '../components/Footer.astro';
                   type="text" 
                   id="form-name"
                   class="form-control" 
-                  placeholder="Your Name" 
+                  placeholder="Nama Anda" 
                   required 
                 />
               </div>
@@ -62,7 +62,7 @@ import Footer from '../components/Footer.astro';
                   type="email" 
                   id="form-email"
                   class="form-control" 
-                  placeholder="Email Address" 
+                  placeholder="Alamat Email" 
                   required 
                 />
               </div>
@@ -70,12 +70,12 @@ import Footer from '../components/Footer.astro';
                 <textarea 
                   id="form-message"
                   class="form-control" 
-                  placeholder="How can we help you?" 
+                  placeholder="Bagaimana kami bisa membantu Anda?" 
                   required
                 ></textarea>
               </div>
               <button type="submit" id="btn-submit" class="btn btn-primary">
-                Send Message
+                Kirim Pesan
               </button>
             </form>
           </div>
@@ -98,7 +98,7 @@ import Footer from '../components/Footer.astro';
         e.preventDefault();
         
         // Disable button
-        btnSubmit.textContent = 'Sending...';
+        btnSubmit.textContent = 'Mengirim...';
         btnSubmit.setAttribute('disabled', 'true');
         
         // Simulate API call to Supabase
@@ -112,7 +112,7 @@ import Footer from '../components/Footer.astro';
         (form as HTMLFormElement).reset();
         
         // Reset button
-        btnSubmit.textContent = 'Send Message';
+        btnSubmit.textContent = 'Kirim Pesan';
         btnSubmit.removeAttribute('disabled');
       });
 

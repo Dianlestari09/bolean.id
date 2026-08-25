@@ -7,20 +7,136 @@ const currentPath = Astro.url.pathname;
     <a href="/" class="navbar-logo">
       <img src="/logo.png" alt="Bolean Logo" width="140" height="35" style="object-fit: contain;" />
     </a>
+    
+    <button class="mobile-toggle" aria-label="Toggle Menu">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+    
     <ul class="navbar-nav">
-      <li><a href="/" class={`nav-link ${currentPath === "/" ? "active" : ""}`}>Home</a></li>
-      <li><a href="/about" class={`nav-link ${currentPath.startsWith("/about") ? "active" : ""}`}>About</a></li>
-      <li><a href="/team" class={`nav-link ${currentPath.startsWith("/team") ? "active" : ""}`}>Team</a></li>
+      <li><a href="/" class={`nav-link ${currentPath === '/' ? 'active' : ''}`}>Beranda</a></li>
+      <li><a href="/about" class={`nav-link ${currentPath.startsWith('/about') ? 'active' : ''}`}>Tentang Kami</a></li>
+      <li><a href="/team" class={`nav-link ${currentPath.startsWith('/team') ? 'active' : ''}`}>Tim</a></li>
       <li class="nav-item-dropdown">
-        <a href="/services" class={`nav-link ${currentPath.startsWith("/services") ? "active" : ""}`}>Services ▾</a>
+        <a href="/services" class={`nav-link ${currentPath.startsWith('/services') ? 'active' : ''}`}>Layanan ▾</a>
         <ul class="dropdown-menu">
-          <li><a href="/services/software" class="dropdown-link">Software</a></li>
-          <li><a href="/services/hardware" class="dropdown-link">Hardware</a></li>
+          <li><a href="/services/software" class="dropdown-link">Perangkat Lunak</a></li>
+          <li><a href="/services/hardware" class="dropdown-link">Perangkat Keras</a></li>
           <li><a href="/services/iot" class="dropdown-link">IoT</a></li>
         </ul>
       </li>
-      <li><a href="/blog" class={`nav-link ${currentPath.startsWith("/blog") ? "active" : ""}`}>Blog</a></li>
-      <li><a href="/contact" class={`nav-link ${currentPath.startsWith("/contact") ? "active" : ""}`}>Contact</a></li>
+      <li><a href="/blog" class={`nav-link ${currentPath.startsWith('/blog') ? 'active' : ''}`}>Blog</a></li>
+      <li><a href="/contact" class={`nav-link ${currentPath.startsWith('/contact') ? 'active' : ''}`}>Kontak</a></li>
     </ul>
   </div>
 </nav>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const navbarNav = document.querySelector('.navbar-nav');
+    const dropdownItem = document.querySelector('.nav-item-dropdown');
+    
+    if(mobileToggle && navbarNav) {
+      mobileToggle.addEventListener('click', () => {
+        navbarNav.classList.toggle('active');
+      });
+    }
+    
+    if(dropdownItem) {
+      dropdownItem.addEventListener('click', (e) => {
+        if(window.innerWidth <= 768) {
+          const target = e.target as HTMLElement | null;
+          if (target && target.classList.contains('nav-link')) {
+            e.preventDefault();
+            dropdownItem.classList.toggle('open');
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-secondary);
+    cursor: pointer;
+    padding: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-fast);
+  }
+  
+  .mobile-toggle:hover {
+    color: var(--color-primary);
+  }
+  
+  @media (max-width: 768px) {
+    .mobile-toggle {
+      display: flex;
+    }
+    
+    .navbar-nav {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: white;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      border-top: 1px solid var(--color-surface);
+      
+      /* Hidden by default on mobile */
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      align-items: flex-start;
+    }
+    
+    .navbar-nav.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .nav-item-dropdown {
+      width: 100%;
+    }
+    
+    .nav-item-dropdown .dropdown-menu {
+      position: static;
+      box-shadow: none;
+      opacity: 0;
+      visibility: hidden;
+      transform: none;
+      padding: 0 0 0 1.5rem;
+      border-left: 2px solid var(--color-surface);
+      margin-top: 0;
+      display: none;
+      min-width: 100%;
+      background: transparent;
+    }
+    
+    .nav-item-dropdown.open .dropdown-menu {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+    
+    .dropdown-link {
+      padding: 0.5rem 0;
+    }
+    
+    .nav-link {
+      font-size: 1.1rem;
+    }
+  }
+</style>

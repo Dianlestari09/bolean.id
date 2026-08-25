@@ -1,0 +1,277 @@
+---
+// Custom language picker that controls Google Translate programmatically
+---
+
+<!-- Hidden Google Translate element (renders in background) -->
+<div id="google_translate_element" style="display:none;"></div>
+
+<!-- Custom Beautiful Language Picker -->
+<div class="lang-picker-container" id="langPicker">
+  <button class="lang-toggle" id="langToggle" aria-label="Pilih Bahasa" aria-expanded="false">
+    <img id="activeFlagImg" src="https://flagcdn.com/w40/id.png" width="22" height="16" alt="ID" class="flag-img" />
+    <span id="activeLangText">ID</span>
+    <svg class="lang-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+  </button>
+
+  <ul class="lang-dropdown" id="langDropdown" role="listbox">
+    <li class="lang-option" data-lang="id" data-flag="https://flagcdn.com/w40/id.png" data-label="Indonesia" role="option" aria-selected="true">
+      <img src="https://flagcdn.com/w40/id.png" width="22" height="16" alt="Indonesia" class="flag-img" />
+      <span>Indonesia</span>
+    </li>
+    <li class="lang-option" data-lang="en" data-flag="https://flagcdn.com/w40/gb.png" data-label="English" role="option" aria-selected="false">
+      <img src="https://flagcdn.com/w40/gb.png" width="22" height="16" alt="English" class="flag-img" />
+      <span>English</span>
+    </li>
+    <li class="lang-option" data-lang="ar" data-flag="https://flagcdn.com/w40/sa.png" data-label="العربية" role="option" aria-selected="false">
+      <img src="https://flagcdn.com/w40/sa.png" width="22" height="16" alt="Arabic" class="flag-img" />
+      <span>العربية</span>
+    </li>
+    <li class="lang-option" data-lang="zh-CN" data-flag="https://flagcdn.com/w40/cn.png" data-label="中文" role="option" aria-selected="false">
+      <img src="https://flagcdn.com/w40/cn.png" width="22" height="16" alt="Chinese" class="flag-img" />
+      <span>中文</span>
+    </li>
+    <li class="lang-option" data-lang="ja" data-flag="https://flagcdn.com/w40/jp.png" data-label="日本語" role="option" aria-selected="false">
+      <img src="https://flagcdn.com/w40/jp.png" width="22" height="16" alt="Japanese" class="flag-img" />
+      <span>日本語</span>
+    </li>
+  </ul>
+</div>
+
+<!-- Google Translate Script -->
+<script is:inline>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'id',
+      includedLanguages: 'en,id,ar,zh-CN,ja',
+      autoDisplay: false,
+    }, 'google_translate_element');
+  }
+
+  function switchLanguage(langCode) {
+    // Try to find the Google Translate select element
+    const selectEl = document.querySelector('.goog-te-combo');
+    if (selectEl) {
+      selectEl.value = langCode;
+      selectEl.dispatchEvent(new Event('change'));
+    } else {
+      // Fallback: use cookie approach
+      const domain = location.hostname === 'localhost' ? 'localhost' : '.' + location.hostname;
+      if (langCode === 'id') {
+        document.cookie = 'googtrans=/id/id; path=/; domain=' + domain;
+        document.cookie = 'googtrans=/id/id; path=/';
+      } else {
+        document.cookie = 'googtrans=/id/' + langCode + '; path=/; domain=' + domain;
+        document.cookie = 'googtrans=/id/' + langCode + '; path=/';
+      }
+      location.reload();
+    }
+  }
+
+  // Wait for translate widget to load
+  window.googleTranslateElementInit = googleTranslateElementInit;
+</script>
+<script is:inline src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('langToggle');
+    const dropdown = document.getElementById('langDropdown');
+    const activeFlagImg = document.getElementById('activeFlagImg');
+    const activeLangText = document.getElementById('activeLangText');
+    const options = document.querySelectorAll('.lang-option');
+    const container = document.getElementById('langPicker');
+
+    // Read active language from cookie
+    function getActiveLang() {
+      const match = document.cookie.match(/googtrans=\/id\/([^;]+)/);
+      return match ? match[1] : 'id';
+    }
+
+    // Restore active state from cookie on page load
+    const currentLang = getActiveLang();
+    options.forEach(opt => {
+      if (opt.dataset.lang === currentLang) {
+        opt.classList.add('active');
+        activeFlagImg.src = opt.dataset.flag;
+        activeFlagImg.alt = opt.dataset.label;
+        activeLangText.textContent = opt.dataset.lang.toUpperCase().split('-')[0];
+      }
+    });
+
+    // Toggle dropdown
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = dropdown.classList.contains('open');
+      dropdown.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    // Select language
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        const lang = opt.dataset.lang;
+        const flag = opt.dataset.flag;
+        const label = opt.dataset.label;
+
+        // Update active UI
+        options.forEach(o => { o.classList.remove('active'); o.setAttribute('aria-selected', 'false'); });
+        opt.classList.add('active');
+        opt.setAttribute('aria-selected', 'true');
+        activeFlagImg.src = flag;
+        activeFlagImg.alt = label;
+        activeLangText.textContent = lang.toUpperCase().split('-')[0];
+
+        // Close dropdown
+        dropdown.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+
+        // Trigger translation
+        switchLanguage(lang);
+      });
+    });
+
+    // Close on outside click
+    document.addEventListener('click', (e) => {
+      if (!container.contains(e.target)) {
+        dropdown.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+</script>
+
+<!-- Hide default Google Translate UI -->
+<style is:global>
+  .goog-te-banner-frame,
+  .goog-te-balloon-frame,
+  #goog-gt-tt,
+  .goog-te-balloon-frame,
+  .goog-tooltip,
+  .goog-tooltip:hover {
+    display: none !important;
+  }
+
+  .skiptranslate {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  body {
+    top: 0 !important;
+    position: initial !important;
+  }
+
+  font {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+</style>
+
+<style>
+  .lang-picker-container {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 9999;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .lang-toggle {
+    background: white;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 99px;
+    padding: 0.55rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-secondary, #1e293b);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .lang-toggle:hover {
+    border-color: var(--color-primary, #0da89e);
+    box-shadow: 0 6px 25px rgba(13, 168, 158, 0.2);
+  }
+
+  .lang-chevron {
+    transition: transform 0.3s ease;
+    color: var(--color-text-muted, #64748b);
+  }
+
+  .lang-toggle[aria-expanded="true"] .lang-chevron {
+    transform: rotate(180deg);
+  }
+
+  .lang-dropdown {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 0;
+    background: white;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    padding: 0.4rem;
+    list-style: none;
+    margin: 0;
+    min-width: 160px;
+
+    /* Hidden by default */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  }
+
+  .lang-dropdown.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .lang-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.85rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--color-secondary, #1e293b);
+    transition: background 0.15s ease;
+  }
+
+  .lang-option:hover {
+    background: #f1f5f9;
+    color: var(--color-primary, #0da89e);
+  }
+
+  .lang-option.active {
+    background: rgba(13, 168, 158, 0.08);
+    color: var(--color-primary, #0da89e);
+    font-weight: 600;
+  }
+
+  .flag-img {
+    border-radius: 3px;
+    object-fit: cover;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .lang-picker-container {
+      bottom: 20px;
+      left: 15px;
+    }
+    .lang-toggle {
+      padding: 0.45rem 0.85rem;
+      font-size: 0.85rem;
+    }
+  }
+</style>
