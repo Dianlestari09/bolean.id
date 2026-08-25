@@ -1,0 +1,57 @@
+---
+import Icon from '../../components/Icon.astro';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout title="IoT Integration | Bolean">
+  <Navbar />
+  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
+    <section class="section section-light">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Our Services</span>
+          <h2 class="section-title">IoT Integration</h2>
+          <p style="color: var(--color-text-muted); margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Connect your physical devices to the digital world. We provide end-to-end Internet of Things solutions for smart automation.
+          </p>
+        </div>
+        
+        <div class="service-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+          <a href="/services/iot/sensors" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
+            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="activity" class="" /></div>
+            </div>
+            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Smart Sensors</h3>
+            <p style="color: var(--color-text-muted); line-height: 1.6;">Deployment of industrial and commercial sensors for real-time data collection and continuous environment monitoring.</p>
+          </a>
+          
+          <a href="/services/iot/dashboards" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
+            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="bar-chart" class="" /></div>
+            </div>
+            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Data Dashboards</h3>
+            <p style="color: var(--color-text-muted); line-height: 1.6;">Centralized platforms to visualize IoT data, allowing you to make informed, data-driven decisions anywhere.</p>
+          </a>
+          
+          <a href="/services/iot/automation" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
+            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="cpu" class="" /></div>
+            </div>
+            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Automated Systems</h3>
+            <p style="color: var(--color-text-muted); line-height: 1.6;">Closing the loop by allowing systems to automatically respond to sensor data without requiring human intervention.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .service-feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+  }
+</style>

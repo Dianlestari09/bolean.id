@@ -1,0 +1,57 @@
+---
+import Icon from '../../components/Icon.astro';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout title="Software Development | Bolean">
+  <Navbar />
+  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
+    <section class="section section-light">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Our Services</span>
+          <h2 class="section-title">Software Development</h2>
+          <p style="color: var(--color-text-muted); margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Custom software solutions tailored to your unique business needs. We build scalable, secure, and high-performance applications.
+          </p>
+        </div>
+        
+        <div class="service-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+          <a href="/services/software/web" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
+            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="monitor" class="" /></div>
+            </div>
+            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Web Applications</h3>
+            <p style="color: var(--color-text-muted); line-height: 1.6;">Responsive and dynamic web apps built with modern frameworks to ensure top-notch user experiences across all devices.</p>
+          </a>
+          
+          <a href="/services/software/mobile" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
+            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="smartphone" class="" /></div>
+            </div>
+            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Mobile Applications</h3>
+            <p style="color: var(--color-text-muted); line-height: 1.6;">Native and cross-platform mobile solutions designed to engage your users on the go with seamless performance.</p>
+          </a>
+          
+          <a href="/services/software/enterprise" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
+            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="globe" class="" /></div>
+            </div>
+            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Enterprise Software</h3>
+            <p style="color: var(--color-text-muted); line-height: 1.6;">Robust internal systems designed to streamline your operations and manage large-scale business data efficiently.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .service-feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+  }
+</style>

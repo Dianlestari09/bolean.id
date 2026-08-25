@@ -1,0 +1,210 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+---
+
+<Layout title="Why Astro is the Ultimate Choice for Static Sites | Bolean">
+  <Navbar />
+  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
+    <section class="section section-light">
+      <div class="container blog-detail-layout">
+        <!-- Main Content -->
+        <article class="blog-main-content">
+          <header style="margin-bottom: 2rem;">
+            <span
+              style="color: var(--color-primary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;"
+              >Web Development</span
+            >
+            <h1
+              style="font-size: 2.5rem; color: var(--color-secondary); margin: 1rem 0;"
+            >
+              Why Astro is the Ultimate Choice for Static Sites
+            </h1>
+            <p style="color: var(--color-text-muted);">August 18, 2026</p>
+          </header>
+
+          <div class="blog-featured-image">
+            <img
+              src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+              alt="Web Development with Astro"
+            />
+          </div>
+
+          <div class="content" style="font-size: 1.1rem; line-height: 1.8; color: var(--color-text-main);">
+            <p>
+              Astro JS telah menjadi salah satu framework modern yang paling diminati oleh para developer web saat ini. Keunggulan utamanya terletak pada arsitektur <i>zero-JavaScript</i> yang memastikan kecepatan website luar biasa.
+            </p>
+            <p>
+              Bagi bisnis yang mengutamakan performa dan SEO, memiliki website yang ringan adalah sebuah keharusan mutlak di era digital. Kecepatan muat (loading speed) sangat memengaruhi retensi pengunjung.
+            </p>
+            
+            <div style="background: rgba(13, 168, 158, 0.05); padding: 1rem 1.5rem; border-left: 4px solid var(--color-primary); margin: 1.5rem 0; border-radius: 0 0.5rem 0.5rem 0;">
+              <strong>Baca Juga:</strong> <a href="/blog/future-of-cloud" style="color: var(--color-primary); font-weight: 600; text-decoration: none;">Masa Depan Cloud Architecture di 2027</a>
+            </div>
+
+            <h2 style="margin-top: 2.5rem; color: var(--color-secondary); font-size: 1.8rem;">
+              Arsitektur Islands yang Revolusioner
+            </h2>
+            <p>
+              Salah satu fitur andalan dari Astro adalah konsep <i>Islands Architecture</i>. Konsep ini memungkinkan developer untuk mengisolasi komponen interaktif hanya di area tertentu pada halaman website.
+            </p>
+            <p>
+              Artinya, bagian halaman yang statis akan tetap dirender sebagai HTML murni tanpa tambahan beban skrip yang berat. Hal ini membuat performa secara keseluruhan meningkat drastis.
+            </p>
+            <p>
+              Mesin pencari seperti Google sangat menyukai struktur ringan seperti ini, sehingga skor Web Vitals akan meroket dan peringkat SEO website Anda akan jauh lebih optimal.
+            </p>
+
+            <h2 style="margin-top: 2.5rem; color: var(--color-secondary); font-size: 1.8rem;">
+              Performa Maksimal untuk SEO Bisnis
+            </h2>
+            <p>
+              Di Bolean, kami menggunakan Astro secara ekstensif untuk membangun website profil perusahaan yang tidak hanya elegan, tetapi juga secepat kilat. Kami sadar SEO adalah investasi jangka panjang.
+            </p>
+            <p>
+              Dengan kombinasi desain responsif dan kecepatan muat tanpa <i>blocking render</i>, pengunjung tidak akan pernah bosan menunggu halaman website Anda terbuka.
+            </p>
+            <p>
+              Jika Anda ingin mendominasi halaman pertama mesin pencari, beralih ke Astro adalah langkah strategis yang sangat kami rekomendasikan untuk masa depan digital Anda.
+            </p>
+
+            <div class="article-tags" style="margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--color-surface); display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+              <strong style="color: var(--color-secondary); margin-right: 0.5rem;">Tags:</strong>
+              <span style="background: var(--color-surface); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.85rem; color: var(--color-text-muted);">#WebDevelopment</span>
+              <span style="background: var(--color-surface); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.85rem; color: var(--color-text-muted);">#AstroJS</span>
+              <span style="background: var(--color-surface); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.85rem; color: var(--color-text-muted);">#SEO</span>
+              <span style="background: var(--color-surface); padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.85rem; color: var(--color-text-muted);">#Performance</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Sidebar -->
+        <aside class="blog-sidebar">
+          <h3 class="sidebar-title">Rekomendasi Artikel</h3>
+
+          <div class="recommended-articles">
+            <a href="/blog/future-of-cloud" class="rec-article-card">
+              <div
+                class="rec-article-img"
+                style="background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"
+              >
+              </div>
+              <div class="rec-article-info">
+                <h4>The Future of Cloud Architecture in 2027</h4>
+                <span>August 25, 2026</span>
+              </div>
+            </a>
+
+            <a href="/blog/protecting-business-data" class="rec-article-card">
+              <div
+                class="rec-article-img"
+                style="background-image: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80');"
+              >
+              </div>
+              <div class="rec-article-info">
+                <h4>Protecting Your Business Data</h4>
+                <span>August 12, 2026</span>
+              </div>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .blog-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+  }
+
+  @media (min-width: 992px) {
+    .blog-detail-layout {
+      grid-template-columns: 2fr 1fr;
+    }
+  }
+
+  .blog-featured-image {
+    margin-bottom: 3rem;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .blog-featured-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+  }
+
+  .sidebar-title {
+    font-size: 1.25rem;
+    color: var(--color-secondary);
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--color-surface);
+  }
+
+  .recommended-articles {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .rec-article-card {
+    display: flex;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+    background: white;
+    border-radius: var(--border-radius-md);
+    padding: 1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all var(--transition-fast);
+    align-items: center;
+  }
+
+  .rec-article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .rec-article-img {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--border-radius-sm);
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+  }
+
+  .rec-article-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .rec-article-info h4 {
+    font-size: 1rem;
+    color: var(--color-secondary);
+    margin: 0;
+    line-height: 1.4;
+    transition: color var(--transition-fast);
+  }
+
+  .rec-article-card:hover .rec-article-info h4 {
+    color: var(--color-primary);
+  }
+
+  .rec-article-info span {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+</style>

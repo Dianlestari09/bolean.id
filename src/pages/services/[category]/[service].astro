@@ -1,0 +1,531 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Navbar from '../../../components/Navbar.astro';
+import Footer from '../../../components/Footer.astro';
+import { allProjects } from '../../../data/projects.js';
+
+export function getStaticPaths() {
+  const services = [
+    // SOFTWARE
+    {
+      params: { category: 'software', service: 'web' },
+      props: {
+        categoryTitle: 'Software Development',
+        categoryUrl: '/services/software',
+        title: 'Web Applications',
+        description: 'Pilih paket pengembangan web yang paling sesuai dengan kebutuhan dan skala bisnis Anda.',
+        benefits: [
+          { icon: '🚀', title: 'Akses Super Cepat', desc: 'Dioptimalkan untuk performa tinggi dan waktu muat instan.' },
+          { icon: '📱', title: 'Desain Responsif', desc: 'Tampil sempurna di berbagai perangkat, dari layar sentuh hingga desktop.' },
+          { icon: '📈', title: 'Skalabilitas Tinggi', desc: 'Siap menangani lonjakan pengunjung tanpa menurunkan performa.' }
+        ],
+        technologies: ['Astro', 'React', 'Next.js', 'Node.js', 'Tailwind CSS'],
+        packages: [
+          { name: 'Starter Web', price: 'Mulai dari Rp 5.000.000', recommended: false, features: ['Company Profile (Maks 5 Halaman)', 'Desain Responsif', 'Form Kontak Dasar', 'Optimasi SEO Dasar'] },
+          { name: 'Professional Web', price: 'Mulai dari Rp 15.000.000', recommended: true, features: ['Katalog / Sistem Dinamis', 'Custom UI/UX Design', 'Integrasi Sistem CMS', 'Optimasi Kecepatan Ekstra'] },
+          { name: 'Enterprise Web', price: 'Hubungi Kami', recommended: false, features: ['Aplikasi Web Custom (SaaS)', 'Arsitektur Cloud Scalable', 'Integrasi API Pihak Ketiga', 'Dukungan Prioritas 24/7'] }
+        ]
+      }
+    },
+    {
+      params: { category: 'software', service: 'mobile' },
+      props: {
+        categoryTitle: 'Software Development',
+        categoryUrl: '/services/software',
+        title: 'Mobile Apps',
+        description: 'Hadirkan bisnis Anda ke genggaman pelanggan dengan aplikasi mobile berkualitas.',
+        benefits: [
+          { icon: '⚡', title: 'Performa Setara Native', desc: 'Transisi halus dan interaksi cepat tanpa lag atau jeda.' },
+          { icon: '🔒', title: 'Keamanan Tingkat Lanjut', desc: 'Enkripsi data dan standar keamanan transaksi yang ketat.' },
+          { icon: '✨', title: 'UX Modern', desc: 'Desain antarmuka intuitif yang disukai oleh pengguna aktif.' }
+        ],
+        technologies: ['Flutter', 'React Native', 'Swift', 'Kotlin', 'Firebase'],
+        packages: [
+          { name: 'Starter App', price: 'Mulai dari Rp 25.000.000', recommended: false, features: ['Aplikasi Android / iOS Single Platform', 'Desain UI/UX Standar', 'Integrasi Firebase Dasar', 'Maintenance 1 Bulan'] },
+          { name: 'Pro App', price: 'Mulai dari Rp 50.000.000', recommended: true, features: ['Android & iOS (Cross-platform)', 'Custom UI/UX Interaktif', 'Integrasi API Backend', 'Sistem Notifikasi Push'] },
+          { name: 'Enterprise App', price: 'Hubungi Kami', recommended: false, features: ['Aplikasi Native Kinerja Tinggi', 'Backend Terdedikasi & Scalable', 'Audit Keamanan Aplikasi', 'SLA & Dukungan Prioritas'] }
+        ]
+      }
+    },
+    {
+      params: { category: 'software', service: 'enterprise' },
+      props: {
+        categoryTitle: 'Software Development',
+        categoryUrl: '/services/software',
+        title: 'Enterprise Software (ERP)',
+        description: 'Solusi sistem internal untuk mendigitalisasi dan mengefisiensikan operasi bisnis Anda.',
+        benefits: [
+          { icon: '⚙️', title: 'Otomatisasi Proses', desc: 'Hilangkan input manual dan percepat alur kerja departemen.' },
+          { icon: '🔗', title: 'Terintegrasi Penuh', desc: 'Menghubungkan data SDM, Keuangan, dan Operasional dalam satu sistem.' },
+          { icon: '🛡️', title: 'Keamanan Level Bank', desc: 'Hak akses bertingkat dan audit log untuk setiap perubahan data.' }
+        ],
+        technologies: ['Python', 'Django', 'Go', 'PostgreSQL', 'Docker'],
+        packages: [
+          { name: 'Starter ERP', price: 'Mulai dari Rp 40.000.000', recommended: false, features: ['Modul Dasar (HR/Finance)', 'Dashboard Laporan Standar', 'Manajemen User Dasar', 'Deployment Cloud Basic'] },
+          { name: 'Pro ERP', price: 'Mulai dari Rp 100.000.000', recommended: true, features: ['Multi-modul (Sesuai Kebutuhan)', 'Workflow & Approval Otomatis', 'Integrasi dengan Sistem Lama', 'Backup Otomatis Harian'] },
+          { name: 'Ultimate ERP', price: 'Hubungi Kami', recommended: false, features: ['Sistem ERP Custom Penuh', 'On-premise / Private Cloud', 'Pelatihan Karyawan Komprehensif', 'Dedicated Account Manager'] }
+        ]
+      }
+    },
+    // HARDWARE
+    {
+      params: { category: 'hardware', service: 'server' },
+      props: {
+        categoryTitle: 'Hardware Solutions',
+        categoryUrl: '/services/hardware',
+        title: 'Server Infrastructure',
+        description: 'Pilih layanan setup dan optimasi server untuk menjaga keandalan infrastruktur IT Anda.',
+        benefits: [
+          { icon: '⏱️', title: 'Uptime 99.9%', desc: 'Arsitektur andal yang memastikan aplikasi bisnis Anda selalu aktif.' },
+          { icon: '💾', title: 'Redundansi Data', desc: 'Sistem pencadangan berlapis untuk mencegah kehilangan data kritis.' },
+          { icon: '🔥', title: 'Kinerja Maksimal', desc: 'Konfigurasi perangkat keras khusus untuk beban komputasi berat.' }
+        ],
+        technologies: ['Linux', 'Windows Server', 'Dell EMC', 'HPE', 'Nginx/Apache'],
+        packages: [
+          { name: 'Basic Server Setup', price: 'Mulai dari Rp 10.000.000', recommended: false, features: ['Instalasi Sistem Operasi Server', 'Konfigurasi Jaringan Dasar', 'Standar Keamanan Firewall Dasar', 'Dokumentasi Sistem'] },
+          { name: 'Pro Server Setup', price: 'Mulai dari Rp 25.000.000', recommended: true, features: ['Setup High-Availability Server', 'Konfigurasi Load Balancing', 'Sistem Backup Otomatis', 'Monitoring Kinerja Server 24/7'] },
+          { name: 'Enterprise Datacenter', price: 'Hubungi Kami', recommended: false, features: ['Rancang Bangun Datacenter', 'Sistem Disaster Recovery (DRC)', 'Keamanan Zero Trust Terpusat', 'SLA Uptime 99.9%'] }
+        ]
+      }
+    },
+    {
+      params: { category: 'hardware', service: 'networking' },
+      props: {
+        categoryTitle: 'Hardware Solutions',
+        categoryUrl: '/services/hardware',
+        title: 'Networking Equipment',
+        description: 'Jaringan yang cepat dan aman adalah tulang punggung dari produktivitas perusahaan.',
+        benefits: [
+          { icon: '🌐', title: 'Koneksi Stabil', desc: 'Pemerataan sinyal dan bandwidth ke setiap sudut kantor.' },
+          { icon: '🚷', title: 'Keamanan Jaringan Tinggi', desc: 'Proteksi dari ancaman cyber internal maupun eksternal.' },
+          { icon: '📊', title: 'Manajemen Bandwidth', desc: 'Prioritaskan kecepatan untuk aplikasi dan divisi krusial perusahaan.' }
+        ],
+        technologies: ['Cisco', 'MikroTik', 'Ubiquiti', 'Fortinet', 'pfSense'],
+        packages: [
+          { name: 'Basic Network', price: 'Mulai dari Rp 5.000.000', recommended: false, features: ['Setup Router & Switch Kantor Dasar', 'Konfigurasi Wi-Fi Internal/Guest', 'Pembagian Subnet Sederhana', 'Troubleshooting 1 Bulan'] },
+          { name: 'Pro Network', price: 'Mulai dari Rp 15.000.000', recommended: true, features: ['Setup Enterprise Firewall', 'Konfigurasi VPN Site-to-Site', 'Manajemen & Limitasi Bandwidth', 'Pemblokiran Akses Berbahaya'] },
+          { name: 'Enterprise Network', price: 'Hubungi Kami', recommended: false, features: ['Arsitektur Jaringan Skala Besar', 'Implementasi SD-WAN', 'Monitoring Jaringan Cerdas (AI)', 'Dukungan Teknisi On-site'] }
+        ]
+      }
+    },
+    {
+      params: { category: 'hardware', service: 'workstation' },
+      props: {
+        categoryTitle: 'Hardware Solutions',
+        categoryUrl: '/services/hardware',
+        title: 'Workstation Setup',
+        description: 'Optimasi perangkat kerja untuk mendukung performa maksimal tim profesional Anda.',
+        benefits: [
+          { icon: '🎨', title: 'Kinerja Kelas Kreator', desc: 'Mampu merender video 4K dan desain 3D tanpa kendala.' },
+          { icon: '🏗️', title: 'Komponen Tahan Banting', desc: 'Perangkat kelas workstation yang didesain untuk menyala 24 jam.' },
+          { icon: '🛡️', title: 'Garansi & Dukungan', desc: 'Jaminan penggantian suku cadang dan pemeliharaan rutin.' }
+        ],
+        technologies: ['Intel Core/Xeon', 'AMD Ryzen', 'NVIDIA Quadro/RTX', 'SSD NVMe', 'Windows 11 Pro'],
+        packages: [
+          { name: 'Office Setup', price: 'Mulai dari Rp 2.000.000/PC', recommended: false, features: ['Instalasi OS & Software Perkantoran', 'Konfigurasi Antivirus Dasar', 'Manajemen Kabel Meja Kerja', 'Koneksi Printer/Scanner Jaringan'] },
+          { name: 'Creator Setup', price: 'Mulai dari Rp 5.000.000/PC', recommended: true, features: ['Konfigurasi PC High-End (Render/Design)', 'Kalibrasi Monitor Profesional', 'Setup Network Attached Storage (NAS)', 'Optimasi Kartu Grafis'] },
+          { name: 'Enterprise Fleet', price: 'Hubungi Kami', recommended: false, features: ['Deployment Masal (Puluhan/Ratusan PC)', 'Sistem Endpoint Management terpusat', 'Remote Monitoring & Patching', 'Inventarisasi Aset Perangkat Keras'] }
+        ]
+      }
+    },
+    // IOT
+    {
+      params: { category: 'iot', service: 'sensors' },
+      props: {
+        categoryTitle: 'IoT Integration',
+        categoryUrl: '/services/iot',
+        title: 'Smart Sensors',
+        description: 'Kumpulkan data fisik real-time dengan jaringan sensor cerdas yang terintegrasi.',
+        benefits: [
+          { icon: '📡', title: 'Pemantauan Real-time', desc: 'Data kondisi lapangan masuk ke sistem setiap detiknya.' },
+          { icon: '🎯', title: 'Akurasi Presisi', desc: 'Sensor skala industri dengan kalibrasi presisi tinggi.' },
+          { icon: '🔋', title: 'Hemat Daya', desc: 'Protokol nirkabel hemat daya yang bisa bertahan bertahun-tahun.' }
+        ],
+        technologies: ['Arduino', 'Raspberry Pi', 'LoRaWAN', 'ESP32', 'MQTT'],
+        packages: [
+          { name: 'Starter Sensor Kit', price: 'Mulai dari Rp 15.000.000', recommended: false, features: ['Maksimal 5 Titik Sensor IoT', 'IoT Gateway Basic', 'Konektivitas Wi-Fi', 'Dashboard Log Data Harian'] },
+          { name: 'Pro Sensor Kit', price: 'Mulai dari Rp 45.000.000', recommended: true, features: ['Hingga 20 Titik Sensor (Multitipe)', 'Industrial Grade Gateway', 'Konektivitas LoRaWAN / 4G', 'Sistem Peringatan (Alert) via Email'] },
+          { name: 'Enterprise Network', price: 'Hubungi Kami', recommended: false, features: ['Sensor Skala Pabrik (Ratusan Titik)', 'Integrasi Sistem SCADA', 'Dukungan Edge Computing Terdistribusi', 'Prediksi Maintenance Berbasis AI'] }
+        ]
+      }
+    },
+    {
+      params: { category: 'iot', service: 'dashboards' },
+      props: {
+        categoryTitle: 'IoT Integration',
+        categoryUrl: '/services/iot',
+        title: 'Data Dashboards',
+        description: 'Visualisasikan data IoT Anda menjadi wawasan bisnis yang mudah dipahami.',
+        benefits: [
+          { icon: '🧠', title: 'Keputusan Berbasis Data', desc: 'Visualisasi grafik membantu pemimpin membuat keputusan instan.' },
+          { icon: '🔔', title: 'Peringatan Dini', desc: 'Sistem langsung memberi tahu via Telegram/Email saat ada anomali.' },
+          { icon: '🌍', title: 'Akses Kapan Saja', desc: 'Pantau aset perusahaan dari HP Anda di mana pun berada.' }
+        ],
+        technologies: ['Grafana', 'InfluxDB', 'Node-RED', 'Vue.js', 'WebSocket'],
+        packages: [
+          { name: 'Basic Dashboard', price: 'Mulai dari Rp 10.000.000', recommended: false, features: ['Visualisasi Data Sensor Real-time', 'Grafik Standar (Garis/Batang)', 'Export Laporan (CSV/PDF) Dasar', 'Akses untuk 3 User'] },
+          { name: 'Pro Dashboard', price: 'Mulai dari Rp 30.000.000', recommended: true, features: ['Widget Custom Interaktif', 'Analisis Data Historis Mendalam', 'Notifikasi Pintar (Telegram/WhatsApp)', 'Manajemen User & Hak Akses'] },
+          { name: 'Enterprise Center', price: 'Hubungi Kami', recommended: false, features: ['Command Center Integrasi Penuh', 'Analisis Big Data & Machine Learning', 'White-labeling Khusus Perusahaan', 'Integrasi API dengan ERP Lain'] }
+        ]
+      }
+    },
+    {
+      params: { category: 'iot', service: 'automation' },
+      props: {
+        categoryTitle: 'IoT Integration',
+        categoryUrl: '/services/iot',
+        title: 'Automated Systems',
+        description: 'Otomatisasikan perangkat keras Anda berdasarkan kondisi aktual secara cerdas.',
+        benefits: [
+          { icon: '🤖', title: 'Efisiensi Tenaga Kerja', desc: 'Biarkan sistem menangani tugas repetitif secara konsisten.' },
+          { icon: '🚫', title: 'Tanpa Human-Error', desc: 'Mengurangi risiko kelalaian manusia pada operasional kritis.' },
+          { icon: '⚡', title: 'Respon Super Cepat', desc: 'Sistem bereaksi terhadap pemicu lingkungan dalam hitungan milidetik.' }
+        ],
+        technologies: ['PLC Siemens', 'SCADA', 'Edge Computing', 'Python', 'C++'],
+        packages: [
+          { name: 'Basic Automation', price: 'Mulai dari Rp 20.000.000', recommended: false, features: ['Kontrol Perangkat IoT Jarak Jauh', 'Penjadwalan Otomatis (Timer Berbasis Waktu)', 'Saklar Pintar (Smart Relays)', 'Log Aktivitas Otomatisasi'] },
+          { name: 'Smart Automation', price: 'Mulai dari Rp 50.000.000', recommended: true, features: ['Respon Otomatis Berbasis Kondisi Sensor', 'Integrasi dengan Sistem Alarm Darurat', 'Pembuatan Skenario Logika Kompleks', 'Dashboard Kontrol Interaktif'] },
+          { name: 'Industrial Auto', price: 'Hubungi Kami', recommended: false, features: ['Kontrol Presisi Robotik & Mesin Pabrik', 'Sistem Keselamatan Standar Industri (SIL)', 'Sinkronisasi Edge-to-Cloud Realtime', 'Pemrograman PLC Lanjutan'] }
+        ]
+      }
+    }
+  ];
+
+  return services.map(service => {
+    service.props.projects = allProjects.filter(p => p.serviceId === service.params.service);
+    return service;
+  });
+}
+
+const { categoryTitle, categoryUrl, title, description, packages, projects } = Astro.props;
+---
+
+<Layout title={`${title} | Layanan Bolean`}>
+  <Navbar />
+  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
+    
+    <!-- Header & Projects Section -->
+    <section class="section section-light" style="padding-bottom: 4rem;">
+      <div class="container">
+        
+        <!-- Back Link (Top Left) -->
+        <div style="margin-bottom: 2rem;">
+          <a href={categoryUrl} class="back-link">← Kembali ke {categoryTitle}</a>
+        </div>
+        
+        <!-- Title & Description (Centered) -->
+        <div class="breadcrumb-header" style="margin-bottom: 4rem;">
+          <h1 class="page-title">{title}</h1>
+          <p class="page-description">{description}</p>
+          <div style="margin-top: 2rem;">
+            <a href="#packages" class="btn btn-outline" style="display: inline-flex;">Lihat Harga Paket ↓</a>
+          </div>
+        </div>
+
+        <!-- Projects Grid -->
+        {projects && projects.length > 0 && (
+          <div class="portfolio-grid">
+            {projects.map((project: any) => (
+              <a href={`/projects/${project.slug}`} class="portfolio-card" style="display: block; text-decoration: none; color: inherit;">
+                <div class="portfolio-image">
+                  <img src={project.image} alt={project.title} loading="lazy" />
+                  <div class="portfolio-overlay">
+                    <span class="btn btn-primary">Lihat Detail</span>
+                  </div>
+                </div>
+                <div class="portfolio-content">
+                  <span class="portfolio-category">{project.category}</span>
+                  <h3 class="portfolio-title">{project.title}</h3>
+                  <p class="portfolio-desc">{project.description}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+        
+      </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="section section-light">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Pilihan Paket</h2>
+          <p style="color: var(--color-text-muted); margin-top: 1rem;">Transparansi harga untuk solusi teknologi terbaik.</p>
+        </div>
+        <div class="packages-grid">
+          {packages.map((pkg: any) => (
+            <div class={`package-card ${pkg.recommended ? 'recommended' : ''}`}>
+              {pkg.recommended && <div class="recommended-badge">Paling Diminati</div>}
+              
+              <div class="package-header">
+                <h3>{pkg.name}</h3>
+                <div class="package-price">{pkg.price}</div>
+              </div>
+              
+              <div class="package-body">
+                <ul class="features-list">
+                  {pkg.features.map((feature: string) => (
+                    <li>
+                      <span class="feature-icon">✓</span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div class="package-footer">
+                <a href={`https://wa.me/6281234567890?text=Halo%20Bolean,%20saya%20tertarik%20dengan%20paket%20${pkg.name}%20untuk%20layanan%20${title}`} target="_blank" class={`btn ${pkg.recommended ? 'btn-primary' : 'btn-outline'}`} style="width: 100%; justify-content: center;">Pilih Paket</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+    
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Header Styles */
+  .breadcrumb-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .back-link {
+    display: inline-block;
+    color: var(--color-primary);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+  .back-link:hover {
+    color: var(--color-secondary);
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
+  }
+  
+  .page-description {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+  
+  /* Packages Styles */
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    align-items: stretch;
+  }
+  
+  .package-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    border: 1px solid #e2e8f0;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all var(--transition-normal);
+  }
+  
+  .package-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  }
+  
+  .package-card.recommended {
+    border: 2px solid var(--color-primary);
+    box-shadow: 0 10px 30px rgba(10, 184, 133, 0.15);
+    transform: scale(1.03);
+    z-index: 10;
+  }
+  
+  .package-card.recommended:hover {
+    transform: scale(1.03) translateY(-10px);
+  }
+  
+  .recommended-badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-primary);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 10px rgba(10, 184, 133, 0.3);
+  }
+  
+  .package-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .package-header h3 {
+    font-size: 1.5rem;
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
+  }
+  
+  .package-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+  
+  .package-body {
+    flex-grow: 1;
+    margin-bottom: 2.5rem;
+  }
+  
+  .features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  
+  .features-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+  
+  .feature-icon {
+    color: var(--color-primary);
+    font-weight: bold;
+  }
+  
+  .package-footer {
+    margin-top: auto;
+  }
+  
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    display: flex;
+  }
+  
+  .btn-outline:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+  
+  /* Portfolio Grid Styles */
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2.5rem;
+  }
+  
+  .portfolio-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  }
+  
+  .portfolio-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  }
+  
+  .portfolio-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+  }
+  
+  .portfolio-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+  }
+  
+  .portfolio-card:hover .portfolio-image img {
+    transform: scale(1.05);
+  }
+  
+  .portfolio-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(14, 25, 54, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+  }
+  
+  .portfolio-card:hover .portfolio-overlay {
+    opacity: 1;
+  }
+  
+  .portfolio-content {
+    padding: 2rem;
+  }
+  
+  .portfolio-category {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .portfolio-title {
+    font-size: 1.35rem;
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.4;
+  }
+  
+  .portfolio-desc {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 991px) {
+    .package-card.recommended {
+      transform: none;
+    }
+    .package-card.recommended:hover {
+      transform: translateY(-10px);
+    }
+  }
+</style>

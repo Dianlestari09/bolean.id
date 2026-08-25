@@ -1,0 +1,57 @@
+---
+import Icon from '../../components/Icon.astro';
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout title="Hardware Solutions | Bolean">
+  <Navbar />
+  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
+    <section class="section section-gray">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">Our Services</span>
+          <h2 class="section-title">Hardware Solutions</h2>
+          <p style="color: var(--color-text-muted); margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Reliable and advanced hardware infrastructure designed to power your business operations seamlessly without interruptions.
+          </p>
+        </div>
+        
+        <div class="service-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+          <a href="/services/hardware/server" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
+            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="hard-drive" class="" /></div>
+            </div>
+            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Server Infrastructure</h3>
+            <p style="color: var(--color-text-muted); line-height: 1.6;">High-performance servers set up and optimized for maximum uptime, security, and data processing capability.</p>
+          </a>
+          
+          <a href="/services/hardware/networking" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
+            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="wifi" class="" /></div>
+            </div>
+            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Networking Equipment</h3>
+            <p style="color: var(--color-text-muted); line-height: 1.6;">Enterprise-grade routers, switches, and firewalls to keep your internal and external communications fast and secure.</p>
+          </a>
+          
+          <a href="/services/hardware/workstation" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
+            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
+              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="settings" class="" /></div>
+            </div>
+            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Workstation Setup</h3>
+            <p style="color: var(--color-text-muted); line-height: 1.6;">Customized PC and workstation configurations tailored specifically for your specialized professional needs.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .service-feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+  }
+</style>

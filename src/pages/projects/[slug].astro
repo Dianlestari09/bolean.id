@@ -1,0 +1,285 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+
+import { allProjects } from '../../data/projects.js';
+
+export function getStaticPaths() {
+  return allProjects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout title={`${project.title} | Portfolio Bolean`}>
+  <Navbar />
+  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
+    
+    <section class="section section-light">
+      <div class="container">
+        
+        <div style="margin-bottom: 2rem;">
+          <a href="#" onclick="history.back(); return false;" style="color: var(--color-primary); font-weight: 600; text-decoration: none;">← Kembali</a>
+        </div>
+        
+        <div class="portfolio-detail-container">
+          
+          <div class="portfolio-detail-image">
+            <img src={project.image} alt={project.title} />
+          </div>
+          
+          <div class="portfolio-detail-info">
+            <span class="category-badge">{project.category}</span>
+            <h1 class="project-title">{project.title}</h1>
+            
+            <p class="project-description">{project.description}</p>
+            
+            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.25rem;">Fitur Unggulan</h3>
+            <ul class="feature-list">
+              {project.features.map((feature: string) => (
+                <li><span class="check">✓</span> {feature}</li>
+              ))}
+            </ul>
+            
+            <!-- Technologies -->
+            {project.technologies && project.technologies.length > 0 && (
+              <div style="margin-bottom: 2.5rem;">
+                <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.25rem;">Teknologi & Framework</h3>
+                <div class="tech-tags-wrapper" style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                  {project.technologies.map((tech: string) => (
+                    <span class="tech-tag" style="background: rgba(13, 168, 158, 0.08); border: 1px solid rgba(13, 168, 158, 0.2); color: var(--color-primary); padding: 0.5rem 1.25rem; border-radius: 50px; font-weight: 600; font-size: 0.95rem;">{tech}</span>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            <div class="action-buttons">
+              <!-- Nanti link ini bisa Anda ubah sesuai kebutuhan -->
+              <a href={`https://wa.me/6281234567890?text=Halo%20Bolean,%20saya%20tertarik%20untuk%20konsultasi%20mengenai%20proyek%20${project.title}`} target="_blank" class="btn btn-primary">Konsultasi Sekarang</a>
+              <a href="#" class="btn btn-outline" onclick="alert('Live demo sedang dipersiapkan.'); return false;">Live Demo</a>
+            </div>
+            
+          </div>
+          
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- Benefits Section -->
+    {project.benefits && project.benefits.length > 0 && (
+      <section class="benefits-section" style="padding: 7rem 0; background-color: #f8fafc;">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title">Kenapa Memilih Solusi Ini?</h2>
+          </div>
+          <div class="benefits-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem;">
+            {project.benefits.map((benefit: any) => (
+              <div class="benefit-card">
+                <div class="benefit-icon-wrapper" style="width: 5rem; height: 5rem; margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center; background: rgba(13, 168, 158, 0.08); border-radius: 1rem; color: var(--color-primary);">
+                  <Icon name={benefit.icon} class="benefit-svg" />
+                </div>
+                <h3 class="benefit-title">{benefit.title}</h3>
+                <p class="benefit-desc">{benefit.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+
+    
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .portfolio-detail-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  
+  @media (min-width: 992px) {
+    .portfolio-detail-container {
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+    }
+  }
+  
+  .portfolio-detail-image {
+    width: 100%;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  
+  .portfolio-detail-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+  }
+  
+  .category-badge {
+    display: inline-block;
+    background: rgba(10, 184, 133, 0.1);
+    color: var(--color-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+  
+  .project-title {
+    font-size: 2.5rem;
+    color: var(--color-secondary);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+  
+  .project-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-text-main);
+    margin-bottom: 2.5rem;
+  }
+  
+  .feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 3rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+  }
+  
+  .feature-list .check {
+    color: var(--color-primary);
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 0.8rem 2rem;
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  
+  .btn-outline:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  /* Benefits Styles (100% Reliable Custom CSS) */
+  .benefits-section {
+    padding: 7rem 0;
+    background-color: #f8fafc;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    color: var(--color-secondary);
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+  }
+
+  .benefit-card {
+    background: white;
+    padding: 3rem 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.03);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+  
+  .benefit-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+  }
+
+  .benefit-icon-wrapper {
+    width: 5rem;
+    height: 5rem;
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(13, 168, 158, 0.08);
+    border-radius: 1rem;
+    color: var(--color-primary);
+  }
+
+  .benefit-svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .benefit-title {
+    font-size: 1.3rem;
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  .benefit-desc {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+  }
+
+  /* Technologies Tags Styles */
+  .tech-tag {
+    background: rgba(13, 168, 158, 0.08);
+    border: 1px solid rgba(13, 168, 158, 0.2);
+    color: var(--color-primary);
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+  }
+
+  .tech-tag:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(13, 168, 158, 0.3);
+  }
+</style>

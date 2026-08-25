@@ -1,0 +1,54 @@
+---
+import Icon from '../components/Icon.astro';
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Services | Bolean">
+  <Navbar />
+  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
+    <section class="section section-light">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">What We Do</span>
+          <h2 class="section-title">Exclusive IT Services</h2>
+        </div>
+        
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon" style="width: 3rem; height: 3rem; margin-bottom: 1.5rem; color: var(--color-primary);"><Icon name="monitor" class="" /></div>
+            <h3 class="service-title">Web Development</h3>
+            <p class="service-desc">Clean, responsive, and high-performance websites tailored to your unique business requirements.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon" style="width: 3rem; height: 3rem; margin-bottom: 1.5rem; color: var(--color-primary);"><Icon name="smartphone" class="" /></div>
+            <h3 class="service-title">App Design</h3>
+            <p class="service-desc">Intuitive UI/UX design that provides an engaging and seamless experience for your mobile users.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon" style="width: 3rem; height: 3rem; margin-bottom: 1.5rem; color: var(--color-primary);"><Icon name="globe" class="" /></div>
+            <h3 class="service-title">Cloud Architecture</h3>
+            <p class="service-desc">Secure and scalable cloud infrastructures to ensure your applications run smoothly 24/7.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon" style="width: 3rem; height: 3rem; margin-bottom: 1.5rem; color: var(--color-primary);"><Icon name="shield-check" class="" /></div>
+            <h3 class="service-title">Cyber Security</h3>
+            <p class="service-desc">Comprehensive security audits and solutions to protect your valuable business data.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon" style="width: 3rem; height: 3rem; margin-bottom: 1.5rem; color: var(--color-primary);"><Icon name="bar-chart" class="" /></div>
+            <h3 class="service-title">Data Analytics</h3>
+            <p class="service-desc">Transform your raw data into actionable insights for better business decisions.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon" style="width: 3rem; height: 3rem; margin-bottom: 1.5rem; color: var(--color-primary);"><Icon name="zap" class="" /></div>
+            <h3 class="service-title">Digital Marketing</h3>
+            <p class="service-desc">Data-driven strategies to increase your online presence and reach your target audience.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

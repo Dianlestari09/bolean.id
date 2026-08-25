@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Bolean - IT Solution & Technology">
+  <Navbar />
+  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
+    <!-- Hero Section -->
+    <section class="hero" style="padding-top: 0; min-height: calc(100vh - 80px);">
+      <div class="container">
+        <div class="hero-content">
+          <span class="hero-subtitle">WELCOME TO BOLEAN</span>
+          <h1 class="hero-title">
+            IT Solutions &<br/><span>Technology</span> Services
+          </h1>
+          <p class="hero-description">
+            We provide clean, powerful, and scalable technology solutions. Elevate your business with our premium IT consulting and development services.
+          </p>
+          <div class="hero-buttons">
+            <a href="/services" class="btn btn-primary">Our Services</a>
+            <a href="/about" class="btn btn-secondary">Learn More</a>
+          </div>
+        </div>
+        <div class="hero-image">
+           <img src="/images/maskot-bolean-transparent.png" alt="Bolean Mascot" style="width: 100%; height: auto; object-fit: contain; max-height: 550px; filter: drop-shadow(0 20px 30px rgba(13, 168, 158, 0.15));" />
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

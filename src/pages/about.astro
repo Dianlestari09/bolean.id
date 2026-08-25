@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="About Us | Bolean">
+  <Navbar />
+  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
+    <section class="section section-gray" style="min-height: calc(100vh - 80px);">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-image-wrapper">
+            <div class="about-image-box">
+              <img src="/images/maskot-bolean-transparent.png" alt="Bolean Mascot" style="width: 100%; height: 100%; object-fit: contain; padding: 2rem; border-radius: inherit;" />
+            </div>
+          </div>
+          <div class="about-content">
+            <span class="section-subtitle">About Us</span>
+            <h2 class="section-title">Building The Future With Technology</h2>
+            <p style="color: var(--color-text-muted); margin-bottom: 1rem;">
+              At Bolean, we simplify the complex. We strip away the unnecessary to focus on what truly matters: delivering robust, scalable, and premium IT solutions.
+            </p>
+            <p style="color: var(--color-text-muted); margin-bottom: 2rem;">
+              Our approach is direct and elegant. We combine deep technical expertise with clean design principles to help businesses transform and succeed in the digital era.
+            </p>
+            
+            <div class="about-features">
+              <div class="feature-item">
+                <span class="feature-icon">✓</span> Expert Team
+              </div>
+              <div class="feature-item">
+                <span class="feature-icon">✓</span> Clean Code
+              </div>
+              <div class="feature-item">
+                <span class="feature-icon">✓</span> 24/7 Support
+              </div>
+              <div class="feature-item">
+                <span class="feature-icon">✓</span> Fast Delivery
+              </div>
+            </div>
+            
+            <a href="/contact" class="btn btn-primary" style="margin-top: 2.5rem;">Discover More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

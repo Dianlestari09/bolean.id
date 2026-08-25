@@ -1,0 +1,199 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+
+export function getStaticPaths() {
+  return [
+    {
+      params: { name: "dian" },
+      props: {
+        name: "Dian Lestari Kurniawati",
+        role: "Leader",
+        image: "/images/team/dian.jpg",
+        desc: "Dian Lestari Kurniawati adalah pemimpin visioner di Bolean, yang mengarahkan tim menuju keunggulan dengan perencanaan strategis dan komunikasi yang efektif. Ia memiliki pengalaman lebih dari 5 tahun dalam memimpin tim teknologi dan memastikan setiap proyek berjalan sesuai target dan visi perusahaan.",
+        expertise: [
+          "Leadership",
+          "Project Management",
+          "Strategic Planning",
+          "Agile Methodology",
+        ],
+      },
+    },
+    {
+      params: { name: "fahd" },
+      props: {
+        name: "M. Fahd Khulloh",
+        role: "Software Engineer",
+        image: "/images/team/fahd.jpg",
+        desc: "M. Fahd Khulloh adalah Lead Software Engineer kami, berspesialisasi dalam menciptakan aplikasi web yang tangguh, terukur, dan berkinerja tinggi. Ia selalu antusias mengeksplorasi teknologi terbaru untuk memberikan solusi perangkat lunak terbaik.",
+        expertise: [
+          "Frontend Development",
+          "Backend Development",
+          "System Architecture",
+          "Database Design",
+        ],
+      },
+    },
+    {
+      params: { name: "iqbal" },
+      props: {
+        name: "Maulana Muhammad Iqbal",
+        role: "Hardware Developer",
+        image: "/images/team/iqbal.jpg",
+        desc: "Maulana Muhammad Iqbal berspesialisasi dalam pengembangan perangkat keras, menghidupkan komponen fisik dengan solusi IoT yang inovatif. Ia memiliki ketertarikan kuat dalam merancang sistem tertanam (embedded systems) yang efisien dan hemat energi.",
+        expertise: [
+          "Internet of Things (IoT)",
+          "Embedded Systems",
+          "PCB Design",
+          "Microcontrollers",
+        ],
+      },
+    },
+    {
+      params: { name: "keysa" },
+      props: {
+        name: "Keyshayara Qanita Kamila",
+        role: "Design",
+        image: "/images/team/keysa.jpg",
+        desc: "Keyshayara Qanita Kamila adalah otak kreatif di balik desain kami yang memukau. Ia memastikan setiap produk memiliki pengalaman pengguna (UX) yang intuitif dan antarmuka (UI) yang menarik secara visual.",
+        expertise: [
+          "UI/UX Design",
+          "Prototyping",
+          "User Research",
+          "Graphic Design",
+        ],
+      },
+    },
+  ];
+}
+
+const { name, role, image, desc, expertise } = Astro.props;
+---
+
+<Layout title={`${name} - ${role} | Bolean`}>
+  <Navbar />
+  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
+    <section class="section section-light">
+      <div class="container">
+        <div class="team-detail-container">
+          <div class="team-detail-image">
+            <img src={image} alt={name} />
+          </div>
+          <div class="team-detail-info">
+            <h1>{name}</h1>
+            <h2 class="role">{role}</h2>
+
+            <div class="info-section">
+              <h3>Tentang</h3>
+              <p class="description">{desc}</p>
+            </div>
+
+            <div class="info-section">
+              <h3>Bidang Keahlian</h3>
+              <ul class="expertise-list">
+                {expertise && expertise.map((item: string) => <li>{item}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .team-detail-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+  @media (min-width: 768px) {
+    .team-detail-container {
+      flex-direction: row;
+      align-items: flex-start;
+      padding: 4rem;
+    }
+  }
+  .team-detail-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+  }
+  .team-detail-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 10%;
+  }
+  .team-detail-info {
+    flex: 1;
+    width: 100%;
+  }
+  .team-detail-info h1 {
+    font-size: 2.5rem;
+    color: var(--color-secondary);
+    margin-bottom: 0.25rem;
+  }
+  .team-detail-info .role {
+    font-size: 1.25rem;
+    color: var(--color-primary);
+    margin-bottom: 2rem;
+    font-weight: 500;
+  }
+
+  .info-section {
+    margin-bottom: 2rem;
+  }
+  .info-section h3 {
+    font-size: 1.1rem;
+    color: var(--color-secondary);
+    margin-bottom: 0.75rem;
+    border-bottom: 2px solid var(--color-surface);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+  }
+
+  .description {
+    color: var(--color-text-muted);
+    line-height: 1.8;
+  }
+
+  .expertise-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .expertise-list li {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .contact-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-fast);
+  }
+  .contact-link:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
+  }
+</style>
