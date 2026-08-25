@@ -288,21 +288,6 @@ ul {
   z-index: 2;
 }
 
-.hero-image-placeholder {
-  width: 100%;
-  aspect-ratio: 1;
-  background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
-  border-radius: var(--border-radius-lg);
-  transform: rotate(3deg);
-  box-shadow: 0 30px 60px rgba(8, 39, 82, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 2rem;
-  font-weight: bold;
-}
-
 /* Services */
 .services-grid {
   display: grid;
