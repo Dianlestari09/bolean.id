@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <rect x="5" y="10" width="40" height="40" rx="10" fill="#f0fdf4"/>
+  <path d="M15 35 L25 18 L35 35 Z" fill="#16a34a"/>
+  <path d="M22 35 V28 H28 V35" fill="#ffffff"/>
+  <text x="55" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#082752">URBAN SMART</text>
+  <text x="55" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="600" fill="#64748b" letter-spacing="1">LIVING PROPERTY</text>
+</svg>

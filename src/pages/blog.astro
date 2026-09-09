@@ -2,172 +2,921 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import { allBlogs, blogCategories, blogTags } from '../data/blogs.js';
+
+// Ambil 3 artikel terbaru untuk widget Recent Posts
+const recentPosts = allBlogs.slice(0, 3);
 ---
 
-<Layout title="Blog Kami | Bolean">
+<Layout title="Blog & Artikel Teknologi | Bolean.id" description="Temukan tren terbaru seputar pengembangan software kustom, arsitektur server, integrasi IoT, dan keamanan siber di Blog Bolean.id.">
   <Navbar />
+  
   <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
-    <section class="section section-gray">
+    
+    <!-- Hero / Breadcrumb Section -->
+    <section class="blog-header-section">
       <div class="container">
-        <div class="section-header">
-          <span class="section-subtitle">Wawasan & Berita</span>
-          <h2 class="section-title">Terbaru Dari Blog Kami</h2>
-          <p style="color: var(--color-text-muted); margin-top: 1rem;">
-            Temukan tren terbaru dalam teknologi, arsitektur cloud, dan transformasi digital.
-          </p>
-        </div>
-        
-        <div class="blog-grid">
-          <!-- Blog Post 1 -->
-          <article class="blog-card">
-            <div class="blog-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Future of Cloud" class="blog-image" />
-            </div>
-            <div class="blog-content">
-              <span class="blog-category">Teknologi</span>
-              <h3 class="blog-title"><a href="/blog/future-of-cloud">Masa Depan Arsitektur Cloud di Tahun 2027</a></h3>
-              <p class="blog-excerpt">Jelajahi bagaimana komputasi tanpa server dan cloud hibrida membentuk kembali infrastruktur TI perusahaan...</p>
-              <div class="blog-meta">
-                <span class="blog-date">25 Agustus 2026</span>
-                <a href="/blog/future-of-cloud" class="blog-read-more">Baca Selengkapnya →</a>
-              </div>
-            </div>
-          </article>
+        <span class="section-subtitle">WAWASAN & ARTIKEL TEKNOLOGI</span>
+        <h1 class="section-title">
+          Wawasan & <span>Berita Terbaru</span>
+        </h1>
+        <p class="blog-header-desc">
+          Temukan analisis mendalam seputar tren arsitektur cloud, software engineering, integrasi IoT, dan infrastruktur enterprise.
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Blog Section (2-Column: Content + Right Sidebar) -->
+    <section class="section section-gray" style="padding-top: 3.5rem; padding-bottom: 5rem;">
+      <div class="container">
+        <div class="blog-layout-grid">
           
-          <!-- Blog Post 2 -->
-          <article class="blog-card">
-            <div class="blog-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Why Astro" class="blog-image" />
+          <!-- =========================================================================
+               LEFT COLUMN: BLOG POSTS LIST
+               ========================================================================= -->
+          <div class="blog-main-column">
+            
+            <!-- Active Filter Bar (Muncul saat user mencari / memilih kategori) -->
+            <div id="blogActiveFilterBar" class="blog-filter-bar" style="display: none;">
+              <span id="blogFilterText">Menampilkan hasil untuk: <strong>Semua</strong></span>
+              <button id="blogResetFilterBtn" class="blog-reset-btn">✕ Reset Filter</button>
             </div>
-            <div class="blog-content">
-              <span class="blog-category">Pengembangan Web</span>
-              <h3 class="blog-title"><a href="/blog/why-astro">Mengapa Astro Adalah Pilihan Utama untuk Situs Statis</a></h3>
-              <p class="blog-excerpt">Pandangan mendalam tentang arsitektur zero-JS Astro dan bagaimana ini memberikan performa secepat kilat...</p>
-              <div class="blog-meta">
-                <span class="blog-date">18 Agustus 2026</span>
-                <a href="/blog/why-astro" class="blog-read-more">Baca Selengkapnya →</a>
+
+            <!-- Blog Post Grid (2 Kolom Kartu Artikel) -->
+            <div class="blog-posts-grid" id="blogPostsGrid">
+              {allBlogs.map((blog) => (
+                <article 
+                  class="blog-post-card" 
+                  data-category={blog.category}
+                  data-tags={blog.tags.join(',')}
+                  data-title={blog.title.toLowerCase()}
+                  data-excerpt={blog.excerpt.toLowerCase()}
+                >
+                  <div class="blog-post-thumb">
+                    <img src={blog.image} alt={blog.title} loading="lazy" />
+                    <span class="blog-category-badge">{blog.category}</span>
+                  </div>
+                  <div class="blog-post-body">
+                    <div class="blog-post-meta">
+                      <span class="meta-date">{blog.date}</span>
+                      <span class="meta-read">{blog.readTime}</span>
+                    </div>
+                    <h2 class="blog-post-title">
+                      <a href={`/blog/${blog.slug}`}>{blog.title}</a>
+                    </h2>
+                    <p class="blog-post-excerpt">{blog.excerpt}</p>
+                    
+                    <div class="blog-post-tags">
+                      {blog.tags.slice(0, 3).map((tag) => (
+                        <span class="blog-mini-tag">{tag}</span>
+                      ))}
+                    </div>
+
+                    <a href={`/blog/${blog.slug}`} class="blog-read-link">
+                      Baca Selengkapnya <span>→</span>
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <!-- Empty State bila pencarian tidak ditemukan -->
+            <div id="blogEmptyState" class="blog-empty-state" style="display: none;">
+              <div class="empty-icon">🔍</div>
+              <h3 style="color: var(--color-secondary); margin-bottom: 0.5rem;">Artikel Tidak Ditemukan</h3>
+              <p style="color: var(--color-text-muted); font-size: 0.95rem;">Tidak ada artikel yang cocok dengan kata kunci atau filter yang Anda pilih.</p>
+              <button id="blogEmptyResetBtn" class="btn btn-primary" style="margin-top: 1.25rem;">Lihat Semua Artikel</button>
+            </div>
+          </div>
+
+
+          <!-- =========================================================================
+               RIGHT COLUMN: SIDEBAR (Search, Categories, Recent Posts, Tags)
+               ========================================================================= -->
+          <aside class="blog-sidebar">
+            
+            <!-- 1. SEARCH WIDGET -->
+            <div class="sidebar-widget">
+              <h3 class="widget-title">Search</h3>
+              <div class="widget-search-form">
+                <input 
+                  type="text" 
+                  id="blogSearchInput" 
+                  class="widget-search-input" 
+                  placeholder="Search here..." 
+                  aria-label="Search articles"
+                />
+                <button id="blogSearchBtn" class="widget-search-btn" aria-label="Search">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                  </svg>
+                </button>
               </div>
             </div>
-          </article>
-          
-          <!-- Blog Post 3 -->
-          <article class="blog-card">
-            <div class="blog-image-wrapper">
-              <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Protecting Business Data" class="blog-image" />
+
+            <!-- 2. CATEGORIES WIDGET -->
+            <div class="sidebar-widget">
+              <h3 class="widget-title">Categories</h3>
+              <ul class="widget-category-list">
+                {blogCategories.map((cat) => (
+                  <li class="widget-category-item">
+                    <button class="widget-category-btn js-category-filter" data-category={cat.name}>
+                      <span class="cat-name">{cat.name}</span>
+                      <span class="cat-count">({String(cat.count).padStart(2, '0')})</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div class="blog-content">
-              <span class="blog-category">Keamanan Siber</span>
-              <h3 class="blog-title"><a href="/blog/protecting-business-data">Melindungi Data Bisnis Anda di Era Modern</a></h3>
-              <p class="blog-excerpt">Praktik keamanan penting yang harus diadopsi oleh setiap bisnis modern agar tetap aman dari ancaman siber...</p>
-              <div class="blog-meta">
-                <span class="blog-date">12 Agustus 2026</span>
-                <a href="/blog/protecting-business-data" class="blog-read-more">Baca Selengkapnya →</a>
+
+            <!-- 3. RECENT POSTS WIDGET -->
+            <div class="sidebar-widget">
+              <h3 class="widget-title">Recent Posts</h3>
+              <div class="widget-recent-posts">
+                {recentPosts.map((post) => (
+                  <a href={`/blog/${post.slug}`} class="recent-post-item">
+                    <div class="recent-post-thumb">
+                      <img src={post.image} alt={post.title} loading="lazy" />
+                    </div>
+                    <div class="recent-post-info">
+                      <span class="recent-post-date">{post.date}</span>
+                      <h4 class="recent-post-title">{post.title}</h4>
+                    </div>
+                  </a>
+                ))}
               </div>
             </div>
-          </article>
+
+            <!-- 4. POPULAR TAGS WIDGET -->
+            <div class="sidebar-widget">
+              <h3 class="widget-title">Popular Tags</h3>
+              <div class="widget-tags-cloud">
+                {blogTags.map((tag) => (
+                  <button class="widget-tag-pill js-tag-filter" data-tag={tag}>
+                    {tag}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <!-- 5. PROMO CONSULTATION CARD -->
+            <div class="sidebar-widget sidebar-promo-card">
+              <h4 class="promo-title">Butuh Solusi IT & Custom App?</h4>
+              <p class="promo-desc">Diskusikan kebutuhan sistem dan infrastruktur bisnis Anda bersama tim ahli Bolean.</p>
+              <a href="/contact" class="promo-btn">Konsultasi Gratis →</a>
+            </div>
+
+          </aside>
+
         </div>
       </div>
     </section>
   </main>
+
   <Footer />
 </Layout>
 
-<style>
-  .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2.5rem;
+<style is:global>
+  /* Header Section */
+  .blog-header-section {
+    background: linear-gradient(180deg, #ffffff 0%, #f4f7fa 100%);
+    padding: 4rem 0 2.5rem;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
   }
-  
-  .blog-card {
-    background: white;
-    border-radius: var(--border-radius-lg);
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    transition: all var(--transition-normal);
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .blog-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  }
-  
-  .blog-image-wrapper {
-    width: 100%;
-    aspect-ratio: 16/9;
-    overflow: hidden;
-  }
-  
-  .blog-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--transition-normal);
-  }
-  
-  .blog-card:hover .blog-image {
-    transform: scale(1.05);
-  }
-  
-  .blog-content {
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
-  
-  .blog-category {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--color-primary);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 0.75rem;
-  }
-  
-  .blog-title {
-    font-size: 1.35rem;
-    line-height: 1.4;
-    margin-bottom: 1rem;
-  }
-  
-  .blog-title a {
-    color: var(--color-secondary);
-  }
-  
-  .blog-title a:hover {
-    color: var(--color-primary);
-  }
-  
-  .blog-excerpt {
+
+  .blog-header-desc {
     color: var(--color-text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 2rem;
-    flex-grow: 1;
+    max-width: 620px;
+    margin: 0.75rem auto 0;
+    font-size: 1.05rem;
   }
-  
-  .blog-meta {
+
+  /* 2-Column Grid Layout */
+  .blog-layout-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 350px;
+    gap: 2.5rem;
+    align-items: start;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .blog-main-column {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .blog-sidebar {
+    min-width: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    box-sizing: border-box;
+  }
+
+  /* Active Filter Bar */
+  .blog-filter-bar {
+    background: #e6fffa;
+    border: 1px solid rgba(13, 168, 158, 0.3);
+    padding: 0.85rem 1.5rem;
+    border-radius: var(--border-radius-md);
+    margin-bottom: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 1px solid #e2e8f0;
-    padding-top: 1rem;
-  }
-  
-  .blog-date {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-  }
-  
-  .blog-read-more {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--color-primary);
-  }
-  
-  .blog-read-more:hover {
+    font-size: 0.95rem;
     color: var(--color-secondary);
   }
+
+  .blog-reset-btn {
+    background: none;
+    border: none;
+    color: #e53e3e;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+
+  .blog-reset-btn:hover {
+    background: rgba(229, 62, 62, 0.1);
+  }
+
+  /* Blog Posts Grid (Left Column: 2 Cards per Row) */
+  .blog-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .blog-post-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    border: 1.5px solid #edf2f7;
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .blog-post-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(13, 168, 158, 0.4);
+    box-shadow: 0 18px 40px rgba(13, 168, 158, 0.09);
+  }
+
+  .blog-post-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    max-height: 220px;
+    overflow: hidden;
+    background: #082752;
+  }
+
+  .blog-post-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .blog-post-card:hover .blog-post-thumb img {
+    transform: scale(1.06);
+  }
+
+  .blog-category-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--color-primary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.3rem 0.85rem;
+    border-radius: var(--border-radius-pill);
+    box-shadow: 0 4px 10px rgba(13, 168, 158, 0.35);
+  }
+
+  .blog-post-body {
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    box-sizing: border-box;
+  }
+
+  .blog-post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-post-title {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+    color: var(--color-secondary);
+  }
+
+  .blog-post-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .blog-post-title a:hover {
+    color: var(--color-primary);
+  }
+
+  .blog-post-excerpt {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+
+  .blog-post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-mini-tag {
+    font-size: 0.75rem;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 0.15rem 0.6rem;
+    border-radius: 4px;
+  }
+
+  .blog-read-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 0.92rem;
+    margin-top: auto;
+    transition: gap 0.2s ease;
+  }
+
+  .blog-read-link:hover {
+    gap: 0.7rem;
+  }
+
+  /* Empty State */
+  .blog-empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: var(--border-radius-lg);
+    border: 1px dashed #cbd5e1;
+  }
+
+  .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Sidebar Widgets (Dark Premium Contrast Theme) */
+  .sidebar-widget {
+    background: #0d1b3e;
+    padding: 2.25rem 1.85rem;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(10, 20, 47, 0.15);
+  }
+
+  .widget-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 1.75rem 0;
+    padding-bottom: 0.85rem;
+    position: relative;
+    border-bottom: none;
+    display: block;
+    letter-spacing: -0.3px;
+  }
+
+  .widget-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 36px;
+    height: 3.5px;
+    background: #2b59ff;
+    border-radius: 3px;
+  }
+
+  /* 1. Search Widget */
+  .widget-search-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #142858;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 10px;
+    padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .widget-search-form:focus-within {
+    border-color: #2b59ff;
+    box-shadow: 0 0 0 3px rgba(43, 89, 255, 0.35);
+  }
+
+  .widget-search-input {
+    width: 100%;
+    padding: 0.6rem 0.5rem 0.6rem 0;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #ffffff;
+    outline: none;
+  }
+
+  .widget-search-input::placeholder {
+    color: #94a3b8;
+    font-size: 0.92rem;
+  }
+
+  .widget-search-btn {
+    width: 44px;
+    height: 44px;
+    background: #2b59ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(43, 89, 255, 0.4);
+  }
+
+  .widget-search-btn:hover {
+    background: #1538c4;
+    transform: scale(1.04);
+  }
+
+  /* 2. Category Widget */
+  .widget-category-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  .widget-category-btn {
+    width: 100%;
+    background: #142858;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.95rem 1.35rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #f1f5f9;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    text-align: left;
+    box-sizing: border-box;
+  }
+
+  .cat-name {
+    display: block;
+    color: inherit;
+  }
+
+  .cat-count {
+    color: #93c5fd;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.25s ease;
+  }
+
+  .widget-category-btn:hover,
+  .widget-category-btn.active {
+    background: #2b59ff;
+    color: #ffffff;
+    border-color: #2b59ff;
+    transform: translateX(4px);
+    box-shadow: 0 8px 22px rgba(43, 89, 255, 0.4);
+  }
+
+  .widget-category-btn:hover .cat-count,
+  .widget-category-btn.active .cat-count {
+    color: #ffffff;
+  }
+
+  /* 3. Recent Posts Widget */
+  .widget-recent-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .recent-post-item {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background: #142858;
+    padding: 0.85rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+
+  .recent-post-item:hover {
+    border-color: #2b59ff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(43, 89, 255, 0.25);
+  }
+
+  .recent-post-thumb {
+    width: 68px;
+    height: 68px;
+    min-width: 68px;
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #082752;
+  }
+
+  .recent-post-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .recent-post-item:hover .recent-post-thumb img {
+    transform: scale(1.08);
+  }
+
+  .recent-post-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .recent-post-date {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #60a5fa;
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .recent-post-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.35;
+    margin: 0;
+    transition: color 0.2s ease;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .recent-post-item:hover .recent-post-title {
+    color: #93c5fd;
+  }
+
+  /* 4. Popular Tags Widget */
+  .widget-tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .widget-tag-pill {
+    background: #142858;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 0.55rem 1.15rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .widget-tag-pill:hover,
+  .widget-tag-pill.active {
+    background: #2b59ff;
+    border-color: #2b59ff;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(43, 89, 255, 0.35);
+  }
+
+  /* 5. Promo Consultation Card */
+  .sidebar-promo-card {
+    background: linear-gradient(135deg, #2b59ff 0%, #1538c4 100%);
+    color: #ffffff;
+    text-align: center;
+    border: none;
+    padding: 2.5rem 1.85rem;
+    box-shadow: 0 15px 35px rgba(21, 56, 196, 0.35);
+  }
+
+  .promo-title {
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    line-height: 1.35;
+  }
+
+  .promo-desc {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.92rem;
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+  }
+
+  .promo-btn {
+    background: #ffffff;
+    color: #1538c4;
+    font-weight: 800;
+    font-size: 0.95rem;
+    border-radius: 9999px;
+    padding: 0.85rem 1.75rem;
+    display: inline-block;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.25s ease;
+  }
+
+  .promo-btn:hover {
+    background: #f8fafc;
+    color: #0b227c;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 992px) {
+    .blog-layout-grid {
+      grid-template-columns: 1fr;
+    }
+    .blog-sidebar {
+      margin-top: 2rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .blog-posts-grid {
+      grid-template-columns: 1fr;
+    }
+    .blog-post-body {
+      padding: 1.5rem 1.25rem;
+    }
+  }
 </style>
+
+<!-- Client Side Interactive Search, Category, & Tag Filter Script -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('blogSearchInput') as HTMLInputElement | null;
+    const searchBtn = document.getElementById('blogSearchBtn');
+    const categoryBtns = document.querySelectorAll('.js-category-filter');
+    const tagBtns = document.querySelectorAll('.js-tag-filter');
+    let cards = document.querySelectorAll('.blog-post-card');
+    
+    const filterBar = document.getElementById('blogActiveFilterBar');
+    const filterText = document.getElementById('blogFilterText');
+    const resetBtn = document.getElementById('blogResetFilterBtn');
+    const emptyState = document.getElementById('blogEmptyState');
+    const postsGrid = document.getElementById('blogPostsGrid');
+    const emptyResetBtn = document.getElementById('blogEmptyResetBtn');
+
+    // CMS Hydration if user edited blogs in /admin
+    try {
+      const cmsBlogsStr = localStorage.getItem('bolean_cms_blogs');
+      if (cmsBlogsStr && postsGrid) {
+        const cmsList = JSON.parse(cmsBlogsStr);
+        if (Array.isArray(cmsList) && cmsList.length > 0) {
+          postsGrid.innerHTML = cmsList.map((blog: any) => {
+            const tags = Array.isArray(blog.tags) ? blog.tags : [];
+            const tagChips = tags.slice(0, 3).map((t: string) => `<span class="blog-mini-tag">${t}</span>`).join('');
+
+            return `
+              <article 
+                class="blog-post-card" 
+                data-category="${blog.category || ''}"
+                data-tags="${tags.join(',')}"
+                data-title="${(blog.title || '').toLowerCase()}"
+                data-excerpt="${(blog.excerpt || '').toLowerCase()}"
+              >
+                <div class="blog-post-thumb">
+                  <img src="${blog.image || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80'}" alt="${blog.title || ''}" loading="lazy" />
+                  <span class="blog-category-badge">${blog.category || 'Teknologi'}</span>
+                </div>
+                <div class="blog-post-body">
+                  <div class="blog-post-meta">
+                    <span class="meta-date">${blog.date || ''}</span>
+                    <span class="meta-read">${blog.readTime || '5 min baca'}</span>
+                  </div>
+                  <h2 class="blog-post-title">
+                    <a href="/blog/${blog.slug}">${blog.title}</a>
+                  </h2>
+                  <p class="blog-post-excerpt">${blog.excerpt || ''}</p>
+                  
+                  <div class="blog-post-tags">
+                    ${tagChips}
+                  </div>
+
+                  <a href="/blog/${blog.slug}" class="blog-read-link">
+                    Baca Selengkapnya <span>&rarr;</span>
+                  </a>
+                </div>
+              </article>
+            `;
+          }).join('');
+
+          cards = document.querySelectorAll('.blog-post-card');
+        }
+      }
+    } catch (e) {
+      console.warn('CMS Blog hydration note:', e);
+    }
+
+    let currentFilterType: 'search' | 'category' | 'tag' | 'none' = 'none';
+    let currentFilterValue = '';
+
+    function applyFilter() {
+      let visibleCount = 0;
+      const term = currentFilterValue.toLowerCase().trim();
+
+      cards.forEach(card => {
+        const title = card.getAttribute('data-title') || '';
+        const excerpt = card.getAttribute('data-excerpt') || '';
+        const category = (card.getAttribute('data-category') || '').toLowerCase();
+        const tags = (card.getAttribute('data-tags') || '').toLowerCase();
+
+        let isMatch = true;
+
+        if (currentFilterType === 'search' && term) {
+          isMatch = title.includes(term) || excerpt.includes(term) || category.includes(term) || tags.includes(term);
+        } else if (currentFilterType === 'category' && term) {
+          isMatch = category === term;
+        } else if (currentFilterType === 'tag' && term) {
+          isMatch = tags.includes(term);
+        }
+
+        if (isMatch) {
+          (card as HTMLElement).style.display = 'flex';
+          visibleCount++;
+        } else {
+          (card as HTMLElement).style.display = 'none';
+        }
+      });
+
+      // Update Filter Bar
+      if (currentFilterType !== 'none' && currentFilterValue) {
+        if (filterBar && filterText) {
+          filterBar.style.display = 'flex';
+          const label = currentFilterType === 'search' 
+            ? `Pencarian: "${currentFilterValue}"` 
+            : (currentFilterType === 'category' ? `Kategori: "${currentFilterValue}"` : `Tag: #${currentFilterValue}`);
+          filterText.innerHTML = `Menampilkan hasil untuk: <strong>${label}</strong> (${visibleCount} artikel)`;
+        }
+      } else {
+        if (filterBar) filterBar.style.display = 'none';
+      }
+
+      // Empty State Handling
+      if (visibleCount === 0) {
+        if (emptyState) emptyState.style.display = 'block';
+        if (postsGrid) postsGrid.style.display = 'none';
+      } else {
+        if (emptyState) emptyState.style.display = 'none';
+        if (postsGrid) postsGrid.style.display = 'grid';
+      }
+    }
+
+    function resetAllFilters() {
+      currentFilterType = 'none';
+      currentFilterValue = '';
+      if (searchInput) searchInput.value = '';
+      categoryBtns.forEach(b => b.classList.remove('active'));
+      tagBtns.forEach(b => b.classList.remove('active'));
+      applyFilter();
+    }
+
+    // 1. Search Events
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        const val = searchInput.value.trim();
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        tagBtns.forEach(b => b.classList.remove('active'));
+        if (val) {
+          currentFilterType = 'search';
+          currentFilterValue = val;
+        } else {
+          currentFilterType = 'none';
+          currentFilterValue = '';
+        }
+        applyFilter();
+      });
+    }
+
+    if (searchBtn && searchInput) {
+      searchBtn.addEventListener('click', () => {
+        const val = searchInput.value.trim();
+        if (val) {
+          currentFilterType = 'search';
+          currentFilterValue = val;
+          applyFilter();
+        }
+      });
+    }
+
+    // 2. Category Events
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.getAttribute('data-category') || '';
+        const wasActive = btn.classList.contains('active');
+
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        tagBtns.forEach(b => b.classList.remove('active'));
+        if (searchInput) searchInput.value = '';
+
+        if (wasActive) {
+          resetAllFilters();
+        } else {
+          btn.classList.add('active');
+          currentFilterType = 'category';
+          currentFilterValue = cat;
+          applyFilter();
+        }
+      });
+    });
+
+    // 3. Tag Events
+    tagBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tag = btn.getAttribute('data-tag') || '';
+        const wasActive = btn.classList.contains('active');
+
+        tagBtns.forEach(b => b.classList.remove('active'));
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        if (searchInput) searchInput.value = '';
+
+        if (wasActive) {
+          resetAllFilters();
+        } else {
+          btn.classList.add('active');
+          currentFilterType = 'tag';
+          currentFilterValue = tag;
+          applyFilter();
+        }
+      });
+    });
+
+    // 4. Reset Button Events
+    if (resetBtn) resetBtn.addEventListener('click', resetAllFilters);
+    if (emptyResetBtn) emptyResetBtn.addEventListener('click', resetAllFilters);
+  });
+</script>

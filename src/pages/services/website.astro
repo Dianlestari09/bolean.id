@@ -5,73 +5,113 @@ import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
 import { allProjects } from '../../data/projects.js';
 
-const hardwareProjects = allProjects.filter(p => p.category.toLowerCase().includes('hardware')).slice(0, 3);
+const webProjects = allProjects.filter(p => p.category.toLowerCase().includes('web')).slice(0, 3);
 
-const hardwareSolutions = [
+const webSolutions = [
   {
-    icon: 'hard-drive',
-    badge: 'SERVER INFRASTRUCTURE',
-    title: 'Infrastruktur Rack Server & Data Center',
-    desc: 'Pengadaan, instalasi, dan konfigurasi server bare-metal skala enterprise untuk menjamin ketersediaan data, efisiensi pendinginan, dan uptime maksimal.',
-    features: ['Setup RAID controller & redundant power supply', 'Konfigurasi hypervisor (Proxmox / VMware ESXi)', 'Manajemen kabel rapi berstandar rak data center']
+    icon: 'globe',
+    badge: 'KORPORAT & PROFIL',
+    title: 'Company Profile Modern',
+    desc: 'Bangun reputasi dan kredibilitas bisnis Anda dengan website profil korporat berkelas, navigasi intuitif, dan visual profesional.',
+    features: ['Branding visual selaras corporate identity', 'Halaman profil, visi misi & portofolio bisnis', 'Form kontak & integrasi WhatsApp instan']
   },
   {
-    icon: 'wifi',
-    badge: 'ENTERPRISE NETWORKING',
-    title: 'Jaringan Enterprise & Fiber Cabling',
-    desc: 'Perancangan topologi jaringan kantor dan industri dengan router Mikrotik/Cisco, switch layer 3 terkelola, firewall, dan penarikan kabel LAN/Fiber rapi.',
-    features: ['Splicing & terminasi kabel fiber optik presisi', 'Segmentasi jaringan aman (VLAN & Subnetting)', 'Konfigurasi VPN site-to-site & Wi-Fi 6 Enterprise']
+    icon: 'target',
+    badge: 'ADS & CONVERSION',
+    title: 'High-Converting Landing Page',
+    desc: 'Dirancang spesifik untuk kampanye iklan digital (Google Ads & Meta Ads) dengan fokus utama konversi penjualan dan perolehan prospek.',
+    features: ['Copywriting berorientasi tindakan (CTA jelas)', 'Loading instan di bawah 1 detik', 'Integrasi tracking pixel & analitik konversi']
   },
   {
-    icon: 'settings',
-    badge: 'HIGH-PERF PC',
-    title: 'Workstation & Industrial Rig',
-    desc: 'Perakitan PC workstation performa ekstrem untuk kebutuhan komputasi berat, rendering 3D, simulasi teknik, pelatihan model AI, serta rig otomasi pabrik.',
-    features: ['Komponen grade industri dengan durabilitas tinggi', 'Pendinginan termal teroptimasi (liquid/air cooling)', 'Burn-in stress test stabil sebelum pengiriman']
+    icon: 'monitor',
+    badge: 'TOKO ONLINE',
+    title: 'E-Commerce & Toko Online',
+    desc: 'Platform belanja online lengkap dengan katalog interaktif, keranjang belanja, kalkulator ongkir otomatis, dan payment gateway resmi.',
+    features: ['Checkout otomatis multi-metode bayar & QRIS', 'Manajemen stok barang & pesanan terintegrasi', 'Dashboard admin ringkas & mudah dioperasikan']
   },
   {
-    icon: 'cpu',
-    badge: 'EMBEDDED SYSTEM',
-    title: 'Desain PCB & Embedded Microcontroller',
-    desc: 'Rancang bangun skematik sirkuit elektronik khusus, routing PCB multi-layer, hingga perakitan modul mikrokontroler (STM32, ESP32, ARM) untuk produk kustom Anda.',
-    features: ['Simulasi kelistrikan & verifikasi sinyal', 'Fabrikasi PCB presisi & penyolderan komponen SMD', 'Integrasi sensorik dan modul komunikasi wireless']
+    icon: 'database',
+    badge: 'CUSTOM WEB APP',
+    title: 'Web Application & Portal SaaS',
+    desc: 'Pengembangan portal web fungsional dengan logika bisnis kompleks, manajemen hak akses multi-user, dan integrasi database performa tinggi.',
+    features: ['Arsitektur modular & skalabel tanpa lag', 'Manajemen role & permission user bertingkat', 'Konektivitas API & webhook real-time']
   }
 ];
 
-const qualityStandards = [
+const webAdvantages = [
   {
     num: '01',
-    title: 'Stress-Testing 72 Jam',
-    desc: 'Semua unit server dan workstation melalui pengujian beban penuh (CPU/GPU/RAM) selama 72 jam untuk memastikan stabilitas nol-crash.'
+    title: 'Kecepatan Super Kilat',
+    desc: 'Framework generasi modern seperti Astro & React yang memangkas beban JavaScript agar halaman terbuka instan.'
   },
   {
     num: '02',
-    title: 'Thermal & Airflow Simulation',
-    desc: 'Penataan alur udara pendingin dihitung presisi untuk mencegah throttling panas pada beban kerja operasional berat.'
+    title: 'Desain UI/UX Eksklusif',
+    desc: 'Tata letak dirancang khusus sesuai psikologi pengunjung untuk mendorong mereka menghubungi bisnis Anda.'
   },
   {
     num: '03',
-    title: 'Clean Cable Management',
-    desc: 'Seluruh kabel server dan switch jaringan ditata secara ergonomis dan diberi label sistematis demi mempermudah maintenance tim Anda.'
+    title: 'SEO Friendly & On-Page Meta',
+    desc: 'Struktur kode semantik HTML5, meta tag Open Graph, sitemap XML, dan schema markup siap menduduki ranking Google.'
   },
   {
     num: '04',
-    title: 'Garansi & Onsite Support',
-    desc: 'Dukungan teknisi langsung ke lokasi untuk inspeksi, pemeliharaan berkala, serta penggantian unit komponen bergaransi resmi.'
+    title: 'Aman & Bebas Khawatir',
+    desc: 'Dilengkapi sertifikat keamanan SSL resmi, proteksi dari serangan DDoS, dan backup berkala.'
   }
 ];
 
-const hardwareStages = [
-  { num: '01', title: 'Site Survey & Blueprint', desc: 'Pemeriksaan kondisi fisik lokasi server, daya kelistrikan, dan pemetaan rute jalur kabel LAN/Fiber.' },
-  { num: '02', title: 'Sourcing Komponen Resmi', desc: 'Pemilihan perangkat keras dari merek terpercaya dengan sertifikasi ketahanan dan kompatibilitas tinggi.' },
-  { num: '03', title: 'Perakitan & Crimping', desc: 'Instalasi fisik unit ke dalam rak server, crimping kabel, splicing fiber, dan penataan kelistrikan UPS.' },
-  { num: '04', title: 'Benchmarking & Uji Coba', desc: 'Pengujian throughput bandwidth jaringan, verifikasi stabilitas server, dan serah terima dokumentasi lengkap.' }
+const webPackages = [
+  {
+    name: 'Starter Web',
+    price: 'Rp 3.500.000',
+    desc: 'Pilihan ideal untuk UMKM, profil profesional, atau peluncuran produk awal.',
+    recommended: false,
+    features: [
+      'Hingga 5 Halaman Konten',
+      'Desain Mobile-First Responsif',
+      'Integrasi Tombol WhatsApp Cepat',
+      'Domain .com & Hosting SSD (1 Tahun)',
+      'Optimasi Kecepatan Standar',
+      'Garansi Pemeliharaan 1 Bulan'
+    ]
+  },
+  {
+    name: 'Business Pro',
+    price: 'Rp 7.500.000',
+    desc: 'Solusi paling diminati untuk perusahaan berkembang yang membutuhkan kehadiran digital berkelas.',
+    recommended: true,
+    features: [
+      'Hingga 10 Halaman Konten',
+      'Desain UI/UX Eksklusif & Modern',
+      'Sistem Manajemen Konten (CMS) Mudah',
+      'Optimasi SEO On-Page Lengkap',
+      'Domain .com / .id & Cloud Server Cepat',
+      'Integrasi Form Email & Google Maps',
+      'Garansi & Support Teknis 3 Bulan'
+    ]
+  },
+  {
+    name: 'Enterprise Custom',
+    price: 'Mulai Rp 15.000.000',
+    desc: 'Arsitektur web kustom skala besar dengan fitur interaktif, database terintegrasi, dan keamanan ketat.',
+    recommended: false,
+    features: [
+      'Halaman & Fitur Custom Tak Terbatas',
+      'Arsitektur Astro / Next.js Super Cepat',
+      'Integrasi Payment Gateway & API Pihak Ketiga',
+      'Audit Keamanan & Proteksi DDoS Cloudflare',
+      'Database Relasional / NoSQL Skalabel',
+      'Pelatihan Admin & Dokumentasi Lengkap',
+      'SLA Support Prioritas 6 Bulan'
+    ]
+  }
 ];
 ---
 
 <Layout 
-  title="Perakitan Hardware, Rack Server & Jaringan Enterprise | Bolean.id"
-  description="Layanan perancangan infrastruktur server, instalasi jaringan enterprise, custom PC workstation, dan perakitan embedded hardware oleh Bolean."
+  title="Jasa Pembuatan Website Profesional & Cepat | Bolean.id"
+  description="Layanan pembuatan website modern, company profile, landing page, dan aplikasi web performa tinggi dengan skor PageSpeed maksimal oleh Bolean."
 >
   <Navbar />
   <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
@@ -82,44 +122,44 @@ const hardwareStages = [
         <div class="service-hero-content">
           <div class="service-badge">
             <span class="badge-dot"></span>
-            <span>HARDWARE & IT INFRASTRUCTURE</span>
+            <span>JASA PEMBUATAN WEBSITE</span>
           </div>
           <h1 class="service-hero-title">
-            Infrastruktur Hardware & Jaringan <span>Tangguh Tanpa Gangguan</span>
+            Website Modern, Super Cepat & <span>Berkinerja Tinggi</span>
           </h1>
           <p class="service-hero-desc">
-            Perkuat operasional bisnis Anda dengan fondasi perangkat keras berkinerja tinggi. Dari perakitan rack server data center, jaringan fiber optik enterprise, hingga PC workstation dan modul mikrokontroler kustom.
+            Tingkatkan konversi dan reputasi bisnis Anda dengan website yang dirancang presisi. Kami menggabungkan estetika desain berkelas, kecepatan loading instan, dan arsitektur SEO-friendly untuk memenangkan persaingan digital.
           </p>
           <div class="service-hero-actions">
             <a 
-              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20pengadaan%20hardware%20dan%20jaringan%20server" 
+              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20pembuatan%20website%20untuk%20bisnis%20saya" 
               target="_blank" 
               class="btn btn-primary btn-hero"
             >
-              Konsultasi Hardware Gratis <span>→</span>
+              Konsultasi Website Gratis <span>→</span>
             </a>
-            <a href="#solutions" class="btn btn-outline btn-hero">
-              Lihat Spesialisasi Kami ↓
+            <a href="#packages" class="btn btn-outline btn-hero">
+              Lihat Pilihan Paket ↓
             </a>
           </div>
 
           <!-- Highlight Metric Badges -->
           <div class="hero-stats-row">
             <div class="hero-stat-card">
-              <span class="stat-number">72 Jam</span>
-              <span class="stat-label">Non-Stop Stress Testing</span>
+              <span class="stat-number">95+</span>
+              <span class="stat-label">Google PageSpeed Score</span>
             </div>
             <div class="hero-stat-card">
-              <span class="stat-number">100% Resmi</span>
-              <span class="stat-label">Industrial Grade Parts</span>
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Mobile-First Responsif</span>
             </div>
             <div class="hero-stat-card">
-              <span class="stat-number">Clean Label</span>
-              <span class="stat-label">Rack Cable Management</span>
+              <span class="stat-number">&lt; 1 Detik</span>
+              <span class="stat-label">Rata-rata Waktu Akses</span>
             </div>
             <div class="hero-stat-card">
-              <span class="stat-number">Onsite</span>
-              <span class="stat-label">Garansi & Support Ahli</span>
+              <span class="stat-number">SEO Ready</span>
+              <span class="stat-label">Structured Data Ready</span>
             </div>
           </div>
         </div>
@@ -127,18 +167,18 @@ const hardwareStages = [
     </section>
 
     <!-- Solutions Section (Balanced 2x2 Grid) -->
-    <section id="solutions" class="section section-gray">
+    <section class="section section-gray">
       <div class="container">
         <div class="section-header text-center">
-          <span class="section-subtitle">SPESIALISASI PERANGKAT KERAS</span>
-          <h2 class="section-title">Solusi Hardware <span>Standar Industri</span></h2>
+          <span class="section-subtitle">SOLUSI WEBSITE BOLEAN</span>
+          <h2 class="section-title">Solusi Web yang <span>Disesuaikan Kebutuhan Anda</span></h2>
           <p class="section-desc">
-            Dikelola oleh teknisi hardware berpengalaman untuk menjamin keandalan sistem Anda dalam jangka panjang.
+            Dari landing page promosi hingga portal enterprise yang kompleks, kami membangun website yang tepat sasaran untuk target audiens Anda.
           </p>
         </div>
 
         <div class="solutions-grid">
-          {hardwareSolutions.map((sol) => (
+          {webSolutions.map((sol) => (
             <div class="solution-card">
               <div class="solution-card-top">
                 <div class="solution-icon-wrap">
@@ -162,46 +202,73 @@ const hardwareStages = [
       </div>
     </section>
 
-    <!-- Quality Standards Section (4 Columns) -->
+    <!-- Engineering Advantages Section (4 Columns) -->
     <section class="section section-light">
       <div class="container">
         <div class="section-header text-center">
-          <span class="section-subtitle">STANDAR KUALITAS KETAT</span>
-          <h2 class="section-title">Kerapian & Keamanan <span>Adalah Prioritas</span></h2>
+          <span class="section-subtitle">STANDAR KUALITAS TINGGI</span>
+          <h2 class="section-title">Mengapa Memilih <span>Website Bolean?</span></h2>
           <p class="section-desc">
-            Kami tidak mengorbankan kualitas demi kecepatan perakitan. Setiap sirkuit, soket, dan jalur kabel dipasang dengan standar tinggi.
+            Bukan sekadar template biasa. Kami membangun website dengan standar rekayasa teknologi terbaik agar bisnis Anda memiliki aset digital yang andal.
           </p>
         </div>
 
-        <div class="quality-grid">
-          {qualityStandards.map((q) => (
-            <div class="quality-card">
-              <div class="quality-num">{q.num}</div>
-              <h4 class="quality-title">{q.title}</h4>
-              <p class="quality-desc">{q.desc}</p>
+        <div class="advantages-grid-4">
+          {webAdvantages.map((adv) => (
+            <div class="advantage-card-4">
+              <div class="adv-badge-4">{adv.num}</div>
+              <h4 class="adv-title-4">{adv.title}</h4>
+              <p class="adv-desc-4">{adv.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <!-- Process Workflow (4 Columns) -->
-    <section class="section section-gray">
+    <!-- Packages Section (3 Columns) -->
+    <section id="packages" class="section section-gray">
       <div class="container">
         <div class="section-header text-center">
-          <span class="section-subtitle">ALUR INSTALASI</span>
-          <h2 class="section-title">Tahapan Eksekusi <span>Proyek Hardware</span></h2>
+          <span class="section-subtitle">TRANSPARANSI HARGA</span>
+          <h2 class="section-title">Pilihan Paket <span>Pembuatan Website</span></h2>
           <p class="section-desc">
-            Pendekatan sistematis mulai dari survei awal hingga serah terima perangkat yang siap beroperasi.
+            Investasi teknologi yang terjangkau dan transparan tanpa biaya tersembunyi.
           </p>
         </div>
 
-        <div class="process-steps-grid">
-          {hardwareStages.map((st) => (
-            <div class="process-step-card">
-              <div class="step-badge">{st.num}</div>
-              <h4 class="step-title">{st.title}</h4>
-              <p class="step-desc">{st.desc}</p>
+        <div class="packages-grid">
+          {webPackages.map((pkg) => (
+            <div class={`package-card ${pkg.recommended ? 'recommended' : ''}`}>
+              {pkg.recommended && (
+                <div class="recommended-badge">Paling Diminati</div>
+              )}
+              <div class="package-header">
+                <h3 class="package-name">{pkg.name}</h3>
+                <div class="package-price">{pkg.price}</div>
+                <p class="package-short-desc">{pkg.desc}</p>
+              </div>
+
+              <div class="package-features">
+                <ul>
+                  {pkg.features.map((feat) => (
+                    <li>
+                      <span class="feat-check">✓</span>
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="package-footer">
+                <a 
+                  href={`https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20tertarik%20dengan%20paket%20${pkg.name}%20untuk%20pembuatan%20website`} 
+                  target="_blank" 
+                  class={`btn ${pkg.recommended ? 'btn-primary' : 'btn-outline'}`}
+                  style="width: 100%; justify-content: center;"
+                >
+                  Pilih Paket {pkg.name}
+                </a>
+              </div>
             </div>
           ))}
         </div>
@@ -209,19 +276,19 @@ const hardwareStages = [
     </section>
 
     <!-- Showcase Projects Section -->
-    {hardwareProjects.length > 0 && (
+    {webProjects.length > 0 && (
       <section class="section section-light">
         <div class="container">
           <div class="section-header-flex">
             <div>
-              <span class="section-subtitle">HASIL INSTALASI</span>
-              <h2 class="section-title">Dokumentasi Proyek <span>Hardware Bolean</span></h2>
+              <span class="section-subtitle">STUDI KASUS NYATA</span>
+              <h2 class="section-title">Contoh Hasil Proyek <span>Website Kami</span></h2>
             </div>
             <a href="/portofolio" class="btn btn-outline">Lihat Semua Portofolio →</a>
           </div>
 
           <div class="portfolio-cards-grid">
-            {hardwareProjects.map((p) => (
+            {webProjects.map((p) => (
               <a href={`/projects/${p.slug}`} class="portfolio-item-card">
                 <div class="portfolio-item-thumb">
                   <img src={p.image} alt={p.title} loading="lazy" />
@@ -230,7 +297,7 @@ const hardwareStages = [
                 <div class="portfolio-item-info">
                   <h3 class="portfolio-item-title">{p.title}</h3>
                   <p class="portfolio-item-desc">{p.description}</p>
-                  <span class="portfolio-view-link">Lihat Detail Instalasi <span>→</span></span>
+                  <span class="portfolio-view-link">Lihat Studi Kasus <span>→</span></span>
                 </div>
               </a>
             ))}
@@ -244,19 +311,19 @@ const hardwareStages = [
       <div class="container">
         <div class="cta-inner-box">
           <div class="cta-content-side">
-            <span class="cta-pill">INSTALASI PROFESIONAL</span>
-            <h2 class="cta-main-title">Butuh Pengadaan Server atau Pembenahan Jaringan?</h2>
+            <span class="cta-pill">KONSULTASI GRATIS</span>
+            <h2 class="cta-main-title">Punya Konsep Website yang Ingin Diwujudkan?</h2>
             <p class="cta-sub-desc">
-              Hubungi tim teknisi hardware Bolean untuk konsultasi kebutuhan rak server, penataan kabel fiber, atau perakitan PC workstation spesifikasi tinggi.
+              Diskusikan kebutuhan ide, fitur, dan anggaran Anda bersama tim engineer Bolean. Dapatkan penawaran terbaik dan estimasi waktu pengerjaan hari ini.
             </p>
           </div>
           <div class="cta-btn-side">
             <a 
-              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20solusi%20hardware" 
+              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20pembuatan%20website" 
               target="_blank" 
               class="btn-cta-giant"
             >
-              KONSULTASI HARDWARE <span>→</span>
+              KONSULTASI SEKARANG <span>→</span>
             </a>
           </div>
         </div>
@@ -461,71 +528,133 @@ const hardwareStages = [
     font-weight: 800;
   }
 
-  /* Quality Grid (4 Columns) */
-  .quality-grid {
+  /* Advantages Grid 4 */
+  .advantages-grid-4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
     margin-top: 3.5rem;
   }
-  .quality-card {
+  .advantage-card-4 {
     background: white;
     border: 1px solid #e2e8f0;
     border-radius: 16px;
     padding: 2rem 1.5rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.02);
   }
-  .quality-num {
+  .adv-badge-4 {
     font-size: 1.25rem;
     font-weight: 800;
     color: var(--color-primary);
     margin-bottom: 0.75rem;
   }
-  .quality-title {
+  .adv-title-4 {
     font-size: 1.08rem;
     color: var(--color-secondary);
     font-weight: 700;
     margin-bottom: 0.5rem;
   }
-  .quality-desc {
+  .adv-desc-4 {
     font-size: 0.88rem;
     color: var(--color-text-muted);
     line-height: 1.55;
     margin: 0;
   }
 
-  /* Process Steps (4 Columns) */
-  .process-steps-grid {
+  /* Packages (3 Columns) */
+  .packages-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
     margin-top: 3.5rem;
+    align-items: stretch;
   }
-  .process-step-card {
+  .package-card {
     background: white;
     border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 2rem 1.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    border-radius: 18px;
+    padding: 2.75rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
   }
-  .step-badge {
-    display: inline-block;
-    font-size: 1.25rem;
+  .package-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  }
+  .package-card.recommended {
+    border: 2px solid var(--color-primary);
+    box-shadow: 0 12px 35px rgba(13, 168, 158, 0.16);
+    transform: scale(1.02);
+  }
+  .package-card.recommended:hover {
+    transform: scale(1.02) translateY(-8px);
+  }
+  .recommended-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-primary);
+    color: white;
+    font-size: 0.78rem;
     font-weight: 800;
-    color: var(--color-primary);
-    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.35rem 1.25rem;
+    border-radius: 50px;
   }
-  .step-title {
-    font-size: 1.1rem;
+  .package-header {
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 1.75rem;
+    margin-bottom: 1.75rem;
+    text-align: center;
+  }
+  .package-name {
+    font-size: 1.45rem;
     font-weight: 700;
     color: var(--color-secondary);
     margin-bottom: 0.5rem;
   }
-  .step-desc {
+  .package-price {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+  }
+  .package-short-desc {
     font-size: 0.88rem;
     color: var(--color-text-muted);
-    line-height: 1.55;
+    line-height: 1.5;
+  }
+  .package-features {
+    flex-grow: 1;
+    margin-bottom: 2rem;
+  }
+  .package-features ul {
+    list-style: none;
+    padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .package-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.92rem;
+    color: #475569;
+    line-height: 1.45;
+  }
+  .feat-check {
+    color: var(--color-primary);
+    font-weight: 800;
+  }
+  .package-footer {
+    margin-top: auto;
   }
 
   /* Portfolio Section */
@@ -682,14 +811,23 @@ const hardwareStages = [
     .solutions-grid {
       grid-template-columns: 1fr;
     }
-    .quality-grid {
+    .advantages-grid-4 {
       grid-template-columns: repeat(2, 1fr);
     }
-    .process-steps-grid {
-      grid-template-columns: repeat(2, 1fr);
+    .packages-grid {
+      grid-template-columns: 1fr;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .portfolio-cards-grid {
       grid-template-columns: repeat(2, 1fr);
+    }
+    .package-card.recommended {
+      transform: none;
+    }
+    .package-card.recommended:hover {
+      transform: translateY(-8px);
     }
     .cta-inner-box {
       flex-direction: column;
@@ -704,10 +842,7 @@ const hardwareStages = [
     .hero-stats-row {
       grid-template-columns: 1fr;
     }
-    .quality-grid {
-      grid-template-columns: 1fr;
-    }
-    .process-steps-grid {
+    .advantages-grid-4 {
       grid-template-columns: 1fr;
     }
     .portfolio-cards-grid {

@@ -1,57 +1,178 @@
 ---
-// Footer — static Indonesian, translated automatically via Google Translate widget
+// Footer — Modern unified layout with integrated CTA Banner
+import { allBlogs } from '../data/blogs.js';
+
+interface Props {
+  showCta?: boolean;
+}
+
+const { showCta = true } = Astro.props;
+const recentBlogPosts = allBlogs.slice(0, 2);
 ---
+
 <footer class="footer">
   <div class="container">
+    
+    {showCta && (
+      <div class="footer-cta-wrapper">
+        <div class="cta-expert-card">
+          
+          <!-- Background Wave Effect -->
+          <div class="cta-expert-bg-wave"></div>
+
+          <!-- 1. Paling Kiri: Action Button to WhatsApp -->
+          <div class="cta-expert-action">
+            <a 
+              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20proyek%20bersama%20expert" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="cta-expert-btn"
+            >
+              TALK TO A SPECIALIST <span>→</span>
+            </a>
+          </div>
+
+          <!-- 2. Tengah: Content Title -->
+          <div class="cta-expert-content">
+            <h2 class="cta-expert-title">
+              Ayo Konsultasikan Projectmu<br class="cta-desktop-br" /> Bersama Expert Kami
+            </h2>
+          </div>
+
+          <!-- 3. Paling Kanan: Expert Photo (/images/foto_footer.png) Besar Pop-out -->
+          <div class="cta-expert-image-wrap">
+            <img 
+              src="/images/foto_footer.png" 
+              alt="Bolean Senior IT Specialist" 
+              class="cta-expert-photo"
+              loading="lazy"
+            />
+          </div>
+
+        </div>
+      </div>
+    )}
+
     <div class="footer-top">
-      <div class="footer-col">
-        <img src="/logo.png" alt="Bolean Logo" width="140" height="35" style="filter: brightness(0) invert(1);" />
+      
+      <!-- Column 1: Brand & Social Icons -->
+      <div class="footer-col footer-col-brand">
+        <a href="/" class="footer-logo-link">
+          <img src="/logo.png" alt="Bolean Logo" width="145" height="36" class="footer-logo-img" />
+        </a>
         <p class="footer-desc">
-          Menyederhanakan yang rumit. Menghadirkan solusi teknologi yang bersih dan tangguh untuk bisnis modern.
+          Menyederhanakan yang rumit. Menghadirkan solusi teknologi yang bersih, tangguh, dan terukur untuk bisnis modern.
         </p>
-        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-          <a href="https://www.instagram.com/bolean.id?igsi=ZzIzbjR1ZnZoZ2Q3" target="_blank" style="color: white; opacity: 0.8; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
+        <div class="footer-social-list">
+          <a href="https://wa.me/6281259145879" target="_blank" rel="noopener noreferrer" class="footer-social-btn footer-social-wa" aria-label="WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
           </a>
-          <a href="https://wa.me/6281259145879" target="_blank" style="color: white; opacity: 0.8; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          <a href="https://www.instagram.com/bolean.id?igsi=ZzIzbjR1ZnZoZ2Q3" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>
           </a>
-          <a href="mailto:infobolean.id@gmail.com" style="color: white; opacity: 0.8; transition: opacity 0.3s;" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.8">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+          <a href="mailto:infobolean.id@gmail.com" class="footer-social-btn" aria-label="Email">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
           </a>
         </div>
       </div>
+
+      <!-- Column 2: Perusahaan -->
       <div class="footer-col">
-        <h4>Perusahaan</h4>
+        <h4 class="footer-title">Perusahaan</h4>
         <ul class="footer-links">
           <li><a href="/about">Tentang Kami</a></li>
+          <li><a href="/portofolio">Portofolio Project</a></li>
           <li><a href="/team">Tim Kami</a></li>
           <li><a href="/blog">Blog</a></li>
           <li><a href="/services">Layanan</a></li>
           <li><a href="/contact">Kontak</a></li>
         </ul>
       </div>
+
+      <!-- Column 3: Layanan -->
       <div class="footer-col">
-        <h4>Layanan</h4>
+        <h4 class="footer-title">Layanan</h4>
         <ul class="footer-links">
-          <li><a href="/services/software">Perangkat Lunak</a></li>
-          <li><a href="/services/hardware">Perangkat Keras</a></li>
-          <li><a href="/services/iot">IoT</a></li>
+          <li><a href="/services/software">Pembuatan Custom Software</a></li>
+          <li><a href="/services/hardware">Pembuatan Hardware</a></li>
+          <li><a href="/services/iot">Pembuatan IoT</a></li>
+          <li><a href="/services/website">Pembuatan Website</a></li>
+          <li><a href="/services/pengelolaan-website">Pengelolaan Website</a></li>
+          <li><a href="/services/otomasi-ai">Otomasi & AI Bisnis</a></li>
         </ul>
       </div>
+
+      <!-- Column 4: Recent Posts -->
       <div class="footer-col">
-        <h4>Buletin</h4>
-        <p class="footer-desc" style="margin-bottom: 1rem;">
-          Berlangganan untuk info terbaru.
-        </p>
-        <div style="display: flex; gap: 0.5rem;">
-          <input type="email" placeholder="Email" class="form-control" style="padding: 0.75rem 1rem; border-radius: 6px; border: none; outline: none; width: 100%; color: #333; font-family: inherit;" />
-          <button class="btn btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; background: var(--color-primary); color: white;">Kirim</button>
+        <h4 class="footer-title">Recent Posts</h4>
+        <div class="footer-recent-posts">
+          {recentBlogPosts.map((post) => (
+            <a href={`/blog/${post.slug}`} class="footer-post-item">
+              <div class="footer-post-thumb">
+                <img src={post.image} alt={post.title} loading="lazy" />
+              </div>
+              <div class="footer-post-content">
+                <span class="footer-post-date">📅 {post.date}</span>
+                <h5 class="footer-post-title">{post.title}</h5>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
+
+      <!-- Column 5: Contact Us (Clean White SVG Icons) -->
+      <div class="footer-col">
+        <h4 class="footer-title">Contact Us</h4>
+        <div class="footer-contact-list">
+          
+          <!-- Location Icon (White SVG) -->
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <div class="footer-contact-text">
+              <p>Kota Malang, Jawa Timur, Indonesia</p>
+            </div>
+          </div>
+
+          <!-- Email Icon (White SVG) -->
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+            </div>
+            <div class="footer-contact-text">
+              <p><a href="mailto:infobolean.id@gmail.com">infobolean.id@gmail.com</a></p>
+            </div>
+          </div>
+
+          <!-- WhatsApp / Phone Icon (Official WhatsApp Green SVG) -->
+          <div class="footer-contact-item">
+            <div class="footer-contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </div>
+            <div class="footer-contact-text">
+              <p><a href="https://wa.me/6281259145879" target="_blank" rel="noopener noreferrer">+62 812-5914-5879</a></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
+
+    <!-- Bottom Copyright -->
     <div class="footer-bottom">
-      &copy; {new Date().getFullYear()} Bolean.id
+      <div class="footer-bottom-flex">
+        <p>&copy; {new Date().getFullYear()} <strong>Bolean.id</strong> — Solusi IT, Software, Hardware & IoT Terpercaya.</p>
+        <p class="footer-credit">All Rights Reserved.</p>
+      </div>
     </div>
   </div>
 </footer>

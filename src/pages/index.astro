@@ -1,33 +1,1383 @@
----
+﻿---
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import { allProjects } from '../data/projects.js';
+import { customerLogos } from '../data/customers.js';
+
+// Gunakan seluruh dataset portofolio agar mencakup Software, Hardware, dan IoT
+const featuredProjects = allProjects;
 ---
 
-<Layout title="Bolean - IT Solution & Technology">
+<Layout title="Bolean.id - Solusi IT, Software, Hardware & IoT Premium" description="Bolean menyediakan solusi teknologi terpadu: pengembangan software kustom, infrastruktur hardware, dan integrasi IoT cerdas untuk mempercepat pertumbuhan bisnis Anda.">
   <Navbar />
-  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
-    <!-- Hero Section -->
-    <section class="hero" style="padding-top: 0; min-height: calc(100vh - 80px);">
+  
+  <main style="padding-top: 80px;">
+    
+    <!-- =========================================================================
+         1. HERO SECTION
+         ========================================================================= -->
+    <section class="hero" style="padding-top: 2rem; min-height: calc(100vh - 80px);">
       <div class="container">
         <div class="hero-content">
-          <span class="hero-subtitle">SELAMAT DATANG DI BOLEAN</span>
+          <span class="hero-subtitle">SOLUSI IT & TEKNOLOGI TERPERCAYA</span>
           <h1 class="hero-title">
-            Solusi IT &<br/>Layanan <span>Teknologi</span>
+            Solusi IT &<br/>Layanan <span>Teknologi</span> Cerdas
           </h1>
           <p class="hero-description">
-            Kami menyediakan solusi teknologi yang bersih, tangguh, dan terukur. Tingkatkan bisnis Anda dengan layanan konsultasi dan pengembangan IT premium kami.
+            Mitra teknologi terpercaya untuk mempercepat pertumbuhan bisnis Anda. Kami menghadirkan solusi pembuatan software, website modern, sistem IoT, hardware, serta integrasi AI & otomasi alur kerja yang tangguh dan terukur.
           </p>
           <div class="hero-buttons">
             <a href="/services" class="btn btn-primary">Layanan Kami</a>
-            <a href="/about" class="btn btn-secondary">Pelajari Lebih Lanjut</a>
+            <a href="#contact-section" class="btn btn-secondary">Konsultasi Gratis</a>
           </div>
         </div>
         <div class="hero-image">
-           <img src="/images/maskot-bolean-transparent2.png" alt="Bolean Mascot" style="width: 100%; height: auto; object-fit: contain; max-height: 550px; filter: drop-shadow(0 20px 30px rgba(13, 168, 158, 0.15));" />
+          <!-- Floating Badge: Proyek Selesai (Tetap Ada) -->
+          <div class="hero-floating-badge hero-badge-top-left">
+            <div class="hero-badge-icon badge-icon-teal">🚀</div>
+            <div>
+              <div class="hero-badge-subtitle">Proyek Selesai</div>
+              <div class="hero-badge-title">120+ Klien Puas</div>
+            </div>
+          </div>
+
+          <!-- Floating Badge: Technology (Kontainer Sendiri, Tanpa Icon) -->
+          <div class="hero-floating-badge hero-badge-top-right">
+            <div class="hero-badge-title" style="font-size: 1rem; font-weight: 800; color: #082752;">Technology</div>
+          </div>
+
+          <!-- Floating Badge: Terpercaya (Kontainer Sendiri, Tanpa Icon) -->
+          <div class="hero-floating-badge hero-badge-bottom-left">
+            <div class="hero-badge-title" style="font-size: 1rem; font-weight: 800; color: #082752;">Terpercaya</div>
+          </div>
+
+          <!-- Floating Badge: Garansi Kepuasan (Kontainer Sendiri, Tanpa Icon) -->
+          <div class="hero-floating-badge hero-badge-bottom-right">
+            <div class="hero-badge-title" style="font-size: 1rem; font-weight: 800; color: #082752;">Garansi Kepuasan</div>
+          </div>
+
+          <!-- PLACEHOLDER GAMBAR HERO / MASKOT BOLEAN -->
+          <img 
+            src="/images/maskot-bolean-transparent2.png" 
+            alt="Bolean Mascot" 
+            class="hero-mascot-img"
+          />
+        </div>
+
+      </div>
+    </section>
+
+
+
+    <!-- =========================================================================
+         2. LOGO CUSTOMER & TECH STACK MARQUEE
+         ========================================================================= -->
+    <section class="marquee-section">
+      <div class="container">
+        <p class="marquee-title">Dipercaya Oleh Berbagai Bisnis & Institusi Terkemuka</p>
+      </div>
+      <div class="marquee-track">
+        <!-- CUSTOMER LOGO ITEMS (Duplikasi otomatis untuk looping animasi marquee yang mulus) -->
+        {[...customerLogos, ...customerLogos].map((client) => (
+          <div class="marquee-item">
+            <img src={client.logo} alt={client.name} loading="lazy" />
+            <span>{client.name}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         3. ABOUT US SECTION
+         ========================================================================= -->
+    <section class="section section-gray" id="about-section">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-image-wrapper">
+            <div class="about-image-box" style="display: flex; align-items: center; justify-content: center; background: linear-gradient(145deg, #082752, #0c3875); padding: 2rem; position: relative;">
+              <!-- PLACEHOLDER GAMBAR ABOUT US -->
+              <img 
+                src="/images/maskot-bolean-transparent2.png" 
+                alt="Tentang Bolean" 
+                style="max-height: 380px; width: auto; object-fit: contain; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));" 
+              />
+              <div style="position: absolute; bottom: 20px; left: 20px; background: rgba(13, 168, 158, 0.95); color: white; padding: 1rem 1.5rem; border-radius: 12px; backdrop-filter: blur(8px); box-shadow: 0 10px 25px rgba(0,0,0,0.15);">
+                <div style="font-size: 1.6rem; font-weight: 800; line-height: 1;">5+ Tahun</div>
+                <div style="font-size: 0.85rem; font-weight: 600;">Dedikasi Solusi IT</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="about-content">
+            <span class="section-subtitle">TENTANG BOLEAN</span>
+            <h2 class="section-title">Menghubungkan Kompleksitas Bisnis dengan Solusi Nyata</h2>
+            <p style="color: var(--color-text-muted); margin-bottom: 1.25rem;">
+              Di Bolean, kami menyederhanakan hal yang rumit. Kami menghilangkan kerumitan teknis dan berfokus pada hasil: menghadirkan sistem teknologi yang tangguh, aman, dan siap bertumbuh bersama bisnis Anda.
+            </p>
+            <p style="color: var(--color-text-muted); margin-bottom: 2rem;">
+              Berpusat di Kota Malang, tim ahli kami memadukan arsitektur perangkat lunak modern, keahlian perangkat keras enterprise, dan inovasi IoT untuk memberikan nilai tambah kompetitif bagi setiap mitra.
+            </p>
+            
+            <div class="about-features">
+              <div class="feature-item">
+                <span class="feature-icon">✓</span> Tim Ahli & Berpengalaman
+              </div>
+              <div class="feature-item">
+                <span class="feature-icon">✓</span> Arsitektur Kode Bersih
+              </div>
+              <div class="feature-item">
+                <span class="feature-icon">✓</span> Dukungan & Maintenance 24/7
+              </div>
+              <div class="feature-item">
+                <span class="feature-icon">✓</span> Pengiriman Tepat Waktu
+              </div>
+            </div>
+            
+            <div style="margin-top: 2.5rem; display: flex; gap: 1rem; align-items: center;">
+              <a href="/about" class="btn btn-primary">Pelajari Lebih Lanjut</a>
+              <a href="/contact" class="btn btn-secondary">Hubungi Kami</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Counter -->
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-number">120<span>+</span></div>
+            <div class="stat-label">Proyek Sukses Dikerjakan</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">98<span>%</span></div>
+            <div class="stat-label">Tingkat Kepuasan Klien</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">99.9<span>%</span></div>
+            <div class="stat-label">Uptime Infrastruktur Server</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">24<span>/7</span></div>
+            <div class="stat-label">Dukungan Teknis & Konsultasi</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         4. SERVICES SECTION (3 PILAR BISNIS)
+         ========================================================================= -->
+    <section class="section section-light" id="services-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">LAYANAN UNGGULAN</span>
+          <h2 class="section-title">Layanan IT Terpadu untuk Masa Depan Bisnis Anda</h2>
+          <p style="color: var(--color-text-muted); margin-top: 0.5rem;">
+            Solusi end-to-end mulai dari digitalisasi aplikasi, pengadaan infrastruktur fisik, hingga otomasi pintar.
+          </p>
+        </div>
+        
+        <div class="services-grid">
+          <!-- Service 1: Custom Software -->
+          <div class="service-card" id="custom-software">
+            <div class="service-icon"><Icon name="monitor" class="" /></div>
+            <h3 class="service-title">Pembuatan Custom Software</h3>
+            <p class="service-desc">
+              Pengembangan aplikasi perangkat lunak kustom, sistem ERP, CRM, dan aplikasi mobile berperforma tinggi dengan standar UX modern sesuai kebutuhan bisnis Anda.
+            </p>
+            <div style="margin-top: 1.5rem;">
+              <a href="/services/software" style="font-weight: 700; color: var(--color-primary); display: inline-flex; align-items: center; gap: 0.3rem;">
+                Lihat Detail Software →
+              </a>
+            </div>
+          </div>
+          
+          <!-- Service 2: Hardware -->
+          <div class="service-card" id="hardware">
+            <div class="service-icon"><Icon name="hard-drive" class="" /></div>
+            <h3 class="service-title">Pembuatan Hardware</h3>
+            <p class="service-desc">
+              Perancangan skematik & PCB kustom, arsitektur server, instalasi jaringan fiber/LAN enterprise, serta perakitan workstation andal.
+            </p>
+            <div style="margin-top: 1.5rem;">
+              <a href="/services/hardware" style="font-weight: 700; color: var(--color-primary); display: inline-flex; align-items: center; gap: 0.3rem;">
+                Lihat Detail Hardware →
+              </a>
+            </div>
+          </div>
+          
+          <!-- Service 3: IoT -->
+          <div class="service-card" id="iot">
+            <div class="service-icon"><Icon name="cpu" class="" /></div>
+            <h3 class="service-title">Pembuatan IoT</h3>
+            <p class="service-desc">
+              Integrasi sensor telemetri real-time, gateway LoRaWAN/MQTT, sistem otomasi industri, dan dashboard monitoring cerdas terintegrasi.
+            </p>
+            <div style="margin-top: 1.5rem;">
+              <a href="/services/iot" style="font-weight: 700; color: var(--color-primary); display: inline-flex; align-items: center; gap: 0.3rem;">
+                Lihat Detail IoT →
+              </a>
+            </div>
+          </div>
+
+          <!-- Service 4: Website -->
+          <div class="service-card" id="website">
+            <div class="service-icon"><Icon name="globe" class="" /></div>
+            <h3 class="service-title">Pembuatan Website</h3>
+            <p class="service-desc">
+              Website profil perusahaan, landing page, dan portal bisnis secepat kilat dengan arsitektur modern, responsif, dan skor SEO 100/100.
+            </p>
+            <div style="margin-top: 1.5rem;">
+              <a href="/services/software/web" style="font-weight: 700; color: var(--color-primary); display: inline-flex; align-items: center; gap: 0.3rem;">
+                Lihat Detail Website →
+              </a>
+            </div>
+          </div>
+
+          <!-- Service 5: Pengelolaan Website -->
+          <div class="service-card" id="pengelolaan-website">
+            <div class="service-icon"><Icon name="shield-check" class="" /></div>
+            <h3 class="service-title">Pengelolaan Website</h3>
+            <p class="service-desc">
+              Layanan pemeliharaan berkala, update konten, optimasi kecepatan server, backup rutin otomatis, audit keamanan siber, dan monitoring 24/7.
+            </p>
+            <div style="margin-top: 1.5rem;">
+              <a href="/contact" style="font-weight: 700; color: var(--color-primary); display: inline-flex; align-items: center; gap: 0.3rem;">
+                Konsultasi Pengelolaan →
+              </a>
+            </div>
+          </div>
+
+          <!-- Service 6: Otomasi & AI Bisnis -->
+          <div class="service-card" id="otomasi-ai">
+            <div class="service-icon"><Icon name="bot" class="" /></div>
+            <h3 class="service-title">Otomasi & AI Bisnis</h3>
+            <p class="service-desc">
+              Integrasi kecerdasan buatan (AI), chatbot WhatsApp otomatis 24/7, dan otomatisasi alur kerja untuk memangkas tugas manual repetitif.
+            </p>
+            <div style="margin-top: 1.5rem;">
+              <a href="/contact" style="font-weight: 700; color: var(--color-primary); display: inline-flex; align-items: center; gap: 0.3rem;">
+                Konsultasi AI & Otomasi →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         5. FEATURED PORTFOLIO / CASE STUDIES (4 Desktop / 2 Mobile per Kategori)
+         ========================================================================= -->
+    <section class="section section-gray" id="portfolio-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">KARYA TERBAIK KAMI</span>
+          <h2 class="section-title">Portofolio & Studi Kasus Proyek</h2>
+          <p style="color: var(--color-text-muted); margin-top: 0.5rem;">
+            Lihat bagaimana kami membantu berbagai industri bertransformasi melalui solusi teknologi yang presisi.
+          </p>
+        </div>
+
+        <!-- Filter Tabs (Hanya Software, Hardware, dan IoT) -->
+        <div class="portfolio-tabs">
+          <button class="portfolio-tab-btn active" data-filter="Software">Software</button>
+          <button class="portfolio-tab-btn" data-filter="Hardware">Hardware</button>
+          <button class="portfolio-tab-btn" data-filter="IoT">IoT</button>
+        </div>
+
+
+        <!-- Portfolio Cards Grid -->
+        <div class="portfolio-grid" id="portfolioGrid">
+          {featuredProjects.map((project) => (
+            <div class="portfolio-card" data-category={project.category}>
+              <div class="portfolio-thumb">
+                <!-- PLACEHOLDER GAMBAR PORTOFOLIO -->
+                <img src={project.image} alt={project.title} loading="lazy" />
+                <span class="portfolio-badge">{project.category}</span>
+              </div>
+              <div class="portfolio-body">
+                <h3 class="portfolio-title">{project.title}</h3>
+                <p class="portfolio-desc">{project.description}</p>
+                <div class="portfolio-tags">
+                  {project.technologies?.slice(0, 3).map((tech) => (
+                    <span class="portfolio-tag">{tech}</span>
+                  ))}
+                </div>
+                <a href={`/projects/${project.slug}`} class="portfolio-link">
+                  Lihat Detail Kasus <span>→</span>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         6. PRICING & SERVICE PACKAGES
+         ========================================================================= -->
+    <section class="section section-light" id="pricing-section">
+      <div class="container container-pricing">
+        <div class="section-header">
+          <span class="section-subtitle">TRANSPARANSI BIAYA</span>
+          <h2 class="section-title">Paket Layanan Fleksibel Sesuai Kebutuhan</h2>
+          <p style="color: var(--color-text-muted); margin-top: 0.5rem;">
+            Pilih paket yang paling cocok untuk mempercepat pertumbuhan dan digitalisasi bisnis Anda.
+          </p>
+        </div>
+
+        <!-- Pricing Category Tabs -->
+        <div class="pricing-tabs-wrapper">
+          <div class="pricing-tabs">
+            <button class="pricing-tab-btn active" data-pricing-tab="popular">
+              ⭐ Paling Populer
+            </button>
+            <button class="pricing-tab-btn" data-pricing-tab="software">
+              Website & Software
+            </button>
+            <button class="pricing-tab-btn" data-pricing-tab="hardware">
+              Hardware & IoT
+            </button>
+          </div>
+        </div>
+
+        <div class="pricing-grid">
+          <!-- Package 1: Pembuatan Website (Populer, Software) -->
+          <div class="pricing-card featured" data-pricing-category="popular software" style="display: flex;">
+            <span class="popular-badge">Paling Populer</span>
+            <div class="pricing-header">
+              <h3 class="pricing-tier">Pembuatan Website</h3>
+              <div class="pricing-price">Mulai Rp 750 Rb</div>
+              <p class="pricing-desc">Cocok untuk Landing Page, Portofolio & Company Profile Bisnis</p>
+            </div>
+            <ul class="pricing-features">
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Desain Modern, Cepat & Responsif
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Integrasi Form Kontak & WhatsApp
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Arsitektur Ringan (Astro/HTML5)
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Optimasi SEO & Google Search Ready
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Garansi & Setup Domain/Hosting
+              </li>
+            </ul>
+            <a href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20tertarik%20dengan%20Paket%20Pembuatan%20Website%20(Mulai%20750rb)" target="_blank" class="btn btn-primary pricing-cta">Pilih Paket Website</a>
+          </div>
+
+          <!-- Package 2: Pembuatan Aplikasi Custom (Populer, Software) -->
+          <div class="pricing-card featured" data-pricing-category="popular software" style="display: flex;">
+            <span class="popular-badge">Paling Populer</span>
+            <div class="pricing-header">
+              <h3 class="pricing-tier">Pembuatan Aplikasi Custom</h3>
+              <div class="pricing-price">Mulai Rp 1 Jt</div>
+              <p class="pricing-desc">Solusi Aplikasi Web, Mobile App & Sistem Internal Bisnis</p>
+            </div>
+            <ul class="pricing-features">
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Fitur & Alur Kerja Kustom Bisnis
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Dashboard Admin & Database Terpadu
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Manajemen Pengguna & Autentikasi
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Multi-Platform (Web / Android / iOS)
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Garansi & Dukungan Teknis Penuh
+              </li>
+            </ul>
+            <a href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20membuat%20Aplikasi%20Custom%20(Mulai%201%20Juta)" target="_blank" class="btn btn-primary pricing-cta">Pesan Aplikasi Custom</a>
+          </div>
+
+          <!-- Package 3: Pembuatan Sistem IoT (Populer, Hardware) -->
+          <div class="pricing-card" data-pricing-category="popular hardware" style="display: flex;">
+            <div class="pricing-header">
+              <h3 class="pricing-tier">Pembuatan Sistem IoT</h3>
+              <div class="pricing-price">Mulai Rp 1.5 Jt</div>
+              <p class="pricing-desc">Sensor Pintar, Telemetri Real-Time & Cloud Monitoring</p>
+            </div>
+            <ul class="pricing-features">
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Integrasi Sensor Fisik Real-Time
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Protokol LoRaWAN / WiFi / MQTT
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Dashboard Monitoring & Kontrol Cloud
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Sistem Notifikasi Alarm Otomatis
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Logging Data & Analisis Grafik
+              </li>
+            </ul>
+            <a href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20Sistem%20IoT%20(Mulai%201.5%20Juta)" target="_blank" class="btn btn-primary pricing-cta">Konsultasi Sistem IoT</a>
+          </div>
+
+          <!-- Package 4: Pembuatan Alat & Otomasi Hardware (Hardware) -->
+          <div class="pricing-card" data-pricing-category="hardware" style="display: none;">
+            <div class="pricing-header">
+              <h3 class="pricing-tier">Pembuatan Alat & Otomasi Hardware</h3>
+              <div class="pricing-price">Mulai Rp 750 Rb</div>
+              <p class="pricing-desc">Desain PCB, Controller & Alat Otomasi Khusus</p>
+            </div>
+            <ul class="pricing-features">
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Desain Skematik & Fabrikasi PCB
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Pemrograman Microcontroller Kustom
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Integrasi Relay, Motor & Aktuator
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Perakitan Komponen & Casing Rapi
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Pengujian Alat & Dokumentasi Lengkap
+              </li>
+            </ul>
+            <a href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20tertarik%20dengan%20Pembuatan%20Alat%20Otomasi%20Hardware%20(Mulai%20750rb)" target="_blank" class="btn btn-secondary pricing-cta">Pesan Alat Otomasi</a>
+          </div>
+
+          <!-- Package 5: Pengelolaan Website (Software) -->
+          <div class="pricing-card" data-pricing-category="software" style="display: none;">
+            <div class="pricing-header">
+              <h3 class="pricing-tier">Pengelolaan Website</h3>
+              <div class="pricing-price">Mulai Rp 500 Rb <span style="font-size: 0.95rem; font-weight: 500; color: var(--color-text-muted);">/ bln</span></div>
+              <p class="pricing-desc">Maintenance Rutin, Keamanan & Optimasi Website Bisnis</p>
+            </div>
+            <ul class="pricing-features">
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Update Konten, Banner & Teks Berkala
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Monitoring Uptime & Kecepatan 24/7
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Backup Cloud Rutin & Proteksi Malware
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Audit Keamanan & Pembaruan Sistem
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Bantuan Teknis Prioritas via WhatsApp
+              </li>
+            </ul>
+            <a href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20tertarik%20dengan%20Paket%20Pengelolaan%20Website%20(500rb/bln)" target="_blank" class="btn btn-secondary pricing-cta">Langganan Pengelolaan</a>
+          </div>
+
+          <!-- Package 6: Otomasi & AI Bisnis (Software, Hardware) -->
+          <div class="pricing-card" data-pricing-category="software hardware" style="display: none;">
+            <div class="pricing-header">
+              <h3 class="pricing-tier">Otomasi & AI Bisnis</h3>
+              <div class="pricing-price">Mulai Rp 1 Jt</div>
+              <p class="pricing-desc">Chatbot AI WhatsApp, Integrasi API & Otomasi Alur Kerja</p>
+            </div>
+            <ul class="pricing-features">
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Integrasi AI Chatbot WhatsApp CS 24/7
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Otomasi Input Data & Generator Invoice
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Sinkronisasi Multi-Platform & API Terpadu
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Pengenalan Dokumen / OCR Cerdas
+              </li>
+              <li class="pricing-feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                Garansi & Setup Sistem Siap Pakai
+              </li>
+            </ul>
+            <a href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20tertarik%20dengan%20Paket%20Otomasi%20%26%20AI%20Bisnis%20(Mulai%201%20Juta)" target="_blank" class="btn btn-secondary pricing-cta">Pesan Otomasi & AI</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         7. VIDEO TESTIMONIALS (1 FEATURED VIDEO SHOWCASE)
+         ========================================================================= -->
+    <section class="section section-gray" id="video-testimonials">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">BUKTI KEBERHASILAN</span>
+          <h2 class="section-title">Apa Kata Klien Kami? (Video Kisah Sukses)</h2>
+          <p style="color: var(--color-text-muted); margin-top: 0.5rem;">
+            Dengarkan langsung pengalaman para mitra yang telah mempercayakan transformasi teknologinya bersama Bolean.
+          </p>
+        </div>
+
+        <div class="single-video-wrapper">
+          <div class="single-video-card">
+            <!-- PLACEHOLDER THUMBNAIL & VIDEO URL (1 Featured Video) -->
+            <div class="single-video-thumb js-open-video" data-video-title="Transformasi Sistem E-Commerce PT Nusantara" data-video-url="https://www.youtube.com/embed/dQw4w9WgXcQ">
+              <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Video Testimonial Utama" />
+              <div class="single-video-play-btn">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              </div>
+              <span class="video-duration">02:45</span>
+            </div>
+            
+            <div class="single-video-content">
+              <span class="single-video-badge">🎬 Studi Kasus Unggulan</span>
+              <p class="single-video-quote">
+                "Implementasi aplikasi dan arsitektur cloud oleh Bolean membantu proses operasional kami 3x lebih cepat tanpa kendala sistem down sama sekali."
+              </p>
+              <div class="single-video-author">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80" alt="Rina Wulandari" class="single-video-avatar" />
+                <div>
+                  <div class="single-video-name">Rina Wulandari</div>
+                  <div class="single-video-role">COO, PT Nusantara Retail Group</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         8. CUSTOMER REVIEWS CAROUSEL (8 TESTIMONIALS SLIDER)
+         ========================================================================= -->
+    <section class="section section-light" id="reviews-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">REVIEW PELANGGAN</span>
+          <h2 class="section-title">Ulasan Jujur dari Klien Kami</h2>
+          <p style="color: var(--color-text-muted); margin-top: 0.5rem;">
+            Kepuasan dan kemudahan bisnis mitra adalah prioritas utama setiap lini layanan Bolean.
+          </p>
+        </div>
+
+        <div class="reviews-carousel-wrapper" id="reviewsCarousel">
+          <div class="reviews-carousel-track" id="reviewsTrack">
+            <!-- Review 1 -->
+            <div class="review-slide">
+              <div class="review-card">
+                <div>
+                  <div class="review-stars">★★★★★</div>
+                  <p class="review-text">
+                    "Pengerjaan website e-commerce kami selesai tepat sebelum target peluncuran. Desainnya sangat profesional dan pelanggan kami sering memuji kecepatan loadingnya."
+                  </p>
+                </div>
+                <div class="review-user">
+                  <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80" alt="Sarah" class="review-avatar" />
+                  <div>
+                    <div class="review-name">Sarah Anindita</div>
+                    <div class="review-role">Marketing Lead, Brand Fashion ID</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="review-slide">
+              <div class="review-card">
+                <div>
+                  <div class="review-stars">★★★★★</div>
+                  <p class="review-text">
+                    "Setup jaringan dan server kantor baru kami berjalan mulus. Tidak ada lagi kendala koneksi putus atau server lag saat beban jam kerja padat. Luar biasa!"
+                  </p>
+                </div>
+                <div class="review-user">
+                  <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80" alt="Reza" class="review-avatar" />
+                  <div>
+                    <div class="review-name">Reza Pratama</div>
+                    <div class="review-role">IT Manager, Logistik Nasional</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="review-slide">
+              <div class="review-card">
+                <div>
+                  <div class="review-stars">★★★★★</div>
+                  <p class="review-text">
+                    "Sangat terbantu dengan tim Bolean yang selalu siap sedia memberikan solusi teknis saat kami butuh kustomisasi sistem pembelajaran online dalam waktu singkat."
+                  </p>
+                </div>
+                <div class="review-user">
+                  <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80" alt="Dewi" class="review-avatar" />
+                  <div>
+                    <div class="review-name">Dewi Kusuma</div>
+                    <div class="review-role">Founder & CEO, EduTech Malang</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review 4 -->
+            <div class="review-slide">
+              <div class="review-card">
+                <div>
+                  <div class="review-stars">★★★★★</div>
+                  <p class="review-text">
+                    "Sistem ERP kustom yang dibangun Bolean membuat pelacakan inventaris obat dan data pasien kami jauh lebih aman, akurat, dan sesuai standar regulasi."
+                  </p>
+                </div>
+                <div class="review-user">
+                  <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80" alt="Dr. Hendra" class="review-avatar" />
+                  <div>
+                    <div class="review-name">Dr. Hendra Gunawan</div>
+                    <div class="review-role">Direktur Operasional, RS Prima Medika</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review 5 -->
+            <div class="review-slide">
+              <div class="review-card">
+                <div>
+                  <div class="review-stars">★★★★★</div>
+                  <p class="review-text">
+                    "Implementasi telemetri sensor IoT di lini produksi pabrik kami berhasil menekan downtime mesin hingga 35%. ROI-nya terasa nyata dalam hitungan bulan!"
+                  </p>
+                </div>
+                <div class="review-user">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80" alt="Agus" class="review-avatar" />
+                  <div>
+                    <div class="review-name">Agus Wicaksono</div>
+                    <div class="review-role">Plant Manager, PT Sinar Manufaktur</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review 6 -->
+            <div class="review-slide">
+              <div class="review-card">
+                <div>
+                  <div class="review-stars">★★★★★</div>
+                  <p class="review-text">
+                    "Desain UI/UX aplikasi mobile perbankan yang dibuat sangat intuitif. Pengguna aktif bulanan kami meningkat signifikan sejak antarmuka baru dirilis."
+                  </p>
+                </div>
+                <div class="review-user">
+                  <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80" alt="Maya" class="review-avatar" />
+                  <div>
+                    <div class="review-name">Maya Puspita</div>
+                    <div class="review-role">Head of Product, FinTech Nusantara</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review 7 -->
+            <div class="review-slide">
+              <div class="review-card">
+                <div>
+                  <div class="review-stars">★★★★★</div>
+                  <p class="review-text">
+                    "Sistem POS dan manajemen stok multi-outlet kami kini terintegrasi secara real-time. Tidak ada lagi selisih data kasir di akhir hari."
+                  </p>
+                </div>
+                <div class="review-user">
+                  <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80" alt="Farhan" class="review-avatar" />
+                  <div>
+                    <div class="review-name">Farhan Al-Ghazi</div>
+                    <div class="review-role">Owner, Kopi Nusantara Chain</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Review 8 -->
+            <div class="review-slide">
+              <div class="review-card">
+                <div>
+                  <div class="review-stars">★★★★★</div>
+                  <p class="review-text">
+                    "Dashboard visual analitik properti yang dikerjakan tim Bolean sangat memudahkan dewan direksi dalam memantau tren penjualan setiap proyek."
+                  </p>
+                </div>
+                <div class="review-user">
+                  <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&auto=format&fit=crop&w=120&q=80" alt="Anita" class="review-avatar" />
+                  <div>
+                    <div class="review-name">Anita Wijaya</div>
+                    <div class="review-role">Direktur Keuangan, Surya Graha</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carousel Controls -->
+          <div class="reviews-nav">
+            <button class="carousel-arrow" id="prevReviewBtn" aria-label="Review Sebelumnya">‹</button>
+            <div class="carousel-dots" id="reviewsDots"></div>
+            <button class="carousel-arrow" id="nextReviewBtn" aria-label="Review Selanjutnya">›</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- =========================================================================
+         9. TEAM SECTION
+         ========================================================================= -->
+    <section class="section section-gray" id="team-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">TALENTA MUDA & BERPENGALAMAN</span>
+          <h2 class="section-title">Energi Generasi Muda di Balik Solusi Teknologi Canggih</h2>
+          <p style="color: var(--color-text-muted); margin-top: 0.5rem; max-width: 680px; margin-left: auto; margin-right: auto;">
+            Didukung generasi muda dengan jam terbang tinggi di dunia teknologi. Kami memadukan kreativitas segar dan eksekusi gesit anak muda dengan pengalaman teknis mendalam untuk bisnis Anda.
+          </p>
+        </div>
+
+        <div class="team-grid">
+          <!-- Member 1: Dian -->
+          <a href="/team/dian" class="team-member-card">
+            <div class="team-photo-wrapper">
+              <img src="/images/team/dian.jpg" alt="Dian Lestari Kurniawati" />
+            </div>
+            <div class="team-member-info">
+              <h3 class="team-member-name">Dian Lestari Kurniawati</h3>
+              <p class="team-member-role">Leader & Project Strategist</p>
+            </div>
+          </a>
+
+          <!-- Member 2: Fahd -->
+          <a href="/team/fahd" class="team-member-card">
+            <div class="team-photo-wrapper">
+              <img src="/images/team/fahd.jpg" alt="M. Fahd Khulloh" />
+            </div>
+            <div class="team-member-info">
+              <h3 class="team-member-name">M. Fahd Khulloh</h3>
+              <p class="team-member-role">Lead Software Engineer</p>
+            </div>
+          </a>
+
+          <!-- Member 3: Iqbal -->
+          <a href="/team/iqbal" class="team-member-card">
+            <div class="team-photo-wrapper">
+              <img src="/images/team/iqbal.jpg" alt="Maulana Muhammad Iqbal" />
+            </div>
+            <div class="team-member-info">
+              <h3 class="team-member-name">Maulana Muhammad Iqbal</h3>
+              <p class="team-member-role">Hardware & IoT Developer</p>
+            </div>
+          </a>
+
+          <!-- Member 4: Keysa -->
+          <a href="/team/keysa" class="team-member-card">
+            <div class="team-photo-wrapper">
+              <img src="/images/team/keysa.jpg" alt="Keyshayara Qanita Kamila" />
+            </div>
+            <div class="team-member-info">
+              <h3 class="team-member-name">Keyshayara Qanita Kamila</h3>
+              <p class="team-member-role">UI/UX & Product Design</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         10. FAQ ACCORDION
+         ========================================================================= -->
+    <section class="section section-light" id="faq-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">TANYA JAWAB UMUM</span>
+          <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
+          <p style="color: var(--color-text-muted); margin-top: 0.5rem;">
+            Temukan jawaban cepat seputar cara kerja, waktu pengerjaan, dan jaminan layanan di Bolean.
+          </p>
+        </div>
+
+        <div class="faq-container">
+          <!-- FAQ 1 -->
+          <div class="faq-item active">
+            <div class="faq-header">
+              <span>Berapa lama rata-rata durasi pengerjaan sebuah proyek di Bolean?</span>
+              <div class="faq-icon">▾</div>
+            </div>
+            <div class="faq-body">
+              Durasi pengerjaan bervariasi sesuai skala proyek. Untuk website Company Profile atau Landing Page rata-rata memakan waktu 1–2 minggu. Untuk aplikasi web dinamis/mobile berkisar antara 4–8 minggu, sedangkan sistem ERP kustom atau integrasi IoT skala penuh disesuaikan dengan roadmap kebutuhan Anda.
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item">
+            <div class="faq-header">
+              <span>Apakah Bolean memberikan garansi dan pemeliharaan (maintenance)?</span>
+              <div class="faq-icon">▾</div>
+            </div>
+            <div class="faq-body">
+              Ya, seluruh paket pengembangan kami sudah mencakup masa garansi perbaikan bug dan pendampingan teknis gratis (1 hingga 3 bulan). Kami juga menyediakan opsi kontrak pemeliharaan berkelanjutan untuk update rutin, backup data berkala, dan monitoring keamanan server.
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item">
+            <div class="faq-header">
+              <span>Bagaimana tahapan pembayaran dan pembuatan kontrak kerja sama?</span>
+              <div class="faq-icon">▾</div>
+            </div>
+            <div class="faq-body">
+              Kami menggunakan sistem pembayaran bertahap (Milestone-based) yang transparan: Uang Muka (DP) saat penandatanganan kesepakatan, termin progres pengembangan, dan pelunasan setelah proyek melalui tahap pengujian akhir (UAT) dan siap dirilis.
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item">
+            <div class="faq-header">
+              <span>Apakah Bolean melayani pengadaan perangkat keras untuk luar kota Malang?</span>
+              <div class="faq-icon">▾</div>
+            </div>
+            <div class="faq-body">
+              Ya! Meskipun kantor pusat kami berbasis di Kota Malang, kami melayani konsultasi arsitektur, pengiriman unit server/jaringan yang telah diprakonfigurasi, serta instalasi on-site ke berbagai kota di seluruh Indonesia.
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item">
+            <div class="faq-header">
+              <span>Bisakah saya berkonsultasi gratis terlebih dahulu?</span>
+              <div class="faq-icon">▾</div>
+            </div>
+            <div class="faq-body">
+              Tentu saja! Anda bisa langsung menghubungi tim teknis kami via WhatsApp atau formulir di bawah ini untuk berdiskusi santai, mendefinisikan kebutuhan, dan mendapatkan estimasi penawaran tanpa komitmen apa pun.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         11. LATEST BLOG & TECH INSIGHTS
+         ========================================================================= -->
+    <section class="section section-gray" id="blog-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">WAWASAN & ARTIKEL</span>
+          <h2 class="section-title">Wawasan Teknologi Terbaru</h2>
+          <p style="color: var(--color-text-muted); margin-top: 0.5rem;">
+            Pelajari tren terbaru seputar cloud, keamanan cyber, dan efisiensi pengembangan sistem modern.
+          </p>
+        </div>
+
+        <div class="home-blog-grid">
+          <!-- Blog 1 -->
+          <article class="home-blog-card">
+            <div class="home-blog-thumb">
+              <!-- PLACEHOLDER GAMBAR BLOG -->
+              <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Masa Depan Cloud" />
+            </div>
+            <div class="home-blog-content">
+              <div class="home-blog-meta">
+                <span class="home-blog-category">Teknologi Cloud</span>
+                <span>25 Agu 2026</span>
+              </div>
+              <h3 class="home-blog-title"><a href="/blog/future-of-cloud">Masa Depan Arsitektur Cloud di Tahun 2027</a></h3>
+              <p class="home-blog-excerpt">Jelajahi bagaimana komputasi tanpa server dan hybrid cloud membentuk ulang infrastruktur TI perusahaan modern...</p>
+              <a href="/blog/future-of-cloud" class="portfolio-link">Baca Selengkapnya →</a>
+            </div>
+          </article>
+
+          <!-- Blog 2 -->
+          <article class="home-blog-card">
+            <div class="home-blog-thumb">
+              <!-- PLACEHOLDER GAMBAR BLOG -->
+              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Why Astro" />
+            </div>
+            <div class="home-blog-content">
+              <div class="home-blog-meta">
+                <span class="home-blog-category">Web Development</span>
+                <span>18 Agu 2026</span>
+              </div>
+              <h3 class="home-blog-title"><a href="/blog/why-astro">Mengapa Astro Adalah Pilihan Utama untuk Situs Super Cepat</a></h3>
+              <p class="home-blog-excerpt">Arsitektur zero-JS Astro memberikan skor performa maksimal dan pengalaman pengguna tanpa jeda loading...</p>
+              <a href="/blog/why-astro" class="portfolio-link">Baca Selengkapnya →</a>
+            </div>
+          </article>
+
+          <!-- Blog 3 -->
+          <article class="home-blog-card">
+            <div class="home-blog-thumb">
+              <!-- PLACEHOLDER GAMBAR BLOG -->
+              <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Protecting Business Data" />
+            </div>
+            <div class="home-blog-content">
+              <div class="home-blog-meta">
+                <span class="home-blog-category">Keamanan Siber</span>
+                <span>10 Agu 2026</span>
+              </div>
+              <h3 class="home-blog-title"><a href="/blog/protecting-business-data">Melindungi Data Bisnis Anda di Era Modern</a></h3>
+              <p class="home-blog-excerpt">Langkah-langkah preventif dan proteksi multi-layer untuk mencegah kebocoran data penting perusahaan Anda...</p>
+              <a href="/blog/protecting-business-data" class="portfolio-link">Baca Selengkapnya →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         12. CONTACT US & CTA BANNER
+         ========================================================================= -->
+    <section class="section section-light" id="contact-section" style="padding-bottom: 11rem;">
+      <div class="container">
+        <div class="section-header">
+
+          <span class="section-subtitle">Hubungi Kami</span>
+          <h2 class="section-title">Konsultasikan Kebutuhan Anda</h2>
+          <p class="section-desc">
+            Diskusikan ide proyek perangkat lunak, infrastruktur perangkat keras, atau integrasi IoT bersama tim Bolean.
+          </p>
+        </div>
+
+        <!-- Fast Contact Form -->
+        <div class="contact-grid">
+          <div class="contact-info">
+            <h3>Hubungi Kantor Kami</h3>
+
+            
+            <div class="info-item">
+              <div class="info-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+              <div class="info-text">
+                <h4>Lokasi Kami</h4>
+                <p>Kota Malang, Jawa Timur, Indonesia</p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+              </div>
+              <div class="info-text">
+                <h4>Email Resmi</h4>
+                <p><a href="mailto:infobolean.id@gmail.com">infobolean.id@gmail.com</a></p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+              </div>
+              <div class="info-text">
+                <h4>WhatsApp / Telepon</h4>
+                <p><a href="https://wa.me/6281259145879" target="_blank" rel="noopener noreferrer">+62 812-5914-5879</a></p>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <div class="info-text">
+                <h4>Jam Operasional</h4>
+                <p>Senin - Sabtu: 08.00 - 17.00 WIB</p>
+              </div>
+            </div>
+
+          </div>
+          
+          <div class="contact-form-wrapper">
+            <h3 style="color: var(--color-secondary); margin-bottom: 0.35rem; font-size: 1.35rem; font-weight: 800;">Kirim Pesan Cepat</h3>
+            <p style="color: var(--color-text-muted); margin-bottom: 1.5rem; font-size: 0.88rem;">
+              Isi data di bawah ini dan konsultan kami akan segera menghubungi Anda kembali dalam waktu kurang dari 24 jam.
+            </p>
+
+
+            <div id="home-form-success" style="display: none; padding: 2rem; background: #f0fdfa; border-radius: 16px; border: 1.5px solid var(--color-primary); text-align: center; margin-bottom: 1.5rem;">
+              <div style="width: 52px; height: 52px; border-radius: 50%; background: #22c55e; color: white; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 0.85rem; box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <h4 style="color: var(--color-secondary); font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">Pesan Diteruskan ke WhatsApp!</h4>
+              <p style="color: #334155; font-size: 0.92rem; line-height: 1.5; margin-bottom: 1.25rem;">WhatsApp Anda telah dibuka. Jika belum terbuka otomatis, silakan klik tombol di bawah ini:</p>
+              <a id="home-wa-direct-btn" href="#" target="_blank" class="btn btn-primary" style="background: #22c55e; border-color: #22c55e; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; padding: 0.75rem 1.5rem; border-radius: 50px; text-decoration: none; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);">
+                <span>Buka Chat WhatsApp Sekarang</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+              <div style="margin-top: 1.25rem;">
+                <button id="home-btn-reset" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;">Kirim Pesan Lainnya</button>
+              </div>
+            </div>
+            
+            <form id="home-contact-form">
+              <div class="form-group">
+                <input type="text" id="contact-name" class="form-control" placeholder="Nama Lengkap Anda" required />
+              </div>
+              <div class="form-group">
+                <input type="email" id="contact-email" class="form-control" placeholder="Alamat Email Bisnis" required />
+              </div>
+              <div class="form-group">
+                <select id="contact-service" class="form-control" style="color: #475569;" required>
+                  <option value="" disabled selected>Pilih Kategori Layanan...</option>
+                  <option value="software">Pengembangan Software (Web/App/ERP)</option>
+                  <option value="hardware">Infrastruktur Hardware / Jaringan Server</option>
+                  <option value="iot">Integrasi IoT & Otomasi Pabrik</option>
+                  <option value="other">Konsultasi Khusus / Lainnya</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <textarea id="contact-msg" class="form-control" placeholder="Ceritakan gambaran singkat kebutuhan atau proyek Anda..." required></textarea>
+              </div>
+              <button type="submit" id="home-btn-submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">
+                Kirim Pesan Konsultasi
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
   </main>
+
+
+
+
+  <!-- =========================================================================
+       VIDEO MODAL POPUP (Triggered by Video Testimonial Cards)
+       ========================================================================= -->
+  <div class="video-modal-backdrop" id="videoModal">
+    <div class="video-modal-container">
+      <button class="video-modal-close" id="closeVideoModal" aria-label="Tutup Video">&times;</button>
+      <iframe 
+        id="videoIframe" 
+        src="" 
+        title="Cuplikan Video Testimonial" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen 
+        style="width: 100%; height: 100%;"
+      ></iframe>
+    </div>
+  </div>
+
+
+  <!-- =========================================================================
+       CLIENT SCRIPTS (FAQ Accordion, Video Modal, Portfolio Filter, Contact Form)
+       ========================================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. FAQ Accordion Logic
+      const faqHeaders = document.querySelectorAll('.faq-header');
+      faqHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+          const item = header.parentElement;
+          const isActive = item?.classList.contains('active');
+          
+          // Close all
+          document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+          
+          // Toggle clicked
+          if (!isActive && item) {
+            item.classList.add('active');
+          }
+        });
+      });
+
+      // 2. Portfolio Filter Tabs Logic (6 Desktop / 4 Mobile per Kategori)
+      const tabBtns = document.querySelectorAll('.portfolio-tab-btn');
+      const cards = document.querySelectorAll('.portfolio-card');
+
+      function applyPortfolioFilter() {
+        const activeBtn = document.querySelector('.portfolio-tab-btn.active');
+        const filter = activeBtn?.getAttribute('data-filter') || 'Software';
+        const isMobile = window.innerWidth <= 768;
+        const maxLimit = isMobile ? 4 : 6;
+        
+        let count = 0;
+        
+        cards.forEach(card => {
+          const cat = card.getAttribute('data-category') || '';
+          let matchedKey = 'Software';
+          if (cat.toLowerCase().includes('software')) matchedKey = 'Software';
+          else if (cat.toLowerCase().includes('hardware')) matchedKey = 'Hardware';
+          else if (cat.toLowerCase().includes('iot')) matchedKey = 'IoT';
+          
+          const isMatch = (matchedKey.toLowerCase() === filter.toLowerCase());
+          
+          if (isMatch && count < maxLimit) {
+            (card as HTMLElement).style.display = 'flex';
+            count++;
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      }
+
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          applyPortfolioFilter();
+        });
+      });
+
+      window.addEventListener('resize', applyPortfolioFilter);
+      applyPortfolioFilter();
+
+
+      // 3. Customer Reviews Carousel Slider Logic
+      const track = document.getElementById('reviewsTrack') as HTMLElement | null;
+      const slides = document.querySelectorAll('.review-slide');
+      const prevBtn = document.getElementById('prevReviewBtn');
+      const nextBtn = document.getElementById('nextReviewBtn');
+      const dotsContainer = document.getElementById('reviewsDots');
+      const carouselWrapper = document.getElementById('reviewsCarousel');
+
+      let currentIndex = 0;
+      let autoPlayTimer: any = null;
+
+      function getVisibleCount() {
+        if (window.innerWidth <= 640) return 1;
+        if (window.innerWidth <= 992) return 2;
+        return 3;
+      }
+
+      function getMaxIndex() {
+        return Math.max(0, slides.length - getVisibleCount());
+      }
+
+      function createDots() {
+        if (!dotsContainer) return;
+        dotsContainer.innerHTML = '';
+        const maxIdx = getMaxIndex();
+        for (let i = 0; i <= maxIdx; i++) {
+          const dot = document.createElement('button');
+          dot.classList.add('carousel-dot');
+          dot.setAttribute('aria-label', `Slide ${i + 1}`);
+          if (i === currentIndex) dot.classList.add('active');
+          dot.addEventListener('click', () => {
+            currentIndex = i;
+            updateCarousel();
+          });
+          dotsContainer.appendChild(dot);
+        }
+      }
+
+      function updateCarousel() {
+        if (!track || slides.length === 0) return;
+        const maxIdx = getMaxIndex();
+        if (currentIndex > maxIdx) currentIndex = maxIdx;
+        if (currentIndex < 0) currentIndex = 0;
+
+        const visibleCount = getVisibleCount();
+        const slideWidthPercent = 100 / visibleCount;
+        const gapOffset = (currentIndex * 1.75) / visibleCount; // gap compensation
+        
+        track.style.transform = `translateX(calc(-${currentIndex * slideWidthPercent}% - ${gapOffset}rem))`;
+
+        // Update dots
+        const dots = dotsContainer?.querySelectorAll('.carousel-dot');
+        dots?.forEach((dot, idx) => {
+          if (idx === currentIndex) dot.classList.add('active');
+          else dot.classList.remove('active');
+        });
+      }
+
+      function nextSlide() {
+        const maxIdx = getMaxIndex();
+        currentIndex = (currentIndex >= maxIdx) ? 0 : currentIndex + 1;
+        updateCarousel();
+      }
+
+      function prevSlide() {
+        const maxIdx = getMaxIndex();
+        currentIndex = (currentIndex <= 0) ? maxIdx : currentIndex - 1;
+        updateCarousel();
+      }
+
+      if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+      if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+      // Auto play
+      function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayTimer = setInterval(nextSlide, 5000);
+      }
+
+      function stopAutoPlay() {
+        if (autoPlayTimer) clearInterval(autoPlayTimer);
+      }
+
+      if (carouselWrapper) {
+        carouselWrapper.addEventListener('mouseenter', stopAutoPlay);
+        carouselWrapper.addEventListener('mouseleave', startAutoPlay);
+        carouselWrapper.addEventListener('touchstart', stopAutoPlay);
+        carouselWrapper.addEventListener('touchend', startAutoPlay);
+      }
+
+      window.addEventListener('resize', () => {
+        createDots();
+        updateCarousel();
+      });
+
+      createDots();
+      updateCarousel();
+      startAutoPlay();
+
+      // 4. Video Modal Logic
+      const videoTriggers = document.querySelectorAll('.js-open-video');
+      const modal = document.getElementById('videoModal');
+      const iframe = document.getElementById('videoIframe') as HTMLIFrameElement | null;
+      const closeBtn = document.getElementById('closeVideoModal');
+
+      videoTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+          const videoUrl = trigger.getAttribute('data-video-url');
+          if (modal && iframe && videoUrl) {
+            iframe.src = `${videoUrl}?autoplay=1`;
+            modal.classList.add('active');
+          }
+        });
+      });
+
+      const closeModal = () => {
+        if (modal && iframe) {
+          modal.classList.remove('active');
+          iframe.src = '';
+        }
+      };
+
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal();
+        });
+      }
+
+      // 5. Fast Contact Form Handler
+      const form = document.getElementById('home-contact-form');
+      const successBox = document.getElementById('home-form-success');
+      const submitBtn = document.getElementById('home-btn-submit');
+      const resetBtn = document.getElementById('home-btn-reset');
+
+      if (form && successBox && submitBtn && resetBtn) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          
+          const nameInput = document.getElementById('contact-name') as HTMLInputElement | null;
+          const emailInput = document.getElementById('contact-email') as HTMLInputElement | null;
+          const serviceSelect = document.getElementById('contact-service') as HTMLSelectElement | null;
+          const msgInput = document.getElementById('contact-msg') as HTMLTextAreaElement | null;
+          const homeWaDirectBtn = document.getElementById('home-wa-direct-btn') as HTMLAnchorElement | null;
+
+          const name = nameInput ? nameInput.value.trim() : '';
+          const email = emailInput ? emailInput.value.trim() : '';
+          const service = (serviceSelect && serviceSelect.selectedIndex >= 0) ? serviceSelect.options[serviceSelect.selectedIndex].text : '';
+          const message = msgInput ? msgInput.value.trim() : '';
+
+          const waNumber = '6281259145879';
+          const text = `Halo Bolean.id, saya ingin konsultasi proyek teknologi.\n\n*Nama:* ${name}\n*Email:* ${email}\n*Layanan:* ${service}\n*Kebutuhan/Pesan:*\n${message}\n\n(Terkirim melalui formulir beranda bolean.id)`;
+          
+          const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(text)}`;
+
+          if (homeWaDirectBtn) {
+            homeWaDirectBtn.href = waUrl;
+          }
+
+          window.open(waUrl, '_blank');
+
+          form.style.display = 'none';
+          successBox.style.display = 'block';
+          (form as HTMLFormElement).reset();
+        });
+
+        resetBtn.addEventListener('click', () => {
+          successBox.style.display = 'none';
+          form.style.display = 'block';
+        });
+      }
+
+      // 6. Pricing Tabs Category Filter
+      const pricingTabBtns = document.querySelectorAll('.pricing-tab-btn');
+      const pricingCards = document.querySelectorAll('.pricing-card');
+
+      pricingTabBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          pricingTabBtns.forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const targetCategory = btn.getAttribute('data-pricing-tab');
+
+          pricingCards.forEach((card) => {
+            const categories = (card.getAttribute('data-pricing-category') || '').split(' ');
+            if (targetCategory && categories.includes(targetCategory)) {
+              (card as HTMLElement).style.display = 'flex';
+              (card as HTMLElement).style.animation = 'priceFadeIn 0.4s ease forwards';
+            } else {
+              (card as HTMLElement).style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
+
+
   <Footer />
 </Layout>

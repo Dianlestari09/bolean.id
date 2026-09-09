@@ -1,57 +1,707 @@
 ---
-import Icon from '../../components/Icon.astro';
 import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import { allProjects } from '../../data/projects.js';
+
+const softwareProjects = allProjects.filter(p => p.category.toLowerCase().includes('software')).slice(0, 3);
+
+const softwareSolutions = [
+  {
+    icon: 'monitor',
+    badge: 'WEB & SAAS',
+    title: 'Aplikasi Web & SaaS Kustom',
+    desc: 'Pengembangan sistem web dinamis, portal klien, dan aplikasi berbasis cloud dengan skalabilitas tinggi serta keamanan data standar enterprise.',
+    features: ['Arsitektur modular microservices & cloud-ready', 'Dashboard interaktif & visualisasi analitik real-time', 'Akses cepat dioptimalkan untuk performa tinggi']
+  },
+  {
+    icon: 'smartphone',
+    badge: 'MOBILE APP',
+    title: 'Aplikasi Mobile iOS & Android',
+    desc: 'Aplikasi seluler performa native dan multiplatform (Flutter / React Native) yang mulus, responsif, dan siap rilis di Google Play & App Store.',
+    features: ['Pengalaman UI/UX modern, intuitif & responsif', 'Notifikasi push & sinkronisasi data offline', 'Integrasi sensor kamera, GPS, dan bluetooth']
+  },
+  {
+    icon: 'database',
+    badge: 'ENTERPRISE SYSTEM',
+    title: 'Sistem Enterprise (ERP & CRM)',
+    desc: 'Software terpadu untuk merapikan seluruh operasi perusahaan, mulai dari manajemen inventaris, keuangan, procurement, hingga pelacakan sales tim.',
+    features: ['Disesuaikan 100% dengan SOP unik internal bisnis Anda', 'Manajemen hak akses bertingkat aman (RBAC)', 'Laporan analitik, export data & audit trail komprehensif']
+  },
+  {
+    icon: 'globe',
+    badge: 'API & INTEGRASI',
+    title: 'Integrasi API & Otomasi Backend',
+    desc: 'Penghubung andal antar platform berbeda melalui RESTful API dan GraphQL yang aman, mempermudah koneksi dengan payment gateway, kurir, dan ERP eksternal.',
+    features: ['Dokumentasi API lengkap & terstandarisasi', 'Enkripsi payload & token authorization (JWT/OAuth)', 'Arsitektur event-driven dengan queue messaging andal']
+  }
+];
+
+const techStack = [
+  { name: 'React / Next.js', category: 'Frontend' },
+  { name: 'Astro', category: 'Fast Web' },
+  { name: 'Flutter', category: 'Mobile App' },
+  { name: 'Node.js', category: 'Backend' },
+  { name: 'Python / FastAPI', category: 'AI & Data' },
+  { name: 'PostgreSQL', category: 'Database' },
+  { name: 'Redis', category: 'Caching' },
+  { name: 'Docker / Cloud', category: 'DevOps' }
+];
+
+const devStages = [
+  { num: '01', title: 'Discovery & Requirement', desc: 'Konsultasi mendalam untuk memetakan alur kerja bisnis, ekspektasi pengguna, dan parameter keberhasilan proyek.' },
+  { num: '02', title: 'UI/UX & Architecture', desc: 'Perancangan wireframe interaktif, prototype visual estetis, dan perancangan skema database yang skalabel.' },
+  { num: '03', title: 'Agile Coding & Sprints', desc: 'Penulisan kode bersih dengan review berkala. Klien mendapatkan progress demo nyata setiap 1-2 minggu.' },
+  { num: '04', title: 'QA & SLA Deployment', desc: 'Pengujian beban (stress test), audit celah keamanan, dan deployment mulus ke server cloud dengan proteksi SLA.' }
+];
 ---
 
-<Layout title="Software Development | Bolean">
+<Layout 
+  title="Jasa Pembuatan Custom Software & Aplikasi Bisnis | Bolean.id"
+  description="Layanan rekayasa perangkat lunak kustom, sistem ERP, aplikasi mobile iOS/Android, dan web portal enterprise dengan standar keamanan tinggi oleh Bolean."
+>
   <Navbar />
   <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
-    <section class="section section-light">
+
+    <!-- Hero Header -->
+    <section class="service-hero">
       <div class="container">
-        <div class="section-header">
-          <span class="section-subtitle">Layanan Kami</span>
-          <h2 class="section-title">Pengembangan Perangkat Lunak</h2>
-          <p style="color: var(--color-text-muted); margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-            Solusi perangkat lunak khusus yang disesuaikan dengan kebutuhan bisnis unik Anda. Kami membangun aplikasi yang terukur, aman, dan berperforma tinggi.
+        <div class="service-hero-content">
+          <div class="service-badge">
+            <span class="badge-dot"></span>
+            <span>CUSTOM SOFTWARE DEVELOPMENT</span>
+          </div>
+          <h1 class="service-hero-title">
+            Pengembangan Software Kustom yang <span>Presisi & Terukur</span>
+          </h1>
+          <p class="service-hero-desc">
+            Wujudkan perangkat lunak khusus yang dirancang 100% mengikuti proses bisnis unik Anda. Kami membangun sistem web, aplikasi mobile, dan platform enterprise yang cepat, aman, dan siap berekspansi bersama skala bisnis Anda.
           </p>
-        </div>
-        
-        <div class="service-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
-          <a href="/services/software/web" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
-            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
-              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="monitor" class="" /></div>
+          <div class="service-hero-actions">
+            <a 
+              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20pembuatan%20custom%20software" 
+              target="_blank" 
+              class="btn btn-primary btn-hero"
+            >
+              Konsultasi Software Gratis <span>→</span>
+            </a>
+            <a href="#solutions" class="btn btn-outline btn-hero">
+              Lihat Cakupan Solusi ↓
+            </a>
+          </div>
+
+          <!-- Highlight Metric Badges -->
+          <div class="hero-stats-row">
+            <div class="hero-stat-card">
+              <span class="stat-number">100% Kustom</span>
+              <span class="stat-label">Tailored Business Logic</span>
             </div>
-            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Aplikasi Web</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.6;">Aplikasi web dinamis dan responsif yang dibangun dengan kerangka kerja modern untuk memastikan pengalaman pengguna terbaik di semua perangkat.</p>
-          </a>
-          
-          <a href="/services/software/mobile" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
-            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
-              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="smartphone" class="" /></div>
+            <div class="hero-stat-card">
+              <span class="stat-number">Multiplatform</span>
+              <span class="stat-label">Web, iOS & Android</span>
             </div>
-            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Aplikasi Mobile</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.6;">Solusi seluler native dan lintas platform yang dirancang untuk melibatkan pengguna Anda kapan saja dengan performa tanpa batas.</p>
-          </a>
-          
-          <a href="/services/software/enterprise" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
-            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
-              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="globe" class="" /></div>
+            <div class="hero-stat-card">
+              <span class="stat-number">Enterprise</span>
+              <span class="stat-label">Security & RBAC Ready</span>
             </div>
-            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Perangkat Lunak Enterprise</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.6;">Sistem internal yang tangguh yang dirancang untuk merampingkan operasi Anda dan mengelola data bisnis skala besar secara efisien.</p>
-          </a>
+            <div class="hero-stat-card">
+              <span class="stat-number">Agile Sprint</span>
+              <span class="stat-label">Fast Iteration & Delivery</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- Solutions Section (Balanced 2x2 Grid) -->
+    <section id="solutions" class="section section-gray">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">KAPABILITAS UTAMA</span>
+          <h2 class="section-title">Pilar Solusi <span>Custom Software Bolean</span></h2>
+          <p class="section-desc">
+            Dari digitalisasi proses administrasi hingga platform mobile skala nasional, kami memiliki keahlian teknologi untuk mewujudkannya.
+          </p>
+        </div>
+
+        <div class="solutions-grid">
+          {softwareSolutions.map((sol) => (
+            <div class="solution-card">
+              <div class="solution-card-top">
+                <div class="solution-icon-wrap">
+                  <Icon name={sol.icon} class="" />
+                </div>
+                <span class="solution-tag">{sol.badge}</span>
+              </div>
+              <h3 class="solution-title">{sol.title}</h3>
+              <p class="solution-desc">{sol.desc}</p>
+              <ul class="solution-checklist">
+                {sol.features.map((item) => (
+                  <li>
+                    <span class="check-icon">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="section section-light">
+      <div class="container text-center">
+        <div class="section-header">
+          <span class="section-subtitle">TEKNOLOGI MODERN</span>
+          <h2 class="section-title">Modern Stack untuk <span>Performa Maksimal</span></h2>
+          <p class="section-desc">
+            Kami mengadopsi ekosistem teknologi terkini yang terbukti handal, aman, dan ramah pemeliharaan jangka panjang.
+          </p>
+        </div>
+
+        <div class="tech-grid">
+          {techStack.map((tech) => (
+            <div class="tech-card">
+              <span class="tech-category">{tech.category}</span>
+              <h4 class="tech-name">{tech.name}</h4>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Development Workflow (4 Steps) -->
+    <section class="section section-gray">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">METODOLOGI KAMI</span>
+          <h2 class="section-title">Alur Pengerjaan <span>Terstruktur & Transparan</span></h2>
+          <p class="section-desc">
+            Setiap fase dijalankan dengan transparan melalui pelaporan berkala dan pengujian ketat sebelum rilis ke server produksi.
+          </p>
+        </div>
+
+        <div class="process-steps-grid">
+          {devStages.map((st) => (
+            <div class="process-step-card">
+              <div class="step-badge">{st.num}</div>
+              <h4 class="step-title">{st.title}</h4>
+              <p class="step-desc">{st.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Showcase Projects Section -->
+    {softwareProjects.length > 0 && (
+      <section class="section section-light">
+        <div class="container">
+          <div class="section-header-flex">
+            <div>
+              <span class="section-subtitle">PORTOFOLIO SOFTWARE</span>
+              <h2 class="section-title">Studi Kasus <span>Perangkat Lunak Nyata</span></h2>
+            </div>
+            <a href="/portofolio" class="btn btn-outline">Lihat Semua Portofolio →</a>
+          </div>
+
+          <div class="portfolio-cards-grid">
+            {softwareProjects.map((p) => (
+              <a href={`/projects/${p.slug}`} class="portfolio-item-card">
+                <div class="portfolio-item-thumb">
+                  <img src={p.image} alt={p.title} loading="lazy" />
+                  <span class="portfolio-badge">{p.category}</span>
+                </div>
+                <div class="portfolio-item-info">
+                  <h3 class="portfolio-item-title">{p.title}</h3>
+                  <p class="portfolio-item-desc">{p.description}</p>
+                  <span class="portfolio-view-link">Lihat Studi Kasus <span>→</span></span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Dedicated CTA Banner -->
+    <section class="section-cta-banner">
+      <div class="container">
+        <div class="cta-inner-box">
+          <div class="cta-content-side">
+            <span class="cta-pill">SOLUSI TANGGUH</span>
+            <h2 class="cta-main-title">Punya Kebutuhan Software Khusus untuk Bisnis Anda?</h2>
+            <p class="cta-sub-desc">
+              Konsultasikan alur kerja dan fitur yang Anda butuhkan. Tim engineer Bolean siap menyusun arsitektur sistem yang efisien dan hemat biaya investasi.
+            </p>
+          </div>
+          <div class="cta-btn-side">
+            <a 
+              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20custom%20software" 
+              target="_blank" 
+              class="btn-cta-giant"
+            >
+              KONSULTASI SOFTWARE <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
   <Footer />
 </Layout>
 
 <style>
-  .service-feature-card:hover {
+  /* Base Service Hero */
+  .service-hero {
+    background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+    padding: 4.5rem 0 3.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: center;
+  }
+  .service-hero-content {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .service-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(13, 168, 158, 0.1);
+    color: var(--color-primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 0.45rem 1.25rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(13, 168, 158, 0.2);
+  }
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary);
+    border-radius: 50%;
+  }
+  .service-hero-title {
+    font-size: 2.85rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+  .service-hero-title span {
+    color: var(--color-primary);
+  }
+  .service-hero-desc {
+    font-size: 1.12rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 2.25rem;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .service-hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .btn-hero {
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+  }
+
+  /* Hero Stats */
+  .hero-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    max-width: 980px;
+    margin: 0 auto;
+    padding-top: 2.5rem;
+    border-top: 1px solid #e2e8f0;
+  }
+  .hero-stat-card {
+    background: white;
+    padding: 1.25rem 1rem;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    text-align: center;
+  }
+  .stat-number {
+    display: block;
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 0.35rem;
+    white-space: nowrap;
+  }
+  .stat-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+    line-height: 1.35;
+    display: block;
+  }
+
+  /* Solutions 2x2 Grid */
+  .section-desc {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    max-width: 620px;
+    margin: 0.75rem auto 0;
+    line-height: 1.6;
+  }
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 3.5rem;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .solution-card {
+    background: white;
+    padding: 2.5rem 2.25rem;
+    border-radius: 18px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  }
+  .solution-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 15px 35px rgba(8, 39, 82, 0.08);
+    border-color: rgba(13, 168, 158, 0.4);
+  }
+  .solution-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+  .solution-icon-wrap {
+    width: 52px;
+    height: 52px;
+    background: rgba(13, 168, 158, 0.08);
+    color: var(--color-primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .solution-icon-wrap :global(svg) {
+    width: 26px;
+    height: 26px;
+  }
+  .solution-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    background: rgba(13, 168, 158, 0.1);
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+    letter-spacing: 0.8px;
+  }
+  .solution-title {
+    font-size: 1.3rem;
+    color: var(--color-secondary);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .solution-desc {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .solution-checklist {
+    list-style: none;
+    padding: 0;
+    margin: auto 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 1.25rem;
+  }
+  .solution-checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.9rem;
+    color: #334155;
+    line-height: 1.45;
+  }
+  .check-icon {
+    color: var(--color-primary);
+    font-weight: 800;
+  }
+
+  /* Tech Grid */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3rem;
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .tech-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    padding: 1.5rem 1.25rem;
+    border-radius: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+  }
+  .tech-card:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(13, 168, 158, 0.1);
+  }
+  .tech-category {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.35rem;
+  }
+  .tech-name {
+    font-size: 1.1rem;
+    color: var(--color-secondary);
+    font-weight: 700;
+    margin: 0;
+  }
+
+  /* Process Steps */
+  .process-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .process-step-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  }
+  .step-badge {
+    display: inline-block;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+  }
+  .step-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 0.5rem;
+  }
+  .step-desc {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Portfolio Section */
+  .section-header-flex {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .portfolio-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .portfolio-item-card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  }
+  .portfolio-item-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+  }
+  .portfolio-item-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    background: #082752;
+    overflow: hidden;
+  }
+  .portfolio-item-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .portfolio-item-card:hover .portfolio-item-thumb img {
+    transform: scale(1.05);
+  }
+  .portfolio-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(8, 39, 82, 0.85);
+    color: #38ef7d;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    backdrop-filter: blur(4px);
+  }
+  .portfolio-item-info {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .portfolio-item-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 0.5rem;
+  }
+  .portfolio-item-desc {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+  .portfolio-view-link {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  /* CTA Banner */
+  .section-cta-banner {
+    padding: 4rem 0 5rem;
+    background: linear-gradient(135deg, #082752 0%, #0c3b7a 100%);
+  }
+  .cta-inner-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .cta-pill {
+    display: inline-block;
+    background: rgba(13, 168, 158, 0.2);
+    color: #38ef7d;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+  }
+  .cta-main-title {
+    font-size: 2.2rem;
+    color: white;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    line-height: 1.25;
+  }
+  .cta-sub-desc {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0;
+  }
+  .btn-cta-giant {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--color-primary);
+    color: white;
+    font-weight: 800;
+    font-size: 1.05rem;
+    padding: 1.15rem 2.25rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(13, 168, 158, 0.4);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .btn-cta-giant:hover {
+    background: #0bb5aa;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(13, 168, 158, 0.5);
+  }
+
+  @media (max-width: 991px) {
+    .service-hero-title {
+      font-size: 2.3rem;
+    }
+    .hero-stats-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .solutions-grid {
+      grid-template-columns: 1fr;
+    }
+    .tech-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .process-steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .portfolio-cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .cta-inner-box {
+      flex-direction: column;
+      text-align: center;
+    }
+    .cta-sub-desc {
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-stats-row {
+      grid-template-columns: 1fr;
+    }
+    .process-steps-grid {
+      grid-template-columns: 1fr;
+    }
+    .portfolio-cards-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

@@ -2,47 +2,1050 @@
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import { allProjects } from '../data/projects.js';
+import { customerLogos as clientLogos } from '../data/customers.js';
+
+// Ambil 4 project terakhir untuk ditampilkan di halaman About
+const recentProjects = allProjects.slice(0, 6);
+
+const marqueeKeywords = [
+  "IT solution",
+  "web development",
+  "technology",
+  "Internet of Things",
+  "AI & Otomasi",
+  "APP Development"
+];
 ---
 
-<Layout title="About Us | Bolean">
+<Layout title="Tentang Kami | Bolean - Solusi IT & Inovasi Teknologi">
   <Navbar />
+
   <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
-    <section class="section section-gray" style="min-height: calc(100vh - 80px);">
+
+    <!-- =========================================================================
+         1. TENTANG KAMI
+         ========================================================================= -->
+    <section class="section section-light" id="tentang-kami">
       <div class="container">
         <div class="about-grid">
-          <div class="about-image-wrapper" style="display: flex; justify-content: center; align-items: center;">
-            <img src="/images/maskot-bolean-transparent2.png" alt="Bolean Mascot" style="width: 100%; height: auto; object-fit: contain; max-height: 550px; filter: drop-shadow(0 20px 30px rgba(13, 168, 158, 0.15));" />
+          <div class="about-image-wrapper">
+            <div class="about-image-box">
+              <img 
+                src="/images/maskot-bolean-transparent2.png" 
+                alt="Tentang Bolean" 
+                class="about-mascot-img"
+              />
+              <div class="about-experience-badge">
+                <div class="exp-number">5+ Tahun</div>
+                <div class="exp-label">Dedikasi Solusi IT</div>
+              </div>
+            </div>
           </div>
+          
           <div class="about-content">
-            <span class="section-subtitle">Tentang Kami</span>
-            <h2 class="section-title">Membangun Masa Depan dengan Teknologi</h2>
-            <p style="color: var(--color-text-muted); margin-bottom: 1rem;">
-              Di Bolean, kami menyederhanakan hal yang rumit. Kami menghilangkan hal yang tidak perlu dan berfokus pada apa yang benar-benar penting: memberikan solusi IT yang tangguh, terukur, dan premium.
+            <span class="section-subtitle">TENTANG KAMI</span>
+            <h1 class="section-title">Membangun Solusi Teknologi Nyata & Masa Depan Digital</h1>
+            <p class="about-paragraph">
+              Di <strong>Bolean</strong>, kami menyederhanakan hal yang rumit. Kami menghilangkan kerumitan teknis dan berfokus pada apa yang benar-benar penting: memberikan solusi IT yang tangguh, terukur, aman, dan dirancang khusus untuk pertumbuhan bisnis Anda.
             </p>
-            <p style="color: var(--color-text-muted); margin-bottom: 2rem;">
-              Pendekatan kami langsung dan elegan. Kami memadukan keahlian teknis mendalam dengan prinsip desain yang bersih untuk membantu bisnis bertransformasi dan sukses di era digital.
+            <p class="about-paragraph">
+              Berpusat di Indonesia, tim ahli kami memadukan keahlian pengembangan software modern, arsitektur hardware enterprise, teknologi IoT terdepan, serta integrasi AI & otomasi alur kerja untuk menciptakan efisiensi operasional yang sesungguhnya.
             </p>
             
             <div class="about-features">
               <div class="feature-item">
-                <span class="feature-icon">✓</span> Tim Ahli
+                <span class="feature-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+                <span>Tim Ahli & Berpengalaman</span>
               </div>
               <div class="feature-item">
-                <span class="feature-icon">✓</span> Kode Bersih
+                <span class="feature-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+                <span>Kode Bersih & Terstandarisasi</span>
               </div>
               <div class="feature-item">
-                <span class="feature-icon">✓</span> Dukungan 24/7
+                <span class="feature-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+                <span>Dukungan & Maintenance 24/7</span>
               </div>
               <div class="feature-item">
-                <span class="feature-icon">✓</span> Pengiriman Cepat
+                <span class="feature-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                </span>
+                <span>Pengiriman Tepat Waktu</span>
               </div>
             </div>
             
-            <a href="/contact" class="btn btn-primary" style="margin-top: 2.5rem;">Cari Tahu Lebih Lanjut</a>
+            <div class="about-cta-group">
+              <a href="/contact" class="btn btn-primary">Konsultasi Sekarang</a>
+              <a href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20tanya%20seputar%20layanan%20Bolean" target="_blank" class="btn btn-secondary">Hubungi WhatsApp</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key Metrics Counter -->
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-number">120<span>+</span></div>
+            <div class="stat-label">Proyek Sukses Dikerjakan</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">98<span>%</span></div>
+            <div class="stat-label">Tingkat Kepuasan Klien</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">24<span>/7</span></div>
+            <div class="stat-label">Dukungan & Monitoring</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">5<span>+</span></div>
+            <div class="stat-label">Tahun Dedikasi & Pengalaman</div>
           </div>
         </div>
       </div>
     </section>
+
+
+    <!-- =========================================================================
+         2. PROJECT TERAKHIR
+         ========================================================================= -->
+    <section class="section section-gray" id="project-terakhir">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">PORTOFOLIO TERBARU</span>
+          <h2 class="section-title">Project Terakhir yang Kami Bangun</h2>
+          <p style="color: var(--color-text-muted); margin-top: 0.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Beberapa hasil karya terbaik kami dalam bidang website, mobile app, hardware, dan sistem Internet of Things.
+          </p>
+        </div>
+
+        <!-- 1-Row Carousel Wrapper (6 Projects) -->
+        <div class="about-projects-carousel-wrapper" id="aboutProjectsCarousel">
+          <div class="about-projects-track" id="aboutProjectsTrack">
+            {recentProjects.map((project) => (
+              <div class="about-project-slide">
+                <div class="recent-project-card">
+                  <div class="recent-project-img-box">
+                    <img src={project.image} alt={project.title} loading="lazy" />
+                    <span class="recent-project-badge">{project.category}</span>
+                  </div>
+                  <div class="recent-project-body">
+                    <h3 class="recent-project-title">{project.title}</h3>
+                    <p class="recent-project-desc">{project.description}</p>
+                    <div class="recent-project-tags">
+                      {project.technologies && project.technologies.slice(0, 3).map((tech) => (
+                        <span class="recent-tag">{tech}</span>
+                      ))}
+                    </div>
+                    <a href={`/projects/${project.slug}`} class="recent-project-link">
+                      Detail Proyek 
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Carousel Navigation Controls -->
+        <div class="about-carousel-controls">
+          <button class="about-carousel-btn" id="prevProjectBtn" aria-label="Project Sebelumnya">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <div class="about-carousel-dots" id="aboutProjectDots"></div>
+          <button class="about-carousel-btn" id="nextProjectBtn" aria-label="Project Selanjutnya">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+
+        <div style="text-align: center; margin-top: 2.5rem;">
+          <a href="/services" class="btn btn-secondary" style="padding: 0.85rem 2rem; font-weight: 700;">
+            Eksplorasi Semua Layanan & Solusi &rarr;
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         3. TULISAN BERJALAN (MARQUEE)
+         ========================================================================= -->
+    <section class="about-marquee-section">
+      <div class="about-marquee-track">
+        {[...marqueeKeywords, ...marqueeKeywords, ...marqueeKeywords, ...marqueeKeywords].map((keyword) => (
+          <div class="about-marquee-item">
+            <span>{keyword}</span>
+            <img 
+              src="/favicon-tab.png" 
+              alt="Bolean Icon" 
+              class="marquee-bolean-bullet" 
+              width="24" 
+              height="24" 
+              loading="lazy" 
+            />
+          </div>
+        ))}
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         4. TEAM MEMBER
+         ========================================================================= -->
+    <section class="section section-light" id="team-member">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">TALENTA MUDA & BERPENGALAMAN</span>
+          <h2 class="section-title">Energi Generasi Muda di Balik Inovasi Bolean</h2>
+          <p style="color: var(--color-text-muted); margin-top: 0.5rem; max-width: 680px; margin-left: auto; margin-right: auto;">
+            Generasi muda dengan segudang pengalaman teknologi nyata. Kami memadukan fleksibilitas dan inovasi anak muda dengan keahlian teknis matang untuk mengakselerasi bisnis Anda.
+          </p>
+        </div>
+
+        <div class="team-cards-grid">
+          <!-- Member 1: Leader -->
+          <a href="/team/dian" class="about-team-card">
+            <div class="about-team-img-wrap">
+              <img src="/images/team/dian.jpg" alt="Dian Lestari Kurniawati" />
+            </div>
+            <div class="about-team-info">
+              <span class="about-team-role">Project Leader</span>
+              <h3 class="about-team-name">Dian Lestari Kurniawati</h3>
+              <p class="about-team-bio">Memimpin strategi manajemen proyek, koordinasi tim, dan jaminan mutu layanan Bolean.</p>
+              <span class="about-team-link">Lihat Profil & Skill &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Member 2: Software Engineer -->
+          <a href="/team/fahd" class="about-team-card">
+            <div class="about-team-img-wrap">
+              <img src="/images/team/fahd.jpg" alt="M. Fahd Khulloh" />
+            </div>
+            <div class="about-team-info">
+              <span class="about-team-role">Software Engineer</span>
+              <h3 class="about-team-name">M. Fahd Khulloh</h3>
+              <p class="about-team-bio">Merancang arsitektur web performa tinggi, backend API, dan sistem aplikasi terintegrasi.</p>
+              <span class="about-team-link">Lihat Profil & Skill &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Member 3: Hardware Developer -->
+          <a href="/team/iqbal" class="about-team-card">
+            <div class="about-team-img-wrap">
+              <img src="/images/team/iqbal.jpg" alt="Maulana Muhammad Iqbal" />
+            </div>
+            <div class="about-team-info">
+              <span class="about-team-role">Hardware & IoT Developer</span>
+              <h3 class="about-team-name">Maulana Muhammad Iqbal</h3>
+              <p class="about-team-bio">Spesialis pembuatan modul IoT, sensor telemetri, skematik PCB, dan infrastruktur server.</p>
+              <span class="about-team-link">Lihat Profil & Skill &rarr;</span>
+            </div>
+          </a>
+
+          <!-- Member 4: Desainer Grafis / UIUX -->
+          <a href="/team/keysa" class="about-team-card">
+            <div class="about-team-img-wrap">
+              <img src="/images/team/keysa.jpg" alt="Keysha Qanita Kamila" />
+            </div>
+            <div class="about-team-info">
+              <span class="about-team-role">UI/UX & Desainer Grafis</span>
+              <h3 class="about-team-name">Keysha Qanita Kamila</h3>
+              <p class="about-team-bio">Menciptakan antarmuka digital yang modern, estetis, interaktif, dan ramah pengguna.</p>
+              <span class="about-team-link">Lihat Profil & Skill &rarr;</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- =========================================================================
+         5. CLIENT KAMI
+         ========================================================================= -->
+    <section class="section section-gray" id="client-kami">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">KLIEN & MITRA KAMI</span>
+          <h2 class="section-title">Dipercaya Oleh Berbagai Bisnis & Institusi</h2>
+          <p style="color: var(--color-text-muted); margin-top: 0.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Kami bangga telah menjadi mitra teknologi terpercaya bagi pelaku usaha, UMKM, instansi, dan korporasi.
+          </p>
+        </div>
+
+        <!-- Client Badges Grid -->
+        <div class="client-logos-grid">
+          {clientLogos.map((client) => (
+            <div class="client-logo-card">
+              <div class="client-logo-img-wrap">
+                <img 
+                  src={client.logo} 
+                  alt={client.name} 
+                  class="client-logo-img"
+                  loading="lazy" 
+                />
+              </div>
+              <div class="client-logo-title">{client.name}</div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Client Testimonial Card -->
+        <div class="about-client-testimonial">
+          <div class="testimonial-quote-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+          </div>
+          <p class="testimonial-quote-text">
+            Bolean berhasil merancang dan mengimplementasikan sistem otomasi serta website bisnis kami dengan hasil yang sangat memuaskan, cepat, dan aman. Komunikasi tim mereka sangat responsif dan solutif.
+          </p>
+          <div class="testimonial-author">
+            <strong>Mitra Bisnis & Klien Terpercaya</strong>
+            <span>Enterprise Partner Bolean</span>
+          </div>
+        </div>
+
+        <!-- Call to Action Banner -->
+        <div class="about-cta-banner">
+          <div class="about-cta-text">
+            <h3>Siap Mewujudkan Solusi Teknologi Anda?</h3>
+            <p>Diskusikan kebutuhan software, hardware, IoT, atau otomasi AI bisnis Anda bersama kami hari ini.</p>
+          </div>
+          <a href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20mengenai%20proyek%20bisnis%20saya" target="_blank" class="btn btn-primary" style="padding: 0.85rem 2rem; font-size: 1rem;">
+            Konsultasi Gratis Sekarang
+          </a>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const track = document.getElementById('aboutProjectsTrack');
+      const slides = document.querySelectorAll('.about-project-slide');
+      const prevBtn = document.getElementById('prevProjectBtn');
+      const nextBtn = document.getElementById('nextProjectBtn');
+      const dotsContainer = document.getElementById('aboutProjectDots');
+      const carouselWrapper = document.getElementById('aboutProjectsCarousel');
+
+      if (!track || slides.length === 0) return;
+
+      let currentIndex = 0;
+      let autoPlayTimer: any = null;
+
+      function getVisibleCount() {
+        if (window.innerWidth <= 640) return 1;
+        if (window.innerWidth <= 1024) return 2;
+        return 3;
+      }
+
+      function getMaxIndex() {
+        return Math.max(0, slides.length - getVisibleCount());
+      }
+
+      function createDots() {
+        if (!dotsContainer) return;
+        dotsContainer.innerHTML = '';
+        const maxIdx = getMaxIndex();
+        for (let i = 0; i <= maxIdx; i++) {
+          const dot = document.createElement('button');
+          dot.classList.add('about-dot');
+          dot.setAttribute('aria-label', `Slide ${i + 1}`);
+          if (i === currentIndex) dot.classList.add('active');
+          dot.addEventListener('click', () => {
+            currentIndex = i;
+            updateCarousel();
+          });
+          dotsContainer.appendChild(dot);
+        }
+      }
+
+      function updateCarousel() {
+        if (!track || slides.length === 0) return;
+        const maxIdx = getMaxIndex();
+        if (currentIndex > maxIdx) currentIndex = maxIdx;
+        if (currentIndex < 0) currentIndex = 0;
+
+        const visibleCount = getVisibleCount();
+        const slideWidthPercent = 100 / visibleCount;
+        const gapOffset = (currentIndex * 1.5) / visibleCount;
+        
+        track.style.transform = `translateX(calc(-${currentIndex * slideWidthPercent}% - ${gapOffset}rem))`;
+
+        const dots = dotsContainer?.querySelectorAll('.about-dot');
+        dots?.forEach((dot, idx) => {
+          if (idx === currentIndex) dot.classList.add('active');
+          else dot.classList.remove('active');
+        });
+      }
+
+      function nextSlide() {
+        const maxIdx = getMaxIndex();
+        currentIndex = (currentIndex >= maxIdx) ? 0 : currentIndex + 1;
+        updateCarousel();
+      }
+
+      function prevSlide() {
+        const maxIdx = getMaxIndex();
+        currentIndex = (currentIndex <= 0) ? maxIdx : currentIndex - 1;
+        updateCarousel();
+      }
+
+      if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+      if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+      function startAutoPlay() {
+        stopAutoPlay();
+        autoPlayTimer = setInterval(nextSlide, 4500);
+      }
+
+      function stopAutoPlay() {
+        if (autoPlayTimer) clearInterval(autoPlayTimer);
+      }
+
+      if (carouselWrapper) {
+        carouselWrapper.addEventListener('mouseenter', stopAutoPlay);
+        carouselWrapper.addEventListener('mouseleave', startAutoPlay);
+        carouselWrapper.addEventListener('touchstart', stopAutoPlay, { passive: true });
+        carouselWrapper.addEventListener('touchend', startAutoPlay, { passive: true });
+      }
+
+      window.addEventListener('resize', () => {
+        createDots();
+        updateCarousel();
+      });
+
+      createDots();
+      updateCarousel();
+      startAutoPlay();
+    });
+  </script>
+
   <Footer />
 </Layout>
+
+<style>
+  /* 1. About Us Section Styling */
+  .about-mascot-img {
+    max-height: 380px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.3));
+    transition: transform 0.3s ease;
+  }
+
+  .about-mascot-img:hover {
+    transform: scale(1.03);
+  }
+
+  .about-experience-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(13, 168, 158, 0.95);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .exp-number {
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .exp-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .about-paragraph {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    font-size: 1.02rem;
+  }
+
+  
+  .about-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem 1.25rem;
+    margin: 1.5rem 0 0.5rem 0;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-main, #1e293b);
+  }
+
+  .feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(13, 168, 158, 0.12);
+    color: var(--color-primary, #0da89e);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .about-features {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+  }
+
+  .about-cta-group {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* 2. 1-Row Carousel Projects */
+  .about-projects-carousel-wrapper {
+    overflow: hidden;
+    width: 100%;
+    margin-top: 2.5rem;
+    padding: 0.5rem 0.25rem 1.5rem;
+  }
+
+  .about-projects-track {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+  }
+
+  .about-project-slide {
+    flex: 0 0 calc((100% - 3rem) / 3);
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 1024px) {
+    .about-project-slide {
+      flex: 0 0 calc((100% - 1.5rem) / 2);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .about-project-slide {
+      flex: 0 0 100%;
+    }
+  }
+
+  .about-project-slide .recent-project-card {
+    height: 100%;
+    margin: 0;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about-project-slide .recent-project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(8, 39, 82, 0.12);
+  }
+
+  .recent-project-img-box {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: #082752;
+  }
+
+  .recent-project-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .recent-project-card:hover .recent-project-img-box img {
+    transform: scale(1.08);
+  }
+
+  .recent-project-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: rgba(8, 39, 82, 0.85);
+    backdrop-filter: blur(6px);
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .recent-project-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .recent-project-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .recent-project-desc {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.7rem;
+  }
+
+  .recent-project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .recent-tag {
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+  }
+
+  .recent-project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition: gap 0.2s ease;
+  }
+
+  .recent-project-link:hover {
+    gap: 0.6rem;
+  }
+
+  /* Carousel Controls */
+  .about-carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .about-carousel-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid var(--color-border);
+    color: var(--color-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    transition: all var(--transition-fast);
+  }
+
+  .about-carousel-btn:hover {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+    transform: scale(1.08);
+    box-shadow: 0 6px 18px rgba(13, 168, 158, 0.3);
+  }
+
+  .about-carousel-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .about-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+  }
+
+  .about-dot.active {
+    width: 28px;
+    border-radius: 20px;
+    background: var(--color-primary);
+    box-shadow: 0 2px 8px rgba(13, 168, 158, 0.4);
+  }
+
+  /* 3. Infinite Marquee Section */
+  .about-marquee-section {
+    background: linear-gradient(135deg, #082752, #0c3875);
+    padding: 2.25rem 0;
+    overflow: hidden;
+    position: relative;
+    border-top: 2px solid rgba(13, 168, 158, 0.3);
+    border-bottom: 2px solid rgba(13, 168, 158, 0.3);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .about-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: aboutMarqueeScroll 28s linear infinite;
+    align-items: center;
+  }
+
+  .about-marquee-item {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding: 0 1.5rem;
+  }
+
+  .about-marquee-item span:first-child {
+    color: #ffffff;
+    -webkit-text-fill-color: #ffffff;
+    background: none;
+  }
+
+  .about-marquee-section:hover .about-marquee-track {
+    animation-play-state: paused;
+  }
+
+  .marquee-bolean-bullet {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    margin-left: 2.75rem;
+    margin-right: 0.75rem;
+    opacity: 0.92;
+    display: inline-block;
+    vertical-align: middle;
+    flex-shrink: 0;
+    transition: transform 0.3s ease, filter 0.3s ease;
+  }
+
+  .about-marquee-item:hover .marquee-bolean-bullet {
+    transform: rotate(15deg) scale(1.12);
+    opacity: 1;
+    filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
+  }
+
+  @keyframes aboutMarqueeScroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* 4. Team Member Section */
+  .team-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+
+  .about-team-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about-team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 45px rgba(8, 39, 82, 0.14);
+  }
+
+  .about-team-img-wrap {
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    background: #082752;
+  }
+
+  .about-team-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.5s ease;
+  }
+
+  .about-team-card:hover .about-team-img-wrap img {
+    transform: scale(1.06);
+  }
+
+  .about-team-info {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .about-team-role {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.35rem;
+  }
+
+  .about-team-name {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .about-team-bio {
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+
+  .about-team-link {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    transition: color 0.2s ease;
+  }
+
+  .about-team-card:hover .about-team-link {
+    color: var(--color-primary);
+  }
+
+  /* 5. Client Kami Section */
+  .client-logos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .client-logo-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--color-border);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 165px;
+  }
+
+  .client-logo-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--color-primary);
+    box-shadow: 0 14px 30px rgba(13, 168, 158, 0.15);
+  }
+
+  .client-logo-img-wrap {
+    height: 85px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .client-logo-img {
+    max-height: 75px;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+
+  .client-logo-card:hover .client-logo-img {
+    transform: scale(1.06);
+  }
+
+  .client-logo-title {
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.82rem;
+    line-height: 1.3;
+    margin-top: auto;
+  }
+
+  @media (max-width: 1024px) {
+    .client-logos-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .client-logos-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .client-logo-card {
+      padding: 1.25rem 0.75rem;
+      min-height: 145px;
+    }
+
+    .client-logo-img-wrap {
+      height: 70px;
+    }
+
+    .client-logo-img {
+      max-height: 60px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .client-logos-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+  }
+
+  .about-client-testimonial {
+    background: white;
+    border-radius: 18px;
+    padding: 2.5rem;
+    margin-top: 3rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid var(--color-primary);
+    position: relative;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .testimonial-quote-icon {
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-primary);
+    opacity: 0.25;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-family: Georgia, serif;
+  }
+
+  .testimonial-quote-text {
+    font-size: 1.15rem;
+    font-style: italic;
+    color: #334155;
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.95rem;
+  }
+
+  .testimonial-author strong {
+    color: var(--color-secondary);
+  }
+
+  .testimonial-author span {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+  }
+
+  .about-cta-banner {
+    background: linear-gradient(135deg, #082752, #0c3875);
+    border-radius: 20px;
+    padding: 3rem;
+    margin-top: 3.5rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    box-shadow: 0 15px 40px rgba(8, 39, 82, 0.25);
+  }
+
+  .about-cta-text h3 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+
+  .about-cta-text p {
+    color: #94a3b8;
+    font-size: 1rem;
+    max-width: 550px;
+  }
+
+  @media (max-width: 768px) {
+    .about-cta-banner {
+      padding: 2rem;
+      text-align: center;
+      justify-content: center;
+    }
+    .about-cta-text p {
+      margin: 0 auto;
+    }
+  }
+</style>

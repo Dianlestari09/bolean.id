@@ -1,0 +1,771 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+
+const maintenanceServices = [
+  {
+    icon: 'activity',
+    title: 'Monitoring Uptime 24/7',
+    desc: 'Sistem pemantauan otomatis setiap 60 detik untuk mendeteksi downtime, error server 500, atau kendala DNS sebelum disadari pelanggan Anda.'
+  },
+  {
+    icon: 'database',
+    title: 'Automated Cloud Backup',
+    desc: 'Pencadangan rutin berkala (harian/mingguan) ke penyimpanan cloud terpisah, memastikan aset data Anda selalu aman dan dapat dipulihkan instan.'
+  },
+  {
+    icon: 'lock',
+    title: 'Keamanan & Proteksi Malware',
+    desc: 'Pemasangan firewall web, pemindaian celah keamanan, pembaruan patch kerentanan sistem, dan perpanjangan sertifikat SSL otomatis.'
+  },
+  {
+    icon: 'settings',
+    title: 'Optimasi Kecepatan & Cache',
+    desc: 'Audit performa berkala, pembersihan sampah database, kompresi gambar generasi modern, dan konfigurasi CDN global agar web selalu enteng.'
+  },
+  {
+    icon: 'monitor',
+    title: 'Pembaruan Konten & Media',
+    desc: 'Bantuan praktis untuk mengunggah artikel blog, memperbarui informasi kontak, mengganti banner promosi, atau mengubah portofolio bisnis.'
+  },
+  {
+    icon: 'bar-chart',
+    title: 'Laporan Performa Bulanan',
+    desc: 'Dapatkan rekap transparan setiap bulan mengenai metrik uptime, statistik pengunjung, status keamanan, serta saran peningkatan performa.'
+  }
+];
+
+const riskComparisons = [
+  {
+    badge: 'BAHAYA',
+    isAlert: true,
+    title: 'Serangan Malware & Hack',
+    desc: 'Plugin usang atau celah kode dapat dieksploitasi untuk memasukkan iklan judi online atau merusak reputasi domain bisnis Anda.'
+  },
+  {
+    badge: 'KERUGIAN',
+    isAlert: true,
+    title: 'Penurunan Peringkat SEO',
+    desc: 'Google memberi penalti keras pada website yang lambat, sering down, atau tidak memiliki sertifikat SSL yang terawat.'
+  },
+  {
+    badge: 'FATAL',
+    isAlert: true,
+    title: 'Data Hilang Permanen',
+    desc: 'Ketika server hosting mengalami kegagalan hardware tanpa backup berkala, data pelanggan dan konten lenyap tanpa jejak.'
+  },
+  {
+    badge: 'SOLUSI BOLEAN',
+    isAlert: false,
+    title: 'Tenang & Terproteksi',
+    desc: 'Tim ahli kami mengawasi dan menjaga website Anda setiap hari sehingga Anda bebas fokus melipatgandakan omzet bisnis.'
+  }
+];
+
+const maintenancePackages = [
+  {
+    name: 'Basic Care',
+    price: 'Rp 450.000',
+    period: '/ bulan',
+    desc: 'Solusi esensial untuk menjaga website profil tetap aktif, aman, dan bebas masalah teknis.',
+    recommended: false,
+    features: [
+      'Monitoring Uptime 24/7 Berkala',
+      'Backup Otomatis Cloud Mingguan',
+      'Pembaruan Sistem & Patch Keamanan',
+      '2x Pembaruan Konten/Banner per Bulan',
+      'Pemeriksaan Broken Link & Eror',
+      'Support Teknis via WhatsApp (Hari Kerja)'
+    ]
+  },
+  {
+    name: 'Pro Growth',
+    price: 'Rp 950.000',
+    period: '/ bulan',
+    desc: 'Paket terfavorit untuk website bisnis dan katalog produk yang membutuhkan keandalan ekstra dan respon cepat.',
+    recommended: true,
+    features: [
+      'Monitoring Uptime 24/7 Real-Time Alert',
+      'Backup Cloud Harian (Daily Backup)',
+      'Optimasi Kecepatan & Cache Berkala',
+      'Proteksi Malware & Firewall Website',
+      '5x Pembaruan Konten/Produk per Bulan',
+      'Jaminan Pemulihan Cepat (< 2 Jam)',
+      'Support Prioritas WhatsApp Dedicated'
+    ]
+  },
+  {
+    name: 'Enterprise SLA',
+    price: 'Rp 2.200.000',
+    period: '/ bulan',
+    desc: 'Perawatan komprehensif tingkat lanjut untuk portal perusahaan, aplikasi web, atau e-commerce bertrafik tinggi.',
+    recommended: false,
+    features: [
+      'Dedicated Engineer Pendamping Khusus',
+      'Perjanjian Layanan Uptime (SLA 99.9%)',
+      'Pencadangan Real-time Multi-region',
+      'Unlimited Minor Update Konten & Styling',
+      'Audit Keamanan Mendalam Bulanan',
+      'Penanganan Insiden Darurat 24/7',
+      'Laporan Analitik Bisnis & Konsultasi Teknis'
+    ]
+  }
+];
+
+const faqs = [
+  {
+    q: 'Bagaimana jika website saya dibuat oleh vendor atau developer lain?',
+    a: 'Tidak masalah! Tim engineer Bolean akan melakukan audit teknis menyeluruh terlebih dahulu terhadap struktur website dan hosting Anda sebelum memulai masa pemeliharaan resmi.'
+  },
+  {
+    q: 'Berapa lama respon tim Bolean jika website mengalami kendala atau down?',
+    a: 'Sistem monitoring kami mendeteksi kendala dalam hitungan menit. Untuk paket Pro Growth dan Enterprise, tim teknis kami langsung merespon dan menangani insiden dalam waktu di bawah 30-60 menit.'
+  },
+  {
+    q: 'Apakah pembaruan konten mencakup perubahan desain tata letak yang besar?',
+    a: 'Pembaruan konten mencakup teks, gambar, penambahan produk, banner promo, atau artikel baru. Untuk perombakan tampilan antarmuka (redesign) skala besar, kami akan memberikan estimasi terpisah yang hemat biaya.'
+  },
+  {
+    q: 'Apakah ada kontrak minimal berlangganan?',
+    a: 'Layanan kami fleksibel per bulan. Namun, untuk memastikan stabilitas sistem jangka panjang, kami menyediakan diskon khusus hingga 20% untuk komitmen tahunan.'
+  }
+];
+---
+
+<Layout 
+  title="Jasa Pengelolaan & Maintenance Website Terpercaya | Bolean.id"
+  description="Layanan pemeliharaan website profesional. Monitoring uptime 24/7, cloud backup rutin, optimasi kecepatan, update konten, dan proteksi keamanan oleh Bolean."
+>
+  <Navbar />
+  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
+
+    <!-- Hero Header -->
+    <section class="service-hero">
+      <div class="container">
+        <div class="service-hero-content">
+          <div class="service-badge">
+            <span class="badge-dot"></span>
+            <span>MANAGED WEB & MAINTENANCE</span>
+          </div>
+          <h1 class="service-hero-title">
+            Pengelolaan Website Bisnis: Bebas Masalah, Cepat & <span>Selalu Aman</span>
+          </h1>
+          <p class="service-hero-desc">
+            Fokuslah mengembangkan bisnis dan operasional Anda. Biarkan tim engineer Bolean menjaga performa, memperbarui konten, serta mengamankan website Anda dari risiko downtime dan ancaman siber 24/7.
+          </p>
+          <div class="service-hero-actions">
+            <a 
+              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20layanan%20pengelolaan%20dan%20maintenance%20website" 
+              target="_blank" 
+              class="btn btn-primary btn-hero"
+            >
+              Konsultasi Pengelolaan <span>→</span>
+            </a>
+            <a href="#packages" class="btn btn-outline btn-hero">
+              Pilihan Paket Maintenance ↓
+            </a>
+          </div>
+
+          <!-- Highlight Metric Badges -->
+          <div class="hero-stats-row">
+            <div class="hero-stat-card">
+              <span class="stat-number">99.9%</span>
+              <span class="stat-label">Target Uptime Server</span>
+            </div>
+            <div class="hero-stat-card">
+              <span class="stat-number">&lt; 30 Menit</span>
+              <span class="stat-label">Respon Insiden Darurat</span>
+            </div>
+            <div class="hero-stat-card">
+              <span class="stat-number">Daily Backup</span>
+              <span class="stat-label">Automated Cloud Backup</span>
+            </div>
+            <div class="hero-stat-card">
+              <span class="stat-number">24/7 Live</span>
+              <span class="stat-label">Monitoring Otomatis</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Grid (3 Columns x 2 Rows) -->
+    <section class="section section-gray">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">CAKUPAN PEMELIHARAAN</span>
+          <h2 class="section-title">Semua Kebutuhan Perawatan Website <span>Dalam Satu Layanan</span></h2>
+          <p class="section-desc">
+            Kami memastikan website Anda beroperasi seperti aset bisnis profesional yang handal, cepat, dan selalu terbarui.
+          </p>
+        </div>
+
+        <div class="services-grid-maint">
+          {maintenanceServices.map((svc) => (
+            <div class="maint-card">
+              <div class="maint-icon-wrap">
+                <Icon name={svc.icon} class="" />
+              </div>
+              <h3 class="maint-title">{svc.title}</h3>
+              <p class="maint-desc">{svc.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Maintenance Matters (4 Columns) -->
+    <section class="section section-light">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">MENGAPA INI PENTING?</span>
+          <h2 class="section-title">Risiko Nyata Website <span>Tanpa Pengelolaan Rutin</span></h2>
+          <p class="section-desc">
+            Website yang dibiarkan tanpa pemeliharaan rentan terhadap serangan hacker, database membengkak, hingga kehilangan calon pelanggan karena halaman eror.
+          </p>
+        </div>
+
+        <div class="risk-cards-grid-4">
+          {riskComparisons.map((rc) => (
+            <div class={`risk-card-item ${!rc.isAlert ? 'solusi-box' : ''}`}>
+              <span class={`risk-pill ${!rc.isAlert ? 'solusi-pill' : ''}`}>{rc.badge}</span>
+              <h4 class="risk-title">{rc.title}</h4>
+              <p class="risk-desc">{rc.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Packages Section (3 Columns) -->
+    <section id="packages" class="section section-gray">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">PAKET BERLANGGANAN</span>
+          <h2 class="section-title">Pilihan Paket <span>Pengelolaan Website</span></h2>
+          <p class="section-desc">
+            Pilih paket yang paling sesuai dengan skala dan frekuensi update website perusahaan Anda.
+          </p>
+        </div>
+
+        <div class="packages-grid">
+          {maintenancePackages.map((pkg) => (
+            <div class={`package-card ${pkg.recommended ? 'recommended' : ''}`}>
+              {pkg.recommended && (
+                <div class="recommended-badge">Paling Diminati</div>
+              )}
+              <div class="package-header">
+                <h3 class="package-name">{pkg.name}</h3>
+                <div class="package-price">
+                  {pkg.price} <span class="price-period">{pkg.period}</span>
+                </div>
+                <p class="package-short-desc">{pkg.desc}</p>
+              </div>
+
+              <div class="package-features">
+                <ul>
+                  {pkg.features.map((feat) => (
+                    <li>
+                      <span class="feat-check">✓</span>
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="package-footer">
+                <a 
+                  href={`https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20tertarik%20dengan%20paket%20Pengelolaan%20${pkg.name}`} 
+                  target="_blank" 
+                  class={`btn ${pkg.recommended ? 'btn-primary' : 'btn-outline'}`}
+                  style="width: 100%; justify-content: center;"
+                >
+                  Pilih Paket {pkg.name}
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section section-light">
+      <div class="container" style="max-width: 860px;">
+        <div class="section-header text-center">
+          <span class="section-subtitle">PERTANYAAN UMUM</span>
+          <h2 class="section-title">FAQ Seputar <span>Maintenance Website</span></h2>
+        </div>
+
+        <div class="faq-list">
+          {faqs.map((f) => (
+            <div class="faq-item">
+              <h4 class="faq-q">❓ {f.q}</h4>
+              <p class="faq-a">{f.a}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Dedicated CTA Banner -->
+    <section class="section-cta-banner">
+      <div class="container">
+        <div class="cta-inner-box">
+          <div class="cta-content-side">
+            <span class="cta-pill">KONSULTASI TEKNIS</span>
+            <h2 class="cta-main-title">Ingin Website Anda Selalu Prima & Bebas Eror?</h2>
+            <p class="cta-sub-desc">
+              Konsultasikan kendala atau kebutuhan maintenance website Anda sekarang. Tim Bolean siap membantu audit performa awal tanpa biaya.
+            </p>
+          </div>
+          <div class="cta-btn-side">
+            <a 
+              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20layanan%20pengelolaan%20website" 
+              target="_blank" 
+              class="btn-cta-giant"
+            >
+              HUBUNGI TIM KAMI <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Base Service Hero */
+  .service-hero {
+    background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+    padding: 4.5rem 0 3.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: center;
+  }
+  .service-hero-content {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .service-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(13, 168, 158, 0.1);
+    color: var(--color-primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 0.45rem 1.25rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(13, 168, 158, 0.2);
+  }
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary);
+    border-radius: 50%;
+  }
+  .service-hero-title {
+    font-size: 2.85rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+  .service-hero-title span {
+    color: var(--color-primary);
+  }
+  .service-hero-desc {
+    font-size: 1.12rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 2.25rem;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .service-hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .btn-hero {
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+  }
+
+  /* Hero Stats */
+  .hero-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    max-width: 980px;
+    margin: 0 auto;
+    padding-top: 2.5rem;
+    border-top: 1px solid #e2e8f0;
+  }
+  .hero-stat-card {
+    background: white;
+    padding: 1.25rem 1rem;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    text-align: center;
+  }
+  .stat-number {
+    display: block;
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 0.35rem;
+    white-space: nowrap;
+  }
+  .stat-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+    line-height: 1.35;
+    display: block;
+  }
+
+  /* Services Grid Maint (3 Columns x 2 Rows) */
+  .section-desc {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    max-width: 620px;
+    margin: 0.75rem auto 0;
+    line-height: 1.6;
+  }
+  .services-grid-maint {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3.5rem;
+  }
+  .maint-card {
+    background: white;
+    padding: 2.25rem 2rem;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  }
+  .maint-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(8, 39, 82, 0.08);
+    border-color: rgba(13, 168, 158, 0.4);
+  }
+  .maint-icon-wrap {
+    width: 52px;
+    height: 52px;
+    background: rgba(13, 168, 158, 0.08);
+    color: var(--color-primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .maint-icon-wrap :global(svg) {
+    width: 26px;
+    height: 26px;
+  }
+  .maint-title {
+    font-size: 1.25rem;
+    color: var(--color-secondary);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .maint-desc {
+    color: var(--color-text-muted);
+    font-size: 0.93rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Risk Cards Grid (4 Columns) */
+  .risk-cards-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .risk-card-item {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  }
+  .risk-card-item.solusi-box {
+    border-color: rgba(13, 168, 158, 0.3);
+    background: linear-gradient(180deg, #ffffff 0%, #f0fdfa 100%);
+  }
+  .risk-pill {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
+    margin-bottom: 0.75rem;
+  }
+  .solusi-pill {
+    color: var(--color-primary);
+    background: rgba(13, 168, 158, 0.12);
+  }
+  .risk-title {
+    font-size: 1.08rem;
+    color: var(--color-secondary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .risk-desc {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Packages (3 Columns) */
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3.5rem;
+    align-items: stretch;
+  }
+  .package-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 2.75rem 2.25rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  }
+  .package-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  }
+  .package-card.recommended {
+    border: 2px solid var(--color-primary);
+    box-shadow: 0 12px 35px rgba(13, 168, 158, 0.16);
+    transform: scale(1.02);
+  }
+  .package-card.recommended:hover {
+    transform: scale(1.02) translateY(-8px);
+  }
+  .recommended-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-primary);
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.35rem 1.25rem;
+    border-radius: 50px;
+  }
+  .package-header {
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 1.75rem;
+    margin-bottom: 1.75rem;
+    text-align: center;
+  }
+  .package-name {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 0.5rem;
+  }
+  .package-price {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+  }
+  .price-period {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+  }
+  .package-short-desc {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+  .package-features {
+    flex-grow: 1;
+    margin-bottom: 2rem;
+  }
+  .package-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .package-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.92rem;
+    color: #475569;
+    line-height: 1.45;
+  }
+  .feat-check {
+    color: var(--color-primary);
+    font-weight: 800;
+  }
+  .package-footer {
+    margin-top: auto;
+  }
+
+  /* FAQ */
+  .faq-list {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .faq-item {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.75rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+  }
+  .faq-q {
+    font-size: 1.12rem;
+    color: var(--color-secondary);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .faq-a {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  /* CTA Banner */
+  .section-cta-banner {
+    padding: 4rem 0 5rem;
+    background: linear-gradient(135deg, #082752 0%, #0c3b7a 100%);
+  }
+  .cta-inner-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .cta-pill {
+    display: inline-block;
+    background: rgba(13, 168, 158, 0.2);
+    color: #38ef7d;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+  }
+  .cta-main-title {
+    font-size: 2.2rem;
+    color: white;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    line-height: 1.25;
+  }
+  .cta-sub-desc {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0;
+  }
+  .btn-cta-giant {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--color-primary);
+    color: white;
+    font-weight: 800;
+    font-size: 1.05rem;
+    padding: 1.15rem 2.25rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(13, 168, 158, 0.4);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .btn-cta-giant:hover {
+    background: #0bb5aa;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(13, 168, 158, 0.5);
+  }
+
+  @media (max-width: 991px) {
+    .service-hero-title {
+      font-size: 2.3rem;
+    }
+    .hero-stats-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .services-grid-maint {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .risk-cards-grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .packages-grid {
+      grid-template-columns: 1fr;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .package-card.recommended {
+      transform: none;
+    }
+    .package-card.recommended:hover {
+      transform: translateY(-8px);
+    }
+    .cta-inner-box {
+      flex-direction: column;
+      text-align: center;
+    }
+    .cta-sub-desc {
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-stats-row {
+      grid-template-columns: 1fr;
+    }
+    .services-grid-maint {
+      grid-template-columns: 1fr;
+    }
+    .risk-cards-grid-4 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

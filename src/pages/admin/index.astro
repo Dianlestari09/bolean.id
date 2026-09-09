@@ -1,0 +1,3462 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { allProjects } from '../../data/projects.js';
+import { allBlogs } from '../../data/blogs.js';
+
+// Serialize seed data for client script
+const projectsJson = JSON.stringify(allProjects);
+const blogsJson = JSON.stringify(allBlogs);
+---
+
+<Layout 
+  title="Bolean CMS - Control Panel & Content Management"
+  description="Panel admin manajemen konten Bolean.id untuk mengelola portofolio proyek dan artikel blog."
+>
+  <!-- Pass seed data safely to client -->
+  <div id="cms-seed-data" data-projects={projectsJson} data-blogs={blogsJson} style="display: none;"></div>
+
+  <!-- AUTH WRAPPER -->
+  <div id="admin-app" class="admin-wrapper">
+    
+    <!-- 1. LOGIN SCREEN (Visible when not authenticated) -->
+    <div id="login-section" class="login-container">
+      <div class="login-backdrop">
+        <div class="login-glow-1"></div>
+        <div class="login-glow-2"></div>
+      </div>
+
+      <div class="login-card">
+        <div class="login-brand">
+          <div class="brand-badge-wrap">
+            <img src="/logo.png" alt="Bolean Logo" width="140" height="36" class="login-logo-img" />
+            <span class="cms-pill">CMS PANEL</span>
+          </div>
+        </div>
+        
+        <div class="login-header">
+          <h1 class="login-title">Portal Manajemen Konten</h1>
+          <p class="login-desc">Masuk untuk mengelola portofolio proyek dan artikel blog Bolean.id.</p>
+        </div>
+
+        <div id="login-alert" class="login-alert" style="display: none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="alert-svg">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span id="login-alert-text">Email atau password salah!</span>
+        </div>
+
+        <form id="login-form" class="login-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="admin-email">Email Administrator</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="20" height="16" x="2" y="4" rx="2"/>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                </svg>
+              </span>
+              <input 
+                type="email" 
+                id="admin-email" 
+                name="email" 
+                value="admin@bolean.id" 
+                placeholder="nama@bolean.id" 
+                required 
+                class="form-control"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="admin-password">Kata Sandi</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </span>
+              <input 
+                type="password" 
+                id="admin-password" 
+                name="password" 
+                value="admin123" 
+                placeholder="••••••••" 
+                required 
+                class="form-control"
+              />
+              <button type="button" id="btn-toggle-pwd" class="btn-toggle-pwd" title="Lihat/Sembunyikan sandi">
+                <svg id="eye-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <label class="remember-wrap">
+              <input type="checkbox" id="remember-me" checked />
+              <span>Ingat sesi di browser ini</span>
+            </label>
+          </div>
+
+          <button type="submit" id="btn-login" class="btn-login-submit">
+            <span>Masuk ke Dashboard</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </button>
+        </form>
+
+        <div class="login-footer-hint">
+          <span>Kredensial Default:</span>
+          <code>admin@bolean.id / admin123</code>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 2. DASHBOARD CMS (Visible when authenticated) -->
+    <div id="dashboard-section" class="dashboard-container" style="display: none;">
+      
+      <!-- TOP NAVIGATION BAR -->
+      <header class="cms-topbar">
+        <div class="topbar-left">
+          <div class="cms-logo-link">
+            <img src="/logo.png" alt="Bolean Logo" width="120" height="30" class="topbar-logo" />
+            <span class="topbar-badge">CMS v2.0</span>
+          </div>
+          <div class="topbar-separator"></div>
+          <div class="topbar-breadcrumb">
+            <span class="crumb-root">Portal</span>
+            <span class="crumb-slash">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </span>
+            <span class="crumb-active" id="current-tab-label">Ringkasan</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <a href="/" target="_blank" class="btn-topbar-link" title="Buka website publik">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" x2="21" y1="14" y2="3"/>
+            </svg>
+            <span>Lihat Website</span>
+          </a>
+
+          <div class="admin-status-pill">
+            <span class="status-pulse-dot"></span>
+            <span class="status-text">Admin Online</span>
+          </div>
+
+          <button id="btn-logout" class="btn-topbar-logout" title="Keluar dari sesi admin">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" x2="9" y1="12" y2="12"/>
+            </svg>
+            <span>Keluar</span>
+          </button>
+        </div>
+      </header>
+
+
+      <!-- MAIN CMS LAYOUT -->
+      <div class="cms-layout-body">
+        
+        <!-- SIDEBAR -->
+        <aside class="cms-sidebar">
+          <div class="sidebar-section-title">NAVIGASI UTAMA</div>
+          <nav class="cms-nav">
+            <button class="cms-nav-item active" data-tab="overview">
+              <span class="nav-icon-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="7" height="9" x="3" y="3" rx="1"/>
+                  <rect width="7" height="5" x="14" y="3" rx="1"/>
+                  <rect width="7" height="9" x="14" y="12" rx="1"/>
+                  <rect width="7" height="5" x="3" y="16" rx="1"/>
+                </svg>
+              </span>
+              <span class="nav-text">Ringkasan</span>
+            </button>
+
+            <button class="cms-nav-item" data-tab="projects">
+              <span class="nav-icon-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>
+                </svg>
+              </span>
+              <span class="nav-text">Portofolio Project</span>
+              <span class="nav-count" id="count-projects-badge">0</span>
+            </button>
+
+            <button class="cms-nav-item" data-tab="blogs">
+              <span class="nav-icon-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                  <path d="M6 6h10"/>
+                  <path d="M6 10h10"/>
+                </svg>
+              </span>
+              <span class="nav-text">Artikel Blog</span>
+              <span class="nav-count" id="count-blogs-badge">0</span>
+            </button>
+          </nav>
+
+          <div class="sidebar-section-title" style="margin-top: 2rem;">PENGATURAN DATA</div>
+          <nav class="cms-nav">
+            <button class="cms-nav-item" data-tab="backup">
+              <span class="nav-icon-wrap">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                  <path d="M3 5V19A9 3 0 0 0 21 19V5"/>
+                  <path d="M3 12A9 3 0 0 0 21 12"/>
+                </svg>
+              </span>
+              <span class="nav-text">Backup & Ekspor</span>
+            </button>
+          </nav>
+
+          <!-- SIDEBAR USER FOOTER -->
+          <div class="cms-sidebar-footer">
+            <div class="user-avatar-initials">AB</div>
+            <div class="user-info-stack">
+              <strong class="user-name">Admin Bolean</strong>
+              <span class="user-role">Super Administrator</span>
+            </div>
+          </div>
+        </aside>
+
+
+        <!-- CONTENT AREA -->
+        <main class="cms-content-area">
+          
+          <!-- TAB 1: OVERVIEW -->
+          <section id="tab-overview" class="cms-tab-content">
+            <div class="content-header-banner">
+              <div>
+                <h2 class="content-heading">Ringkasan Sistem CMS</h2>
+                <p class="content-subheading">Pantau metrik portofolio proyek dan artikel blog Bolean.id yang aktif saat ini.</p>
+              </div>
+            </div>
+
+            <!-- METRICS CARDS -->
+            <div class="cms-metrics-row">
+              <div class="metric-card">
+                <div class="metric-icon-square teal-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>
+                  </svg>
+                </div>
+                <div class="metric-data">
+                  <span class="metric-label">Total Portofolio Proyek</span>
+                  <strong class="metric-value" id="stat-total-projects">0</strong>
+                  <span class="metric-note">Tampil di /portofolio</span>
+                </div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-icon-square blue-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                    <path d="M6 6h10"/>
+                    <path d="M6 10h10"/>
+                  </svg>
+                </div>
+                <div class="metric-data">
+                  <span class="metric-label">Total Artikel Blog</span>
+                  <strong class="metric-value" id="stat-total-blogs">0</strong>
+                  <span class="metric-note">Tampil di /blog</span>
+                </div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-icon-square purple-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.9a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/>
+                    <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/>
+                    <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>
+                  </svg>
+                </div>
+                <div class="metric-data">
+                  <span class="metric-label">Kategori Layanan</span>
+                  <strong class="metric-value">6 Solusi</strong>
+                  <span class="metric-note">Software, IoT, Hardware, dll</span>
+                </div>
+              </div>
+
+              <div class="metric-card">
+                <div class="metric-icon-square green-icon">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                </div>
+                <div class="metric-data">
+                  <span class="metric-label">Sinkronisasi Database</span>
+                  <strong class="metric-value" style="color: #059669; font-size: 1.25rem;">Browser Sync</strong>
+                  <span class="metric-note">Otomatis terhubung live</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- QUICK ACTIONS -->
+            <div class="overview-section-box">
+              <h3 class="box-title">Aksi Cepat</h3>
+              <div class="quick-actions-row">
+                <button class="quick-btn" onclick="document.querySelector('[data-tab=projects]').click(); setTimeout(() => document.getElementById('btn-add-project').click(), 100);">
+                  <div class="quick-btn-icon teal-bg">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19"/>
+                      <line x1="5" y1="12" x2="19" y2="12"/>
+                    </svg>
+                  </div>
+                  <div class="quick-btn-info">
+                    <strong>+ Tambah Portofolio Baru</strong>
+                    <p>Input proyek baru beserta screenshot, deskripsi & teknologi</p>
+                  </div>
+                </button>
+
+                <button class="quick-btn" onclick="document.querySelector('[data-tab=blogs]').click(); setTimeout(() => document.getElementById('btn-add-blog').click(), 100);">
+                  <div class="quick-btn-icon blue-bg">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 20h9"/>
+                      <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+                    </svg>
+                  </div>
+                  <div class="quick-btn-info">
+                    <strong>+ Tulis Artikel Blog Baru</strong>
+                    <p>Terbitkan tulisan seputar IT, arsitektur, atau studi kasus</p>
+                  </div>
+                </button>
+
+                <button class="quick-btn" onclick="document.querySelector('[data-tab=backup]').click();">
+                  <div class="quick-btn-icon purple-bg">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="7 10 12 15 17 10"/>
+                      <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                  </div>
+                  <div class="quick-btn-info">
+                    <strong>Unduh Backup / Ekspor</strong>
+                    <p>Download file projects.js & blogs.js untuk kode sumber</p>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <!-- PREVIEW RECENT -->
+            <div class="overview-section-box">
+              <div class="box-header-flex">
+                <h3 class="box-title">Entri Terbaru Portofolio</h3>
+                <a href="/portofolio" target="_blank" class="box-link">Buka Halaman Portofolio ↗</a>
+              </div>
+              <p class="box-desc">Semua perubahan yang disimpan di admin panel ini langsung tersinkronisasi otomatis saat Anda membuka halaman portofolio website.</p>
+            </div>
+          </section>
+
+
+          <!-- TAB 2: PORTFOLIO MANAGER -->
+          <section id="tab-projects" class="cms-tab-content" style="display: none;">
+            <div class="content-header-banner">
+              <div>
+                <h2 class="content-heading">Manajemen Portofolio Proyek</h2>
+                <p class="content-subheading">Kelola studi kasus, kategori layanan, daftar teknologi, dan thumbnail proyek.</p>
+              </div>
+              <button id="btn-add-project" class="btn-primary-action">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <span>+ Tambah Proyek Baru</span>
+              </button>
+            </div>
+
+            <!-- FILTER & SEARCH BAR -->
+            <div class="cms-control-bar">
+              <div class="search-input-wrap">
+                <svg class="search-icon-svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.3-4.3"/>
+                </svg>
+                <input 
+                  type="text" 
+                  id="search-project-input" 
+                  placeholder="Cari berdasarkan nama proyek, teknologi, atau deskripsi..." 
+                  class="control-search"
+                />
+              </div>
+
+              <div class="filter-select-wrap">
+                <select id="filter-project-category" class="control-select">
+                  <option value="all">Semua Kategori Proyek</option>
+                  <option value="Software">Software & Enterprise</option>
+                  <option value="Mobile">Aplikasi Mobile</option>
+                  <option value="IoT">Internet of Things</option>
+                  <option value="Hardware">Hardware & Server</option>
+                </select>
+                <svg class="select-chevron-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+
+            <!-- TABLE CONTAINER -->
+            <div class="cms-table-card">
+              <table class="cms-data-table">
+                <thead>
+                  <tr>
+                    <th style="width: 90px;">Cover</th>
+                    <th style="min-width: 260px;">Judul & Deskripsi</th>
+                    <th style="width: 150px;">Kategori</th>
+                    <th style="width: 180px;">Slug URL</th>
+                    <th style="width: 180px;">Teknologi</th>
+                    <th style="width: 170px; text-align: right;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="projects-table-body">
+                  <!-- Rendered dynamically by client script -->
+                </tbody>
+              </table>
+
+              <div id="projects-empty-state" class="empty-state" style="display: none;">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.3-4.3"/>
+                </svg>
+                <h3>Tidak Ada Proyek Ditemukan</h3>
+                <p>Coba gunakan kata kunci pencarian lain atau pilih filter kategori yang berbeda.</p>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- TAB 3: BLOG MANAGER -->
+          <section id="tab-blogs" class="cms-tab-content" style="display: none;">
+            <div class="content-header-banner">
+              <div>
+                <h2 class="content-heading">Manajemen Artikel Blog</h2>
+                <p class="content-subheading">Tulis artikel wawasan baru, perbarui tulisan, atau kelola kategori blog.</p>
+              </div>
+              <button id="btn-add-blog" class="btn-primary-action">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <span>+ Tulis Artikel Baru</span>
+              </button>
+            </div>
+
+            <!-- FILTER & SEARCH BAR -->
+            <div class="cms-control-bar">
+              <div class="search-input-wrap">
+                <svg class="search-icon-svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.3-4.3"/>
+                </svg>
+                <input 
+                  type="text" 
+                  id="search-blog-input" 
+                  placeholder="Cari judul artikel, tag, atau isi ringkasan..." 
+                  class="control-search"
+                />
+              </div>
+
+              <div class="filter-select-wrap">
+                <select id="filter-blog-category" class="control-select">
+                  <option value="all">Semua Kategori Blog</option>
+                  <!-- Populated dynamically -->
+                </select>
+                <svg class="select-chevron-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+              </div>
+            </div>
+
+            <!-- TABLE CONTAINER -->
+            <div class="cms-table-card">
+              <table class="cms-data-table">
+                <thead>
+                  <tr>
+                    <th style="width: 90px;">Cover</th>
+                    <th style="min-width: 260px;">Judul Artikel</th>
+                    <th style="width: 160px;">Kategori</th>
+                    <th style="width: 170px;">Tanggal & Waktu</th>
+                    <th style="width: 190px;">Tags</th>
+                    <th style="width: 170px; text-align: right;">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="blogs-table-body">
+                  <!-- Rendered dynamically by client script -->
+                </tbody>
+              </table>
+
+              <div id="blogs-empty-state" class="empty-state" style="display: none;">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.3-4.3"/>
+                </svg>
+                <h3>Tidak Ada Artikel Ditemukan</h3>
+                <p>Coba gunakan kata kunci pencarian lain atau pilih filter kategori yang berbeda.</p>
+              </div>
+            </div>
+          </section>
+
+
+          <!-- TAB 4: BACKUP & EXPORT -->
+          <section id="tab-backup" class="cms-tab-content" style="display: none;">
+            <div class="content-header-banner">
+              <div>
+                <h2 class="content-heading">Cadangkan & Ekspor Data (Backup)</h2>
+                <p class="content-subheading">Unduh file kode sumber JavaScript yang diperbarui untuk disimpan permanen ke server repositori.</p>
+              </div>
+            </div>
+
+            <div class="backup-grid">
+              <div class="backup-card">
+                <div class="backup-icon-circle teal-bg">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 8 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/>
+                  </svg>
+                </div>
+                <h3>Unduh projects.js</h3>
+                <p>Ekspor seluruh daftar portofolio terbaru yang telah Anda edit ke file <code>projects.js</code> siap pakai di <code>src/data/projects.js</code>.</p>
+                <button id="btn-export-projects" class="btn-backup-action">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  <span>Unduh File projects.js</span>
+                </button>
+              </div>
+
+              <div class="backup-card">
+                <div class="backup-icon-circle blue-bg">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                    <path d="M6 6h10"/>
+                    <path d="M6 10h10"/>
+                  </svg>
+                </div>
+                <h3>Unduh blogs.js</h3>
+                <p>Ekspor seluruh artikel blog terbaru yang telah Anda edit ke file <code>blogs.js</code> siap pakai di <code>src/data/blogs.js</code>.</p>
+                <button id="btn-export-blogs" class="btn-backup-action">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  <span>Unduh File blogs.js</span>
+                </button>
+              </div>
+
+              <div class="backup-card danger-zone">
+                <div class="backup-icon-circle red-bg">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                    <path d="M21 3v5h-5"/>
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                    <path d="M8 16H3v5"/>
+                  </svg>
+                </div>
+                <h3>Reset ke Data Awal</h3>
+                <p>Hapus seluruh modifikasi di browser dan kembalikan data portofolio & blog ke kondisi asli bawaan sistem.</p>
+                <button id="btn-reset-data" class="btn-danger-action">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6h18"/>
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                  </svg>
+                  <span>Reset Data Sekarang</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- SUPABASE NOTICE -->
+            <div class="supabase-info-card">
+              <div class="supa-header">
+                <div class="supa-icon-badge">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                    <path d="M3 5V19A9 3 0 0 0 21 19V5"/>
+                    <path d="M3 12A9 3 0 0 0 21 12"/>
+                  </svg>
+                </div>
+                <div>
+                  <h4>Dukungan Integrasi Database Cloud (Supabase PostgreSQL)</h4>
+                  <span class="supa-pill">Ready for Cloud Sync</span>
+                </div>
+              </div>
+              <p>
+                Sistem CMS ini dirancang dengan struktur data standar JSON. Anda dapat dengan sangat mudah menghubungkannya ke database cloud online (seperti Supabase, Firebase, atau REST API backend) untuk kolaborasi multi-user antar staf perusahaan kapan pun dibutuhkan.
+              </p>
+            </div>
+          </section>
+
+        </main>
+      </div>
+    </div>
+
+
+    <!-- =========================================================================
+         3. MODALS (PROJECT & BLOG)
+         ========================================================================= -->
+
+    <!-- A. MODAL TAMBAH/EDIT PROJECT -->
+    <div id="project-modal" class="cms-modal-overlay" style="display: none;">
+      <div class="cms-modal-box">
+        <div class="cms-modal-header">
+          <h3 id="modal-project-title">Tambah Proyek Portofolio</h3>
+          <button type="button" class="btn-modal-close" onclick="closeProjectModal()" title="Tutup">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+
+        <form id="project-form" onsubmit="return false;">
+          <input type="hidden" id="project-edit-index" value="-1" />
+          
+          <div class="cms-modal-body">
+            <div class="form-row">
+              <div class="form-col-8">
+                <label for="proj-title">Judul Proyek *</label>
+                <input type="text" id="proj-title" class="cms-input" placeholder="Contoh: Sistem ERP Manufaktur Multi-Cabang" required />
+              </div>
+              <div class="form-col-4">
+                <label for="proj-slug">Slug URL *</label>
+                <input type="text" id="proj-slug" class="cms-input" placeholder="sistem-erp-manufaktur" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-col-6">
+                <label for="proj-category">Kategori Proyek *</label>
+                <select id="proj-category" class="cms-input" required>
+                  <option value="Software - Web">Software - Web</option>
+                  <option value="Software - Enterprise">Software - Enterprise</option>
+                  <option value="Aplikasi Mobile">Aplikasi Mobile</option>
+                  <option value="IoT - Industri">IoT - Industri</option>
+                  <option value="IoT & Smart Home">IoT & Smart Home</option>
+                  <option value="Hardware - Server">Hardware - Server</option>
+                  <option value="Hardware - Networking">Hardware - Networking</option>
+                </select>
+              </div>
+              <div class="form-col-6">
+                <label for="proj-service-id">ID Layanan Terkait</label>
+                <input type="text" id="proj-service-id" class="cms-input" placeholder="software, hardware, iot, otomasi-ai" />
+              </div>
+            </div>
+
+            <!-- DRAG & DROP / FILE UPLOAD UNTUK PROYEK -->
+            <div class="upload-field-group">
+              <label>Upload Thumbnail / Screenshot Proyek *</label>
+              <input type="hidden" id="proj-image" required />
+              <input type="file" id="proj-file-input" accept="image/png, image/jpeg, image/webp, image/gif, image/svg+xml" style="display: none;" />
+
+              <div id="proj-dropzone" class="cms-dropzone">
+                <div id="proj-dropzone-empty" class="dropzone-empty-state">
+                  <div class="dropzone-icon-circle">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <p class="dropzone-title">Tarik & Lepaskan gambar ke sini, atau <span class="dropzone-browse-link">Pilih File dari Komputer</span></p>
+                  <span class="dropzone-subtitle">Mendukung format PNG, JPG, WEBP, atau GIF (Maksimal 5MB)</span>
+                </div>
+
+                <div id="proj-dropzone-filled" class="dropzone-filled-state" style="display: none;">
+                  <div class="dropzone-preview-wrap">
+                    <img id="proj-image-preview" src="" alt="Preview Proyek" class="dropzone-preview-img" />
+                  </div>
+                  <div class="dropzone-file-meta">
+                    <span id="proj-file-name" class="dropzone-file-name">screenshot-proyek.png</span>
+                    <div class="dropzone-btn-actions">
+                      <button type="button" id="btn-change-proj-image" class="btn-dropzone-action">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <span>Ganti File</span>
+                      </button>
+                      <button type="button" id="btn-remove-proj-image" class="btn-dropzone-action btn-dropzone-danger">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        <span>Hapus</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Accordion fallback URL -->
+              <div class="url-fallback-accordion">
+                <button type="button" id="btn-toggle-proj-url" class="btn-url-toggle">
+                  <span>atau gunakan link URL gambar online</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div id="proj-url-box" class="url-input-box" style="display: none;">
+                  <input type="url" id="proj-url-input" class="cms-input" placeholder="https://images.unsplash.com/..." />
+                  <button type="button" id="btn-apply-proj-url" class="btn-apply-url">Gunakan URL</button>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label for="proj-description">Deskripsi Ringkas Proyek *</label>
+              <textarea id="proj-description" rows="3" class="cms-textarea" placeholder="Jelaskan tujuan proyek, masalah yang diselesaikan, dan dampaknya..." required></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-col-6">
+                <label for="proj-features">Fitur Utama (Satu per baris)</label>
+                <textarea id="proj-features" rows="3" class="cms-textarea" placeholder="Real-time Analytics
+Integrasi API Bank
+Audit Log Keamanan"></textarea>
+              </div>
+              <div class="form-col-6">
+                <label for="proj-technologies">Teknologi Digunakan (Pisahkan koma)</label>
+                <textarea id="proj-technologies" rows="3" class="cms-textarea" placeholder="React, Node.js, PostgreSQL, Docker, Redis"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="cms-modal-footer">
+            <button type="button" class="btn-modal-cancel" onclick="closeProjectModal()">Batal</button>
+            <button type="submit" class="btn-modal-save">Simpan Proyek</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <!-- B. MODAL TAMBAH/EDIT BLOG -->
+    <div id="blog-modal" class="cms-modal-overlay" style="display: none;">
+      <div class="cms-modal-box">
+        <div class="cms-modal-header">
+          <h3 id="modal-blog-title">Tulis Artikel Blog Baru</h3>
+          <button type="button" class="btn-modal-close" onclick="closeBlogModal()" title="Tutup">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+
+        <form id="blog-form" onsubmit="return false;">
+          <input type="hidden" id="blog-edit-index" value="-1" />
+
+          <div class="cms-modal-body">
+            <div class="form-row">
+              <div class="form-col-8">
+                <label for="blog-title">Judul Artikel *</label>
+                <input type="text" id="blog-title" class="cms-input" placeholder="Contoh: Tren Arsitektur Cloud Native untuk Bisnis 2027" required />
+              </div>
+              <div class="form-col-4">
+                <label for="blog-slug">Slug URL *</label>
+                <input type="text" id="blog-slug" class="cms-input" placeholder="tren-arsitektur-cloud-native-2027" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <!-- 1. KATEGORI ARTIKEL (DROPDOWN) -->
+              <div class="form-col-4">
+                <label for="blog-category">Kategori Artikel *</label>
+                <select id="blog-category" class="cms-input" required>
+                  <option value="Cloud & Infrastructure">Cloud & Infrastructure</option>
+                  <option value="Web Development">Web Development</option>
+                  <option value="Cyber Security">Cyber Security</option>
+                  <option value="IoT & Telemetry">IoT & Telemetry</option>
+                  <option value="Hardware & Server">Hardware & Server</option>
+                  <option value="Mobile App">Mobile App</option>
+                  <option value="AI & Otomasi Bisnis">AI & Otomasi Bisnis</option>
+                  <option value="Enterprise Solutions">Enterprise Solutions</option>
+                </select>
+              </div>
+
+              <!-- 2. TANGGAL RILIS (FORMAT KALENDER) -->
+              <div class="form-col-4">
+                <label for="blog-date-picker">Tanggal Rilis (Kalender) *</label>
+                <input type="date" id="blog-date-picker" class="cms-input" required />
+                <input type="hidden" id="blog-date" />
+                <div id="blog-date-formatted-preview" class="date-format-helper"></div>
+              </div>
+
+              <div class="form-col-4">
+                <label for="blog-read-time">Estimasi Waktu Baca</label>
+                <input type="text" id="blog-read-time" class="cms-input" placeholder="5 min baca" />
+              </div>
+            </div>
+
+            <!-- 3. UPLOAD GAMBAR (FILE UPLOAD ATAU DRAG N DROP DARI LOKAL) -->
+            <div class="upload-field-group">
+              <label>Upload Cover Gambar Artikel *</label>
+              <input type="hidden" id="blog-image" required />
+              <input type="file" id="blog-file-input" accept="image/png, image/jpeg, image/webp, image/gif, image/svg+xml" style="display: none;" />
+
+              <div id="blog-dropzone" class="cms-dropzone">
+                <div id="blog-dropzone-empty" class="dropzone-empty-state">
+                  <div class="dropzone-icon-circle">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                  </div>
+                  <p class="dropzone-title">Tarik & Lepaskan gambar ke sini, atau <span class="dropzone-browse-link">Pilih File dari Komputer</span></p>
+                  <span class="dropzone-subtitle">Mendukung format PNG, JPG, WEBP, atau GIF (Maksimal 5MB)</span>
+                </div>
+
+                <div id="blog-dropzone-filled" class="dropzone-filled-state" style="display: none;">
+                  <div class="dropzone-preview-wrap">
+                    <img id="blog-image-preview" src="" alt="Preview Cover" class="dropzone-preview-img" />
+                  </div>
+                  <div class="dropzone-file-meta">
+                    <span id="blog-file-name" class="dropzone-file-name">cover-blog.png</span>
+                    <div class="dropzone-btn-actions">
+                      <button type="button" id="btn-change-blog-image" class="btn-dropzone-action">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <span>Ganti File</span>
+                      </button>
+                      <button type="button" id="btn-remove-blog-image" class="btn-dropzone-action btn-dropzone-danger">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        <span>Hapus</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Accordion fallback URL -->
+              <div class="url-fallback-accordion">
+                <button type="button" id="btn-toggle-blog-url" class="btn-url-toggle">
+                  <span>atau gunakan link URL gambar online</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div id="blog-url-box" class="url-input-box" style="display: none;">
+                  <input type="url" id="blog-url-input" class="cms-input" placeholder="https://images.unsplash.com/..." />
+                  <button type="button" id="btn-apply-blog-url" class="btn-apply-url">Gunakan URL</button>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label for="blog-excerpt">Ringkasan Artikel (Excerpt) *</label>
+              <textarea id="blog-excerpt" rows="3" class="cms-textarea" placeholder="Tulis sinopsis ringkas yang menarik perhatian pembaca di katalog blog..." required></textarea>
+            </div>
+
+            <div>
+              <label for="blog-tags">Tag Artikel (Pisahkan dengan tanda koma)</label>
+              <input type="text" id="blog-tags" class="cms-input" placeholder="Cloud, DevOps, Microservices, Kubernetes" />
+            </div>
+          </div>
+
+          <div class="cms-modal-footer">
+            <button type="button" class="btn-modal-cancel" onclick="closeBlogModal()">Batal</button>
+            <button type="submit" class="btn-modal-save">Simpan Artikel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</Layout>
+
+<!-- CLIENT SCRIPT LOGIC -->
+<script>
+  // ==========================================
+  // CLIENT-SIDE CMS LOGIC & DATA SYNCHRONIZATION
+  // ==========================================
+  
+  const STORAGE_KEY_AUTH = 'bolean_cms_auth_session';
+  const STORAGE_KEY_PROJECTS = 'bolean_cms_projects';
+  const STORAGE_KEY_BLOGS = 'bolean_cms_blogs';
+
+  // Retrieve seed data from hidden DOM element
+  const seedEl = document.getElementById('cms-seed-data');
+  const defaultProjects = seedEl ? JSON.parse(seedEl.getAttribute('data-projects') || '[]') : [];
+  const defaultBlogs = seedEl ? JSON.parse(seedEl.getAttribute('data-blogs') || '[]') : [];
+
+  // In-memory data store
+  let currentProjects: any[] = [];
+  let currentBlogs: any[] = [];
+
+  // Dropzone managers
+  let projDropzoneManager: any = null;
+  let blogDropzoneManager: any = null;
+
+  // Helper Category Pill Class
+  function getCategoryClass(cat: string) {
+    const c = (cat || '').toLowerCase();
+    if (c.includes('web') || c.includes('software')) return 'pill-blue';
+    if (c.includes('mobile')) return 'pill-cyan';
+    if (c.includes('iot')) return 'pill-emerald';
+    if (c.includes('hardware') || c.includes('server')) return 'pill-purple';
+    if (c.includes('cloud') || c.includes('devops')) return 'pill-teal';
+    if (c.includes('security') || c.includes('cyber')) return 'pill-amber';
+    return 'pill-slate';
+  }
+
+  // Indonesian Date Formatter & Parser
+  const ID_MONTHS = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+  function formatIndonesianDate(isoStr: string): string {
+    if (!isoStr) return '';
+    const parts = isoStr.split('-');
+    if (parts.length !== 3) return isoStr;
+    const day = parseInt(parts[2], 10);
+    const monthIdx = parseInt(parts[1], 10) - 1;
+    const year = parts[0];
+    return `${day} ${ID_MONTHS[monthIdx] || ''} ${year}`;
+  }
+
+  function parseToIsoDate(str: string): string {
+    if (!str) return '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+    const monthsMap: Record<string, string> = {
+      'januari': '01', 'februari': '02', 'maret': '03', 'april': '04', 'mei': '05', 'juni': '06',
+      'juli': '07', 'agustus': '08', 'september': '09', 'oktober': '10', 'november': '11', 'desember': '12'
+    };
+    const parts = str.trim().split(/\s+/);
+    if (parts.length >= 3) {
+      const day = parts[0].padStart(2, '0');
+      const month = monthsMap[parts[1].toLowerCase()] || '01';
+      const year = parts[2];
+      return `${year}-${month}-${day}`;
+    }
+    return '';
+  }
+
+  // Dropzone Setup Function
+  function setupDropzone(config: {
+    dropzoneId: string;
+    fileInputId: string;
+    emptyStateId: string;
+    filledStateId: string;
+    previewImgId: string;
+    hiddenInputId: string;
+    fileNameId: string;
+    changeBtnId: string;
+    removeBtnId: string;
+    urlToggleBtnId: string;
+    urlBoxId: string;
+    urlInputId: string;
+    applyUrlBtnId: string;
+  }) {
+    const dropzone = document.getElementById(config.dropzoneId);
+    const fileInput = document.getElementById(config.fileInputId) as HTMLInputElement | null;
+    const emptyState = document.getElementById(config.emptyStateId);
+    const filledState = document.getElementById(config.filledStateId);
+    const previewImg = document.getElementById(config.previewImgId) as HTMLImageElement | null;
+    const hiddenInput = document.getElementById(config.hiddenInputId) as HTMLInputElement | null;
+    const fileName = document.getElementById(config.fileNameId);
+    const changeBtn = document.getElementById(config.changeBtnId);
+    const removeBtn = document.getElementById(config.removeBtnId);
+    const urlToggleBtn = document.getElementById(config.urlToggleBtnId);
+    const urlBox = document.getElementById(config.urlBoxId);
+    const urlInput = document.getElementById(config.urlInputId) as HTMLInputElement | null;
+    const applyUrlBtn = document.getElementById(config.applyUrlBtnId);
+
+    function setImage(src: string, name?: string) {
+      if (!hiddenInput) return;
+      if (!src) {
+        hiddenInput.value = '';
+        if (previewImg) previewImg.src = '';
+        if (emptyState) emptyState.style.display = 'flex';
+        if (filledState) filledState.style.display = 'none';
+        return;
+      }
+      hiddenInput.value = src;
+      if (previewImg) previewImg.src = src;
+      if (fileName) {
+        fileName.textContent = name || (src.startsWith('data:') ? 'gambar-lokal-terupload.png' : (src.split('/').pop() || 'gambar.png'));
+      }
+      if (emptyState) emptyState.style.display = 'none';
+      if (filledState) filledState.style.display = 'flex';
+    }
+
+    function handleFile(file: File) {
+      if (!file || !file.type.startsWith('image/')) {
+        alert('Harap pilih file gambar (PNG, JPG, WEBP, atau GIF).');
+        return;
+      }
+      if (file.size > 8 * 1024 * 1024) {
+        alert('Ukuran file terlalu besar. Maksimal 8MB.');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target && typeof e.target.result === 'string') {
+          setImage(e.target.result, file.name);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    if (dropzone && fileInput) {
+      dropzone.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('button')) return;
+        fileInput.click();
+      });
+
+      dropzone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzone.classList.add('drag-over');
+      });
+
+      dropzone.addEventListener('dragleave', () => {
+        dropzone.classList.remove('drag-over');
+      });
+
+      dropzone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzone.classList.remove('drag-over');
+        if (e.dataTransfer && e.dataTransfer.files.length > 0) {
+          handleFile(e.dataTransfer.files[0]);
+        }
+      });
+
+      fileInput.addEventListener('change', () => {
+        if (fileInput.files && fileInput.files.length > 0) {
+          handleFile(fileInput.files[0]);
+        }
+      });
+    }
+
+    if (changeBtn && fileInput) {
+      changeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        fileInput.click();
+      });
+    }
+
+    if (removeBtn) {
+      removeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setImage('');
+        if (fileInput) fileInput.value = '';
+      });
+    }
+
+    if (urlToggleBtn && urlBox) {
+      urlToggleBtn.addEventListener('click', () => {
+        const isShown = urlBox.style.display !== 'none';
+        urlBox.style.display = isShown ? 'none' : 'flex';
+      });
+    }
+
+    if (applyUrlBtn && urlInput) {
+      applyUrlBtn.addEventListener('click', () => {
+        const url = urlInput.value.trim();
+        if (url) {
+          setImage(url, url.split('/').pop() || 'gambar-online.png');
+          if (urlBox) urlBox.style.display = 'none';
+        }
+      });
+    }
+
+    return { setImage };
+  }
+
+  // Init Data Store
+  function initDataStore() {
+    const storedProjects = localStorage.getItem(STORAGE_KEY_PROJECTS);
+    if (storedProjects) {
+      try {
+        currentProjects = JSON.parse(storedProjects);
+      } catch (e) {
+        currentProjects = [...defaultProjects];
+      }
+    } else {
+      currentProjects = [...defaultProjects];
+      localStorage.setItem(STORAGE_KEY_PROJECTS, JSON.stringify(currentProjects));
+    }
+
+    const storedBlogs = localStorage.getItem(STORAGE_KEY_BLOGS);
+    if (storedBlogs) {
+      try {
+        currentBlogs = JSON.parse(storedBlogs);
+      } catch (e) {
+        currentBlogs = [...defaultBlogs];
+      }
+    } else {
+      currentBlogs = [...defaultBlogs];
+      localStorage.setItem(STORAGE_KEY_BLOGS, JSON.stringify(currentBlogs));
+    }
+
+    updateDashboardMetrics();
+    renderProjectsTable();
+    renderBlogsTable();
+    populateBlogCategoryFilter();
+  }
+
+  function saveProjectsStore() {
+    localStorage.setItem(STORAGE_KEY_PROJECTS, JSON.stringify(currentProjects));
+    updateDashboardMetrics();
+    renderProjectsTable();
+  }
+
+  function saveBlogsStore() {
+    localStorage.setItem(STORAGE_KEY_BLOGS, JSON.stringify(currentBlogs));
+    updateDashboardMetrics();
+    renderBlogsTable();
+    populateBlogCategoryFilter();
+  }
+
+  // Auth Handling
+  function checkAuth() {
+    const isAuthed = sessionStorage.getItem(STORAGE_KEY_AUTH) || localStorage.getItem(STORAGE_KEY_AUTH);
+    const loginSec = document.getElementById('login-section');
+    const dashSec = document.getElementById('dashboard-section');
+
+    if (isAuthed === 'true') {
+      if (loginSec) loginSec.style.display = 'none';
+      if (dashSec) dashSec.style.display = 'block';
+      initDataStore();
+    } else {
+      if (loginSec) loginSec.style.display = 'flex';
+      if (dashSec) dashSec.style.display = 'none';
+    }
+  }
+
+  // Update Metrics
+  function updateDashboardMetrics() {
+    const statProjects = document.getElementById('stat-total-projects');
+    const statBlogs = document.getElementById('stat-total-blogs');
+    const badgeProjects = document.getElementById('count-projects-badge');
+    const badgeBlogs = document.getElementById('count-blogs-badge');
+
+    if (statProjects) statProjects.textContent = currentProjects.length.toString();
+    if (statBlogs) statBlogs.textContent = currentBlogs.length.toString();
+    if (badgeProjects) badgeProjects.textContent = currentProjects.length.toString();
+    if (badgeBlogs) badgeBlogs.textContent = currentBlogs.length.toString();
+  }
+
+  // Render Projects Table
+  function renderProjectsTable() {
+    const tbody = document.getElementById('projects-table-body');
+    const emptyState = document.getElementById('projects-empty-state');
+    const searchInput = document.getElementById('search-project-input') as HTMLInputElement | null;
+    const filterSelect = document.getElementById('filter-project-category') as HTMLSelectElement | null;
+
+    if (!tbody) return;
+
+    const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const catFilter = filterSelect ? filterSelect.value : 'all';
+
+    const filtered = currentProjects.filter(p => {
+      const matchQuery = !query || 
+        p.title.toLowerCase().includes(query) || 
+        p.category.toLowerCase().includes(query) ||
+        (p.technologies && p.technologies.some((t: string) => t.toLowerCase().includes(query)));
+      
+      const matchCat = catFilter === 'all' || p.category.toLowerCase().includes(catFilter.toLowerCase());
+      return matchQuery && matchCat;
+    });
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '';
+      if (emptyState) emptyState.style.display = 'block';
+      return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
+
+    tbody.innerHTML = filtered.map((p) => {
+      const realIndex = currentProjects.findIndex(item => item.slug === p.slug);
+      const techs = Array.isArray(p.technologies) ? p.technologies : (p.technologies ? p.technologies.split(',') : []);
+      const techChips = techs.length > 0 
+        ? techs.slice(0, 3).map((t: string) => `<span class="table-chip">${t.trim()}</span>`).join('')
+        : '<span class="text-muted">-</span>';
+
+      return `
+        <tr>
+          <td class="td-cover">
+            <div class="thumb-container">
+              <img src="${p.image || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200'}" alt="${p.title}" class="table-thumb" onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=200'" />
+            </div>
+          </td>
+          <td class="td-title">
+            <div class="table-title-wrap">
+              <a href="/projects/${p.slug}" target="_blank" class="table-title-link" title="Lihat detail proyek">${p.title}</a>
+              <p class="table-excerpt">${p.description ? p.description.slice(0, 85) + '...' : ''}</p>
+            </div>
+          </td>
+          <td class="td-category">
+            <span class="category-pill ${getCategoryClass(p.category)}">${p.category || 'Solusi IT'}</span>
+          </td>
+          <td class="td-slug">
+            <span class="slug-pill">
+              <span class="slug-slash">/</span>projects/${p.slug}
+            </span>
+          </td>
+          <td class="td-tags">
+            <div class="chips-wrap">${techChips}</div>
+          </td>
+          <td class="td-actions" style="text-align: right;">
+            <div class="action-btn-group">
+              <button class="btn-action btn-edit" onclick="openEditProject(${realIndex})" title="Edit proyek ini">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                <span>Edit</span>
+              </button>
+              <button class="btn-action btn-delete" onclick="deleteProject(${realIndex})" title="Hapus proyek ini">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" x2="17"/><line x1="14" x2="14" y1="11" x2="17"/></svg>
+                <span>Hapus</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // Render Blogs Table
+  function renderBlogsTable() {
+    const tbody = document.getElementById('blogs-table-body');
+    const emptyState = document.getElementById('blogs-empty-state');
+    const searchInput = document.getElementById('search-blog-input') as HTMLInputElement | null;
+    const filterSelect = document.getElementById('filter-blog-category') as HTMLSelectElement | null;
+
+    if (!tbody) return;
+
+    const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+    const catFilter = filterSelect ? filterSelect.value : 'all';
+
+    const filtered = currentBlogs.filter(b => {
+      const matchQuery = !query || 
+        b.title.toLowerCase().includes(query) || 
+        b.category.toLowerCase().includes(query);
+      
+      const matchCat = catFilter === 'all' || b.category.toLowerCase() === catFilter.toLowerCase();
+      return matchQuery && matchCat;
+    });
+
+    if (filtered.length === 0) {
+      tbody.innerHTML = '';
+      if (emptyState) emptyState.style.display = 'block';
+      return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
+
+    tbody.innerHTML = filtered.map((b) => {
+      const realIndex = currentBlogs.findIndex(item => item.slug === b.slug);
+      const tagsList = Array.isArray(b.tags) ? b.tags : (b.tags ? b.tags.split(',') : []);
+      const tagsHtml = tagsList.length > 0 
+        ? tagsList.slice(0, 3).map((t: string) => `<span class="table-chip">${t.trim()}</span>`).join('')
+        : '<span class="text-muted">-</span>';
+
+      return `
+        <tr>
+          <td class="td-cover">
+            <div class="thumb-container">
+              <img src="${b.image || 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=200'}" alt="${b.title}" class="table-thumb" onerror="this.src='https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=200'" />
+            </div>
+          </td>
+          <td class="td-title">
+            <div class="table-title-wrap">
+              <a href="/blog/${b.slug}" target="_blank" class="table-title-link" title="Buka artikel">${b.title}</a>
+              <p class="table-excerpt">${b.excerpt ? b.excerpt.slice(0, 85) + '...' : ''}</p>
+            </div>
+          </td>
+          <td class="td-category">
+            <span class="category-pill ${getCategoryClass(b.category)}">${b.category || 'Teknologi'}</span>
+          </td>
+          <td class="td-meta">
+            <div class="meta-stack">
+              <span class="meta-line date-line">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/></svg>
+                <span>${b.date || '-'}</span>
+              </span>
+              <span class="meta-line time-line">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>${b.readTime || '5 min'}</span>
+              </span>
+            </div>
+          </td>
+          <td class="td-tags">
+            <div class="chips-wrap">${tagsHtml}</div>
+          </td>
+          <td class="td-actions" style="text-align: right;">
+            <div class="action-btn-group">
+              <button class="btn-action btn-edit" onclick="openEditBlog(${realIndex})" title="Edit artikel ini">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+                <span>Edit</span>
+              </button>
+              <button class="btn-action btn-delete" onclick="deleteBlog(${realIndex})" title="Hapus artikel ini">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" x2="17"/><line x1="14" x2="14" y1="11" x2="17"/></svg>
+                <span>Hapus</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  function populateBlogCategoryFilter() {
+    const sel = document.getElementById('filter-blog-category') as HTMLSelectElement | null;
+    if (!sel) return;
+    const cats = Array.from(new Set(currentBlogs.map(b => b.category))).filter(Boolean);
+    sel.innerHTML = '<option value="all">Semua Kategori Blog</option>' + 
+      cats.map(c => `<option value="${c}">${c}</option>`).join('');
+  }
+
+  // Global window functions for modal actions
+  (window as any).openEditProject = function(index: number) {
+    const p = currentProjects[index];
+    if (!p) return;
+
+    (document.getElementById('project-edit-index') as HTMLInputElement).value = index.toString();
+    (document.getElementById('modal-project-title') as HTMLElement).textContent = 'Edit Proyek Portofolio';
+    (document.getElementById('proj-title') as HTMLInputElement).value = p.title || '';
+    (document.getElementById('proj-slug') as HTMLInputElement).value = p.slug || '';
+    (document.getElementById('proj-category') as HTMLSelectElement).value = p.category || 'Software - Web';
+    (document.getElementById('proj-service-id') as HTMLInputElement).value = p.serviceId || '';
+    (document.getElementById('proj-description') as HTMLTextAreaElement).value = p.description || '';
+    (document.getElementById('proj-features') as HTMLTextAreaElement).value = p.features ? p.features.join('\n') : '';
+    (document.getElementById('proj-technologies') as HTMLInputElement).value = p.technologies ? p.technologies.join(', ') : '';
+
+    if (projDropzoneManager) {
+      projDropzoneManager.setImage(p.image || '', p.image ? 'screenshot-proyek.png' : '');
+    }
+
+    const modal = document.getElementById('project-modal');
+    if (modal) modal.style.display = 'flex';
+  };
+
+  (window as any).deleteProject = function(index: number) {
+    const p = currentProjects[index];
+    if (!p) return;
+    if (confirm(`Yakin ingin menghapus proyek "${p.title}"? Perubahan akan langsung tersimpan.`)) {
+      currentProjects.splice(index, 1);
+      saveProjectsStore();
+    }
+  };
+
+  (window as any).closeProjectModal = function() {
+    const modal = document.getElementById('project-modal');
+    if (modal) modal.style.display = 'none';
+  };
+
+  (window as any).openEditBlog = function(index: number) {
+    const b = currentBlogs[index];
+    if (!b) return;
+
+    (document.getElementById('blog-edit-index') as HTMLInputElement).value = index.toString();
+    (document.getElementById('modal-blog-title') as HTMLElement).textContent = 'Edit Artikel Blog';
+    (document.getElementById('blog-title') as HTMLInputElement).value = b.title || '';
+    (document.getElementById('blog-slug') as HTMLInputElement).value = b.slug || '';
+    
+    // 1. Kategori Dropdown
+    const catSelect = document.getElementById('blog-category') as HTMLSelectElement | null;
+    if (catSelect) {
+      const exists = Array.from(catSelect.options).some(o => o.value === b.category);
+      if (!exists && b.category) {
+        const opt = document.createElement('option');
+        opt.value = b.category;
+        opt.textContent = b.category;
+        catSelect.appendChild(opt);
+      }
+      catSelect.value = b.category || 'Cloud & Infrastructure';
+    }
+
+    // 2. Tanggal Kalender
+    const datePicker = document.getElementById('blog-date-picker') as HTMLInputElement | null;
+    const dateHidden = document.getElementById('blog-date') as HTMLInputElement | null;
+    const datePreview = document.getElementById('blog-date-formatted-preview');
+
+    const isoDate = parseToIsoDate(b.date || '');
+    if (datePicker) {
+      datePicker.value = isoDate || new Date().toISOString().split('T')[0];
+    }
+    if (dateHidden) {
+      dateHidden.value = b.date || '';
+    }
+    if (datePreview) {
+      datePreview.textContent = b.date ? `Format rilis: ${b.date}` : '';
+    }
+
+    (document.getElementById('blog-read-time') as HTMLInputElement).value = b.readTime || '5 min baca';
+    (document.getElementById('blog-excerpt') as HTMLTextAreaElement).value = b.excerpt || '';
+    (document.getElementById('blog-tags') as HTMLInputElement).value = b.tags ? b.tags.join(', ') : '';
+
+    // 3. Upload Gambar
+    if (blogDropzoneManager) {
+      blogDropzoneManager.setImage(b.image || '', b.image ? 'cover-artikel.png' : '');
+    }
+
+    const modal = document.getElementById('blog-modal');
+    if (modal) modal.style.display = 'flex';
+  };
+
+  (window as any).deleteBlog = function(index: number) {
+    const b = currentBlogs[index];
+    if (!b) return;
+    if (confirm(`Yakin ingin menghapus artikel "${b.title}"?`)) {
+      currentBlogs.splice(index, 1);
+      saveBlogsStore();
+    }
+  };
+
+  (window as any).closeBlogModal = function() {
+    const modal = document.getElementById('blog-modal');
+    if (modal) modal.style.display = 'none';
+  };
+
+  // Helper for auto-generating slug from title
+  function slugify(text: string) {
+    return text
+      .toString()
+      .toLowerCase()
+      .trim()
+      .replace(/[\s\W-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  // DOM Loaded Event Listener
+  document.addEventListener('DOMContentLoaded', () => {
+    checkAuth();
+
+    // Initialize Dropzone Managers
+    projDropzoneManager = setupDropzone({
+      dropzoneId: 'proj-dropzone',
+      fileInputId: 'proj-file-input',
+      emptyStateId: 'proj-dropzone-empty',
+      filledStateId: 'proj-dropzone-filled',
+      previewImgId: 'proj-image-preview',
+      hiddenInputId: 'proj-image',
+      fileNameId: 'proj-file-name',
+      changeBtnId: 'btn-change-proj-image',
+      removeBtnId: 'btn-remove-proj-image',
+      urlToggleBtnId: 'btn-toggle-proj-url',
+      urlBoxId: 'proj-url-box',
+      urlInputId: 'proj-url-input',
+      applyUrlBtnId: 'btn-apply-proj-url'
+    });
+
+    blogDropzoneManager = setupDropzone({
+      dropzoneId: 'blog-dropzone',
+      fileInputId: 'blog-file-input',
+      emptyStateId: 'blog-dropzone-empty',
+      filledStateId: 'blog-dropzone-filled',
+      previewImgId: 'blog-image-preview',
+      hiddenInputId: 'blog-image',
+      fileNameId: 'blog-file-name',
+      changeBtnId: 'btn-change-blog-image',
+      removeBtnId: 'btn-remove-blog-image',
+      urlToggleBtnId: 'btn-toggle-blog-url',
+      urlBoxId: 'blog-url-box',
+      urlInputId: 'blog-url-input',
+      applyUrlBtnId: 'btn-apply-blog-url'
+    });
+
+    // Calendar Date Picker Change Listener
+    const blogDatePicker = document.getElementById('blog-date-picker') as HTMLInputElement | null;
+    const blogDateHidden = document.getElementById('blog-date') as HTMLInputElement | null;
+    const blogDatePreview = document.getElementById('blog-date-formatted-preview');
+
+    if (blogDatePicker && blogDateHidden) {
+      blogDatePicker.addEventListener('change', () => {
+        const iso = blogDatePicker.value;
+        const formatted = formatIndonesianDate(iso);
+        blogDateHidden.value = formatted;
+        if (blogDatePreview) {
+          blogDatePreview.textContent = formatted ? `Format rilis: ${formatted}` : '';
+        }
+      });
+    }
+
+    // Login Form Submit
+    const loginForm = document.getElementById('login-form');
+    const alertBox = document.getElementById('login-alert');
+    const alertText = document.getElementById('login-alert-text');
+    const togglePwdBtn = document.getElementById('btn-toggle-pwd');
+    const pwdInput = document.getElementById('admin-password') as HTMLInputElement | null;
+
+    if (togglePwdBtn && pwdInput) {
+      togglePwdBtn.addEventListener('click', () => {
+        pwdInput.type = pwdInput.type === 'password' ? 'text' : 'password';
+      });
+    }
+
+    if (loginForm) {
+      loginForm.addEventListener('submit', () => {
+        const emailInput = (document.getElementById('admin-email') as HTMLInputElement).value.trim();
+        const passwordInput = (document.getElementById('admin-password') as HTMLInputElement).value;
+        const rememberMe = (document.getElementById('remember-me') as HTMLInputElement).checked;
+
+        if (emailInput === 'admin@bolean.id' && passwordInput === 'admin123') {
+          if (rememberMe) {
+            localStorage.setItem(STORAGE_KEY_AUTH, 'true');
+          } else {
+            sessionStorage.setItem(STORAGE_KEY_AUTH, 'true');
+          }
+          if (alertBox) alertBox.style.display = 'none';
+          checkAuth();
+        } else {
+          if (alertBox && alertText) {
+            alertText.textContent = 'Email atau kata sandi tidak valid. Gunakan admin@bolean.id / admin123';
+            alertBox.style.display = 'flex';
+          }
+        }
+      });
+    }
+
+    // Logout Button
+    const logoutBtn = document.getElementById('btn-logout');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        if (confirm('Apakah Anda yakin ingin keluar dari panel admin?')) {
+          localStorage.removeItem(STORAGE_KEY_AUTH);
+          sessionStorage.removeItem(STORAGE_KEY_AUTH);
+          checkAuth();
+        }
+      });
+    }
+
+    // Navigation Tabs
+    const navItems = document.querySelectorAll('.cms-nav-item');
+    const tabContents = document.querySelectorAll('.cms-tab-content');
+    const tabLabel = document.getElementById('current-tab-label');
+
+    const tabTitles: Record<string, string> = {
+      overview: 'Ringkasan',
+      projects: 'Manajemen Portofolio Proyek',
+      blogs: 'Manajemen Artikel Blog',
+      backup: 'Cadangkan & Ekspor Data'
+    };
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const tab = item.getAttribute('data-tab');
+        if (!tab) return;
+
+        navItems.forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+
+        tabContents.forEach(c => {
+          (c as HTMLElement).style.display = 'none';
+        });
+
+        const target = document.getElementById(`tab-${tab}`);
+        if (target) target.style.display = 'block';
+
+        if (tabLabel && tabTitles[tab]) {
+          tabLabel.textContent = tabTitles[tab];
+        }
+      });
+    });
+
+    // Search and Filter Events
+    const projectSearch = document.getElementById('search-project-input');
+    const projectFilter = document.getElementById('filter-project-category');
+    if (projectSearch) projectSearch.addEventListener('input', renderProjectsTable);
+    if (projectFilter) projectFilter.addEventListener('change', renderProjectsTable);
+
+    const blogSearch = document.getElementById('search-blog-input');
+    const blogFilter = document.getElementById('filter-blog-category');
+    if (blogSearch) blogSearch.addEventListener('input', renderBlogsTable);
+    if (blogFilter) blogFilter.addEventListener('change', renderBlogsTable);
+
+    // Auto-generate Slugs
+    const projTitleInput = document.getElementById('proj-title') as HTMLInputElement | null;
+    const projSlugInput = document.getElementById('proj-slug') as HTMLInputElement | null;
+    if (projTitleInput && projSlugInput) {
+      projTitleInput.addEventListener('input', () => {
+        const editIdx = (document.getElementById('project-edit-index') as HTMLInputElement).value;
+        if (editIdx === '-1') {
+          projSlugInput.value = slugify(projTitleInput.value);
+        }
+      });
+    }
+
+    const blogTitleInput = document.getElementById('blog-title') as HTMLInputElement | null;
+    const blogSlugInput = document.getElementById('blog-slug') as HTMLInputElement | null;
+    if (blogTitleInput && blogSlugInput) {
+      blogTitleInput.addEventListener('input', () => {
+        const editIdx = (document.getElementById('blog-edit-index') as HTMLInputElement).value;
+        if (editIdx === '-1') {
+          blogSlugInput.value = slugify(blogTitleInput.value);
+        }
+      });
+    }
+
+    // Open Add Modals
+    const btnAddProj = document.getElementById('btn-add-project');
+    if (btnAddProj) {
+      btnAddProj.addEventListener('click', () => {
+        (document.getElementById('project-edit-index') as HTMLInputElement).value = '-1';
+        (document.getElementById('modal-project-title') as HTMLElement).textContent = 'Tambah Proyek Portofolio Baru';
+        (document.getElementById('project-form') as HTMLFormElement).reset();
+        if (projDropzoneManager) {
+          projDropzoneManager.setImage('');
+        }
+        const modal = document.getElementById('project-modal');
+        if (modal) modal.style.display = 'flex';
+      });
+    }
+
+    const btnAddBlog = document.getElementById('btn-add-blog');
+    if (btnAddBlog) {
+      btnAddBlog.addEventListener('click', () => {
+        (document.getElementById('blog-edit-index') as HTMLInputElement).value = '-1';
+        (document.getElementById('modal-blog-title') as HTMLElement).textContent = 'Tulis Artikel Blog Baru';
+        (document.getElementById('blog-form') as HTMLFormElement).reset();
+        
+        // Auto set current date to Calendar
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const todayIso = `${yyyy}-${mm}-${dd}`;
+        
+        if (blogDatePicker) blogDatePicker.value = todayIso;
+        const formatted = formatIndonesianDate(todayIso);
+        if (blogDateHidden) blogDateHidden.value = formatted;
+        if (blogDatePreview) blogDatePreview.textContent = `Format rilis: ${formatted}`;
+        
+        (document.getElementById('blog-read-time') as HTMLInputElement).value = '5 min baca';
+        
+        if (blogDropzoneManager) {
+          blogDropzoneManager.setImage('');
+        }
+        const modal = document.getElementById('blog-modal');
+        if (modal) modal.style.display = 'flex';
+      });
+    }
+
+    // Save Project Form
+    const projectForm = document.getElementById('project-form');
+    if (projectForm) {
+      projectForm.addEventListener('submit', () => {
+        const editIdx = parseInt((document.getElementById('project-edit-index') as HTMLInputElement).value, 10);
+        const title = (document.getElementById('proj-title') as HTMLInputElement).value.trim();
+        const slug = (document.getElementById('proj-slug') as HTMLInputElement).value.trim();
+        const category = (document.getElementById('proj-category') as HTMLSelectElement).value;
+        const serviceId = (document.getElementById('proj-service-id') as HTMLInputElement).value.trim();
+        const image = (document.getElementById('proj-image') as HTMLInputElement).value.trim();
+        const description = (document.getElementById('proj-description') as HTMLTextAreaElement).value.trim();
+        const featuresRaw = (document.getElementById('proj-features') as HTMLTextAreaElement).value.trim();
+        const techsRaw = (document.getElementById('proj-technologies') as HTMLInputElement).value.trim();
+
+        if (!image) {
+          alert('Harap unggah screenshot atau gambar thumbnail proyek.');
+          return;
+        }
+
+        const features = featuresRaw ? featuresRaw.split('\n').map(f => f.trim()).filter(Boolean) : [];
+        const technologies = techsRaw ? techsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+
+        const projectData = {
+          title,
+          slug,
+          category,
+          serviceId: serviceId || 'software',
+          image: image,
+          description,
+          features,
+          technologies,
+          benefits: []
+        };
+
+        if (editIdx >= 0 && editIdx < currentProjects.length) {
+          currentProjects[editIdx] = { ...currentProjects[editIdx], ...projectData };
+        } else {
+          currentProjects.unshift(projectData);
+        }
+
+        saveProjectsStore();
+        (window as any).closeProjectModal();
+      });
+    }
+
+    // Save Blog Form
+    const blogForm = document.getElementById('blog-form');
+    if (blogForm) {
+      blogForm.addEventListener('submit', () => {
+        const editIdx = parseInt((document.getElementById('blog-edit-index') as HTMLInputElement).value, 10);
+        const title = (document.getElementById('blog-title') as HTMLInputElement).value.trim();
+        const slug = (document.getElementById('blog-slug') as HTMLInputElement).value.trim();
+        const category = (document.getElementById('blog-category') as HTMLSelectElement).value;
+        const date = (document.getElementById('blog-date') as HTMLInputElement).value.trim();
+        const readTime = (document.getElementById('blog-read-time') as HTMLInputElement).value.trim();
+        const image = (document.getElementById('blog-image') as HTMLInputElement).value.trim();
+        const excerpt = (document.getElementById('blog-excerpt') as HTMLTextAreaElement).value.trim();
+        const tagsRaw = (document.getElementById('blog-tags') as HTMLInputElement).value.trim();
+
+        if (!image) {
+          alert('Harap unggah cover gambar untuk artikel blog ini.');
+          return;
+        }
+
+        const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+
+        const blogData = {
+          title,
+          slug,
+          category: category || 'Cloud & Infrastructure',
+          date: date || 'Hari Ini',
+          readTime: readTime || '5 min baca',
+          image: image,
+          excerpt,
+          tags
+        };
+
+        if (editIdx >= 0 && editIdx < currentBlogs.length) {
+          currentBlogs[editIdx] = { ...currentBlogs[editIdx], ...blogData };
+        } else {
+          currentBlogs.unshift(blogData);
+        }
+
+        saveBlogsStore();
+        (window as any).closeBlogModal();
+      });
+    }
+
+    // Export Helpers
+    function downloadFile(filename: string, text: string) {
+      const element = document.createElement('a');
+      element.setAttribute('href', 'data:text/javascript;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', filename);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+
+    const btnExportProjects = document.getElementById('btn-export-projects');
+    if (btnExportProjects) {
+      btnExportProjects.addEventListener('click', () => {
+        const code = '// Generated by Bolean CMS\nexport const allProjects = ' + 
+          JSON.stringify(currentProjects, null, 2) + ';\n';
+        downloadFile('projects.js', code);
+      });
+    }
+
+    const btnExportBlogs = document.getElementById('btn-export-blogs');
+    if (btnExportBlogs) {
+      btnExportBlogs.addEventListener('click', () => {
+        const cats = Array.from(new Set(currentBlogs.map(b => b.category))).filter(Boolean);
+        const tags = Array.from(new Set(currentBlogs.flatMap(b => b.tags || []))).filter(Boolean);
+
+        const code = '// Generated by Bolean CMS\nexport const allBlogs = ' + 
+          JSON.stringify(currentBlogs, null, 2) + ';\n\nexport const blogCategories = ' + 
+          JSON.stringify(cats, null, 2) + ';\n\nexport const blogTags = ' + 
+          JSON.stringify(tags, null, 2) + ';\n';
+        downloadFile('blogs.js', code);
+      });
+    }
+
+    // Reset Data
+    const btnReset = document.getElementById('btn-reset-data');
+    if (btnReset) {
+      btnReset.addEventListener('click', () => {
+        if (confirm('PERINGATAN: Apakah Anda yakin ingin menghapus seluruh perubahan lokal dan mengembalikan portofolio serta blog ke data bawaan sistem?')) {
+          localStorage.removeItem(STORAGE_KEY_PROJECTS);
+          localStorage.removeItem(STORAGE_KEY_BLOGS);
+          initDataStore();
+          alert('Data berhasil direset ke pengaturan awal.');
+        }
+      });
+    }
+  });
+</script>
+
+<style is:global>
+  /* GLOBAL CMS COLOR TOKENS & RESET */
+  :root {
+    --cms-primary: #0da89e;
+    --cms-primary-dark: #097d75;
+    --cms-primary-light: #f0fdfa;
+    --cms-navy: #082752;
+    --cms-navy-dark: #051a37;
+    --cms-bg-page: #f8fafc;
+    --cms-border: #e2e8f0;
+    --cms-border-light: #f1f5f9;
+    --cms-text-main: #0f172a;
+    --cms-text-sub: #475569;
+    --cms-text-muted: #94a3b8;
+  }
+
+  .admin-wrapper {
+    min-height: 100vh;
+    background-color: var(--cms-bg-page);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--cms-text-main);
+  }
+
+  /* 1. LOGIN SCREEN */
+  .login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #051630 0%, #082752 50%, #07356c 100%);
+    padding: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .login-backdrop {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .login-glow-1 {
+    position: absolute;
+    top: -15%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(13, 168, 158, 0.22) 0%, rgba(13, 168, 158, 0) 70%);
+    border-radius: 50%;
+  }
+
+  .login-glow-2 {
+    position: absolute;
+    bottom: -15%;
+    right: -10%;
+    width: 650px;
+    height: 650px;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.18) 0%, rgba(14, 165, 233, 0) 70%);
+    border-radius: 50%;
+  }
+
+  .login-card {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 440px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2.75rem 2.25rem;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    box-sizing: border-box;
+  }
+
+  .login-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.75rem;
+  }
+
+  .brand-badge-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .cms-pill {
+    background: #f0fdfa;
+    color: #0d9488;
+    border: 1px solid #ccfbf1;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border-radius: 9999px;
+  }
+
+  .login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .login-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--cms-navy);
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  .login-desc {
+    color: var(--cms-text-sub);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .login-alert {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+
+  .alert-svg {
+    flex-shrink: 0;
+    stroke: #dc2626;
+  }
+
+  .login-form .form-group {
+    margin-bottom: 1.35rem;
+  }
+
+  .login-form label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.4rem;
+  }
+
+  .input-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .input-icon {
+    position: absolute;
+    left: 14px;
+    color: #94a3b8;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .form-control {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px 0 44px;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    color: #0f172a;
+    background: #f8fafc;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+  }
+
+  .form-control:focus {
+    outline: none;
+    background: #ffffff;
+    border-color: var(--cms-primary);
+    box-shadow: 0 0 0 3.5px rgba(13, 168, 158, 0.15);
+  }
+
+  .btn-toggle-pwd {
+    position: absolute;
+    right: 12px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    border-radius: 6px;
+  }
+
+  .btn-toggle-pwd:hover {
+    color: #475569;
+  }
+
+  .form-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+  }
+
+  .remember-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #475569;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .remember-wrap input {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--cms-primary);
+  }
+
+  .btn-login-submit {
+    width: 100%;
+    height: 48px;
+    background: linear-gradient(135deg, #0da89e 0%, #097d75 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    box-shadow: 0 4px 14px rgba(13, 168, 158, 0.35);
+    transition: all 0.2s ease;
+  }
+
+  .btn-login-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(13, 168, 158, 0.45);
+  }
+
+  .btn-login-submit:active {
+    transform: translateY(0);
+  }
+
+  .login-footer-hint {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #f1f5f9;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  .login-footer-hint code {
+    display: inline-block;
+    background: #f1f5f9;
+    color: var(--cms-navy);
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-top: 0.25rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+
+  /* 2. CMS DASHBOARD TOPBAR */
+  .cms-topbar {
+    height: 64px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--cms-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-sizing: border-box;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .cms-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .topbar-badge {
+    background: #f0fdfa;
+    color: #0d9488;
+    border: 1px solid #ccfbf1;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .topbar-separator {
+    width: 1px;
+    height: 24px;
+    background: #e2e8f0;
+  }
+
+  .topbar-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+  }
+
+  .crumb-root {
+    color: #94a3b8;
+    font-weight: 500;
+  }
+
+  .crumb-slash {
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+  }
+
+  .crumb-active {
+    color: var(--cms-navy);
+    font-weight: 700;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .btn-topbar-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: #ffffff;
+    border: 1px solid var(--cms-border);
+    color: #475569;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .btn-topbar-link:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: var(--cms-navy);
+  }
+
+  .admin-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #166534;
+  }
+
+  .status-pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.25);
+  }
+
+  .btn-topbar-logout {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: #ffffff;
+    border: 1px solid #fecdd3;
+    color: #e11d48;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .btn-topbar-logout:hover {
+    background: #fff1f2;
+    border-color: #fda4af;
+  }
+
+
+  /* 3. CMS BODY & SIDEBAR */
+  .cms-layout-body {
+    display: flex;
+    min-height: calc(100vh - 64px);
+  }
+
+  .cms-sidebar {
+    width: 260px;
+    background: #ffffff;
+    border-right: 1px solid var(--cms-border);
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+
+  .sidebar-section-title {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
+    padding: 0 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .cms-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .cms-nav-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 42px;
+    padding: 0 0.75rem;
+    border-radius: 9px;
+    border: none;
+    background: transparent;
+    color: #475569;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+  }
+
+  .nav-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+    color: #64748b;
+    transition: color 0.15s ease;
+  }
+
+  .nav-text {
+    flex-grow: 1;
+  }
+
+  .nav-count {
+    background: #f1f5f9;
+    color: #64748b;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    transition: all 0.15s ease;
+  }
+
+  .cms-nav-item:hover {
+    background: #f8fafc;
+    color: var(--cms-navy);
+  }
+
+  .cms-nav-item:hover .nav-icon-wrap {
+    color: var(--cms-primary);
+  }
+
+  .cms-nav-item.active {
+    background: #f0fdfa;
+    color: #0f766e;
+    font-weight: 700;
+  }
+
+  .cms-nav-item.active .nav-icon-wrap {
+    color: #0d9488;
+  }
+
+  .cms-nav-item.active .nav-count {
+    background: #0d9488;
+    color: #ffffff;
+  }
+
+  .cms-sidebar-footer {
+    margin-top: auto;
+    padding: 1rem 0.75rem 0 0.75rem;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .user-avatar-initials {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #082752 0%, #0da89e 100%);
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .user-info-stack {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .user-name {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--cms-navy);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .user-role {
+    font-size: 0.72rem;
+    color: #94a3b8;
+  }
+
+
+  /* 4. CONTENT AREA */
+  .cms-content-area {
+    flex-grow: 1;
+    padding: 2.25rem 2.5rem;
+    background-color: var(--cms-bg-page);
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
+  .content-header-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+  }
+
+  .content-heading {
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--cms-navy);
+    margin: 0 0 0.35rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  .content-subheading {
+    color: var(--cms-text-sub);
+    font-size: 0.88rem;
+    margin: 0;
+  }
+
+  .btn-primary-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #0da89e 0%, #097d75 100%);
+    color: #ffffff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 9px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(13, 168, 158, 0.3);
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(13, 168, 158, 0.4);
+  }
+
+
+  /* 5. CONTROL BAR (SEARCH & FILTERS) */
+  .cms-control-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .search-input-wrap {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-icon-svg {
+    position: absolute;
+    left: 14px;
+    color: #94a3b8;
+    pointer-events: none;
+  }
+
+  .control-search {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px 0 42px;
+    border: 1px solid var(--cms-border);
+    border-radius: 9px;
+    font-size: 0.9rem;
+    background: #ffffff;
+    color: #0f172a;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+  }
+
+  .control-search:focus {
+    outline: none;
+    border-color: var(--cms-primary);
+    box-shadow: 0 0 0 3px rgba(13, 168, 158, 0.12);
+  }
+
+  .filter-select-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 220px;
+  }
+
+  .control-select {
+    width: 100%;
+    height: 44px;
+    padding: 0 34px 0 14px;
+    border: 1px solid var(--cms-border);
+    border-radius: 9px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #334155;
+    background: #ffffff;
+    appearance: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+  }
+
+  .control-select:focus {
+    outline: none;
+    border-color: var(--cms-primary);
+    box-shadow: 0 0 0 3px rgba(13, 168, 158, 0.12);
+  }
+
+  .select-chevron-svg {
+    position: absolute;
+    right: 12px;
+    color: #94a3b8;
+    pointer-events: none;
+  }
+
+
+  /* 6. MODERN DATA TABLE */
+  .cms-table-card {
+    background: #ffffff;
+    border: 1px solid var(--cms-border);
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cms-data-table {
+    width: 100%;
+    min-width: 950px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    text-align: left;
+  }
+
+  .cms-data-table th {
+    background: #f8fafc;
+    color: #475569;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--cms-border);
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+
+  .cms-data-table td {
+    padding: 16px 20px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f1f5f9;
+    background: #ffffff;
+    font-size: 0.88rem;
+    color: #334155;
+    box-sizing: border-box;
+    transition: background-color 0.15s ease;
+  }
+
+  .cms-data-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .cms-data-table tbody tr:hover td {
+    background-color: #f8fafc;
+  }
+
+  /* Table Specific Columns */
+  .td-cover {
+    width: 86px;
+    padding-right: 14px;
+  }
+
+  .thumb-container {
+    width: 74px;
+    height: 50px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #0f172a;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .table-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .td-title {
+    min-width: 250px;
+  }
+
+  .table-title-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .table-title-link {
+    color: var(--cms-navy);
+    font-size: 0.94rem;
+    font-weight: 700;
+    line-height: 1.4;
+    text-decoration: none;
+    display: block;
+    transition: color 0.15s ease;
+  }
+
+  .table-title-link:hover {
+    color: var(--cms-primary);
+    text-decoration: underline;
+  }
+
+  .table-excerpt {
+    color: var(--cms-text-sub);
+    font-size: 0.81rem;
+    line-height: 1.45;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Category Pills */
+  .category-pill {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 4px 11px;
+    border-radius: 9999px;
+    white-space: nowrap;
+    line-height: 1.25;
+  }
+
+  .pill-blue { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+  .pill-cyan { background: #ecfeff; color: #0e7490; border: 1px solid #a5f3fc; }
+  .pill-emerald { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+  .pill-purple { background: #f5f3ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+  .pill-teal { background: #f0fdfa; color: #0f766e; border: 1px solid #99f6e4; }
+  .pill-amber { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+  .pill-slate { background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0; }
+
+  /* Slug Pill */
+  .slug-pill {
+    display: inline-flex;
+    align-items: center;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.77rem;
+    padding: 4px 9px;
+    border-radius: 6px;
+    max-width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .slug-slash {
+    color: #94a3b8;
+    font-weight: 700;
+    margin-right: 1px;
+  }
+
+  /* Meta Stack (Date & Time) */
+  .meta-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .meta-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .date-line {
+    color: #334155;
+    font-weight: 600;
+  }
+
+  .date-line svg {
+    color: #64748b;
+    flex-shrink: 0;
+  }
+
+  .time-line {
+    color: #64748b;
+    font-size: 0.76rem;
+  }
+
+  .time-line svg {
+    color: #94a3b8;
+    flex-shrink: 0;
+  }
+
+  /* Chips */
+  .chips-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 220px;
+  }
+
+  .table-chip {
+    display: inline-block;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    font-size: 0.74rem;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    line-height: 1.25;
+  }
+
+  .text-muted {
+    color: #94a3b8;
+  }
+
+  /* Action Buttons */
+  .action-btn-group {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 7px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    line-height: 1;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .btn-action svg {
+    flex-shrink: 0;
+  }
+
+  .btn-edit {
+    background: #ffffff;
+    border-color: #cbd5e1;
+    color: #334155;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  }
+
+  .btn-edit:hover {
+    background: #f0fdfa;
+    border-color: #5eead4;
+    color: #0d9488;
+    box-shadow: 0 1px 3px rgba(13, 168, 158, 0.15);
+  }
+
+  .btn-delete {
+    background: #ffffff;
+    border-color: #fecdd3;
+    color: #e11d48;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  }
+
+  .btn-delete:hover {
+    background: #fff1f2;
+    border-color: #fda4af;
+    color: #be123c;
+    box-shadow: 0 1px 3px rgba(225, 29, 72, 0.15);
+  }
+
+  .empty-state {
+    padding: 3.5rem 1.5rem;
+    text-align: center;
+    color: #64748b;
+  }
+
+  .empty-state h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cms-navy);
+    margin: 0.85rem 0 0.35rem 0;
+  }
+
+  .empty-state p {
+    font-size: 0.88rem;
+    margin: 0;
+  }
+
+
+  /* 7. OVERVIEW TAB SPECIFICS */
+  .cms-metrics-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .metric-card {
+    background: #ffffff;
+    border: 1px solid var(--cms-border);
+    border-radius: 12px;
+    padding: 1.35rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  }
+
+  .metric-icon-square {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .teal-icon { background: #f0fdfa; color: #0d9488; border: 1px solid #ccfbf1; }
+  .blue-icon { background: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
+  .purple-icon { background: #f5f3ff; color: #7c3aed; border: 1px solid #ede9fe; }
+  .green-icon { background: #f0fdf4; color: #16a34a; border: 1px solid #dcfce7; }
+
+  .metric-data {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metric-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #64748b;
+    margin-bottom: 0.2rem;
+  }
+
+  .metric-value {
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--cms-navy);
+    line-height: 1.1;
+  }
+
+  .metric-note {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    margin-top: 0.25rem;
+  }
+
+  .overview-section-box {
+    background: #ffffff;
+    border: 1px solid var(--cms-border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  }
+
+  .box-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cms-navy);
+    margin: 0 0 1.25rem 0;
+  }
+
+  .box-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+
+  .box-link {
+    color: var(--cms-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .box-link:hover {
+    text-decoration: underline;
+  }
+
+  .box-desc {
+    color: var(--cms-text-sub);
+    font-size: 0.88rem;
+    margin: 0;
+  }
+
+  .quick-actions-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .quick-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: #f8fafc;
+    border: 1px solid var(--cms-border);
+    border-radius: 10px;
+    padding: 1.15rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .quick-btn:hover {
+    background: #ffffff;
+    border-color: var(--cms-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(13, 168, 158, 0.12);
+  }
+
+  .quick-btn-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .teal-bg { background: #f0fdfa; color: #0d9488; border: 1px solid #ccfbf1; }
+  .blue-bg { background: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; }
+  .purple-bg { background: #f5f3ff; color: #7c3aed; border: 1px solid #ede9fe; }
+  .red-bg { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+
+  .quick-btn-info strong {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--cms-navy);
+    margin-bottom: 0.25rem;
+  }
+
+  .quick-btn-info p {
+    font-size: 0.78rem;
+    color: var(--cms-text-sub);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+
+  /* 8. BACKUP & EXPORT TAB */
+  .backup-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .backup-card {
+    background: #ffffff;
+    border: 1px solid var(--cms-border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .backup-icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .backup-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cms-navy);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .backup-card p {
+    color: var(--cms-text-sub);
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin: 0 0 1.5rem 0;
+    flex-grow: 1;
+  }
+
+  .backup-card code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--cms-navy);
+  }
+
+  .btn-backup-action {
+    width: 100%;
+    height: 42px;
+    background: var(--cms-navy);
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .btn-backup-action:hover {
+    background: var(--cms-primary);
+  }
+
+  .danger-zone {
+    border-color: #fecaca;
+    background: #fffafa;
+  }
+
+  .btn-danger-action {
+    width: 100%;
+    height: 42px;
+    background: #dc2626;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+  }
+
+  .btn-danger-action:hover {
+    background: #b91c1c;
+  }
+
+  .supabase-info-card {
+    background: #ffffff;
+    border: 1px solid var(--cms-border);
+    border-radius: 12px;
+    padding: 1.75rem;
+  }
+
+  .supa-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .supa-icon-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+    background: #ecfdf5;
+    border: 1px solid #d1fae5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .supa-pill {
+    display: inline-block;
+    background: #ecfdf5;
+    color: #059669;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    border: 1px solid #a7f3d0;
+  }
+
+  .supa-header h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--cms-navy);
+    margin: 0 0 0.25rem 0;
+  }
+
+  .supabase-info-card p {
+    color: var(--cms-text-sub);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+
+  /* 9. MODALS (PORTFOLIO & BLOG) */
+  .cms-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    box-sizing: border-box;
+  }
+
+  .cms-modal-box {
+    background: #ffffff;
+    width: 100%;
+    max-width: 680px;
+    max-height: 90vh;
+    border-radius: 16px;
+    overflow-y: auto;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--cms-border);
+  }
+
+  .cms-modal-header {
+    padding: 1.35rem 1.75rem;
+    border-bottom: 1px solid var(--cms-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: #ffffff;
+    z-index: 10;
+  }
+
+  .cms-modal-header h3 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--cms-navy);
+    margin: 0;
+  }
+
+  .btn-modal-close {
+    background: #f1f5f9;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+  }
+
+  .btn-modal-close:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+  }
+
+  .cms-modal-body {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .form-col-8 { flex: 8; }
+  .form-col-6 { flex: 6; }
+  .form-col-4 { flex: 4; }
+
+  .cms-input, .cms-textarea {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: #f8fafc;
+    color: #0f172a;
+    box-sizing: border-box;
+    font-family: inherit;
+    transition: all 0.15s ease;
+  }
+
+  .cms-input:focus, .cms-textarea:focus {
+    outline: none;
+    border-color: var(--cms-primary);
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(13, 168, 158, 0.15);
+  }
+
+  .cms-modal-body label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 0.35rem;
+  }
+
+  /* UPLOAD DROPZONE STYLES */
+  .upload-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .cms-dropzone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 12px;
+    background: #f8fafc;
+    padding: 1.25rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cms-dropzone:hover, .cms-dropzone.drag-over {
+    border-color: var(--cms-primary);
+    background: #f0fdfa;
+    box-shadow: 0 0 0 3px rgba(13, 168, 158, 0.12);
+  }
+
+  .dropzone-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.75rem 0;
+  }
+
+  .dropzone-icon-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cms-primary);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+  }
+
+  .dropzone-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--cms-navy);
+    margin: 0;
+  }
+
+  .dropzone-browse-link {
+    color: var(--cms-primary);
+    text-decoration: underline;
+    font-weight: 700;
+  }
+
+  .dropzone-subtitle {
+    font-size: 0.75rem;
+    color: #64748b;
+  }
+
+  .dropzone-filled-state {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-align: left;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 9px;
+    padding: 0.75rem 0.9rem;
+  }
+
+  .dropzone-preview-wrap {
+    width: 90px;
+    height: 60px;
+    border-radius: 7px;
+    overflow: hidden;
+    background: #0f172a;
+    border: 1px solid #e2e8f0;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  .dropzone-preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .dropzone-file-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex-grow: 1;
+    overflow: hidden;
+  }
+
+  .dropzone-file-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--cms-navy);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dropzone-btn-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-dropzone-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    color: #334155;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .btn-dropzone-action:hover {
+    background: #f1f5f9;
+    border-color: #94a3b8;
+  }
+
+  .btn-dropzone-danger {
+    color: #dc2626;
+    border-color: #fecaca;
+    background: #fffafa;
+  }
+
+  .btn-dropzone-danger:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+  }
+
+  .url-fallback-accordion {
+    margin-top: 0.25rem;
+  }
+
+  .btn-url-toggle {
+    background: none;
+    border: none;
+    color: #64748b;
+    font-size: 0.76rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0;
+    transition: color 0.15s ease;
+  }
+
+  .btn-url-toggle:hover {
+    color: var(--cms-primary);
+  }
+
+  .url-input-box {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .btn-apply-url {
+    background: var(--cms-navy);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0 16px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .btn-apply-url:hover {
+    background: var(--cms-primary);
+  }
+
+  .date-format-helper {
+    font-size: 0.74rem;
+    color: #0d9488;
+    font-weight: 600;
+    margin-top: 0.35rem;
+  }
+
+  .cms-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 1.25rem 1.75rem;
+    border-top: 1px solid var(--cms-border);
+    background: #f8fafc;
+  }
+
+  .btn-modal-cancel {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    color: #475569;
+    font-weight: 600;
+    font-size: 0.88rem;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .btn-modal-cancel:hover {
+    background: #f1f5f9;
+  }
+
+  .btn-modal-save {
+    background: linear-gradient(135deg, #0da89e 0%, #097d75 100%);
+    color: #ffffff;
+    border: none;
+    font-weight: 700;
+    font-size: 0.88rem;
+    padding: 9px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(13, 168, 158, 0.25);
+    transition: all 0.15s ease;
+  }
+
+  .btn-modal-save:hover {
+    box-shadow: 0 6px 18px rgba(13, 168, 158, 0.35);
+  }
+
+  /* 10. RESPONSIVE BREAKPOINTS */
+  @media (max-width: 1100px) {
+    .cms-metrics-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .quick-actions-row {
+      grid-template-columns: 1fr;
+    }
+    .backup-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .cms-sidebar {
+      width: 72px;
+      padding: 1rem 0.35rem;
+    }
+    .sidebar-section-title, .nav-text, .nav-count, .cms-sidebar-footer {
+      display: none;
+    }
+    .cms-nav-item {
+      justify-content: center;
+      padding: 0;
+    }
+    .nav-icon-wrap {
+      margin-right: 0;
+    }
+    .cms-content-area {
+      padding: 1.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .cms-topbar {
+      padding: 0 1rem;
+    }
+    .topbar-separator, .topbar-breadcrumb, .admin-status-pill {
+      display: none;
+    }
+    .cms-layout-body {
+      flex-direction: column;
+    }
+    .cms-sidebar {
+      width: 100%;
+      border-right: none;
+      border-bottom: 1px solid var(--cms-border);
+    }
+    .cms-nav {
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    .cms-metrics-row {
+      grid-template-columns: 1fr;
+    }
+    .content-header-banner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    .cms-control-bar {
+      flex-direction: column;
+    }
+    .form-row {
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+  }
+</style>

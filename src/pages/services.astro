@@ -5,47 +5,140 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout title="Services | Bolean">
+<Layout title="Layanan IT, Software, Hardware & IoT | Bolean.id" description="Jelajahi 6 layanan unggulan Bolean: Pembuatan Custom Software, Pembuatan Hardware, Pembuatan IoT, Pembuatan Website, Pengelolaan Website, dan Otomasi & AI Bisnis.">
   <Navbar />
   <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
-    <section class="section section-light">
+    
+    <!-- Hero Header -->
+    <section class="section section-light" style="padding: 4.5rem 0 3rem; text-align: center; border-bottom: 1px solid #e2e8f0; background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);">
       <div class="container">
-        <div class="section-header">
-          <span class="section-subtitle">Apa Yang Kami Lakukan</span>
-          <h2 class="section-title">Layanan IT Eksklusif</h2>
-        </div>
-        
+        <span class="section-subtitle">SOLUSI TEKNOLOGI LENGKAP</span>
+        <h1 class="section-title">Layanan Unggulan <span>Bolean</span></h1>
+        <p style="color: var(--color-text-muted); max-width: 680px; margin: 1rem auto 0; font-size: 1.1rem; line-height: 1.6;">
+          Kami menyediakan layanan komprehensif mulai dari rekayasa perangkat lunak, perakitan perangkat keras kustom, integrasi IoT pintar, hingga pembuatan dan pemeliharaan website profesional.
+        </p>
+      </div>
+    </section>
+
+    <!-- 5 Core Services Grid -->
+    <section class="section section-gray" style="padding: 4.5rem 0 6rem;">
+      <div class="container">
         <div class="services-grid">
-          <div class="service-card">
-            <div class="service-icon" style="width: 3rem; height: 3rem; margin-bottom: 1.5rem; color: var(--color-primary);"><Icon name="monitor" class="" /></div>
-            <h3 class="service-title">Pengembangan Web</h3>
-            <p class="service-desc">Website yang bersih, responsif, dan berperforma tinggi yang disesuaikan dengan kebutuhan bisnis unik Anda.</p>
+          
+          <!-- 1. Pembuatan Custom Software -->
+          <div class="service-card" id="custom-software">
+            <div class="service-icon"><Icon name="monitor" class="" /></div>
+            <h3 class="service-title">Pembuatan Custom Software</h3>
+            <p class="service-desc">
+              Pengembangan perangkat lunak kustom yang dirancang presisi untuk alur kerja bisnis Anda. Termasuk sistem ERP, CRM, portal manajemen database, serta aplikasi mobile (iOS/Android).
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 1.25rem 0 1.5rem; color: #475569; font-size: 0.92rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>✓ Sistem Enterprise & ERP/CRM Kustom</li>
+              <li>✓ Aplikasi Mobile iOS & Android</li>
+              <li>✓ Otomasi Workflow & API Terintegrasi</li>
+            </ul>
+            <div>
+              <a href="/services/software" class="btn btn-primary" style="font-size: 0.9rem; padding: 0.65rem 1.25rem;">
+                Detail Software →
+              </a>
+            </div>
           </div>
-          <div class="service-card">
-            <div class="service-icon" style="width: 3rem; height: 3rem; margin-bottom: 1.5rem; color: var(--color-primary);"><Icon name="smartphone" class="" /></div>
-            <h3 class="service-title">Desain Aplikasi</h3>
-            <p class="service-desc">Desain UI/UX intuitif yang memberikan pengalaman menarik dan mulus bagi pengguna ponsel Anda.</p>
+
+          <!-- 2. Pembuatan Hardware -->
+          <div class="service-card" id="hardware">
+            <div class="service-icon"><Icon name="hard-drive" class="" /></div>
+            <h3 class="service-title">Pembuatan Hardware</h3>
+            <p class="service-desc">
+              Perancangan skematik & fabrikasi PCB, controller embedded system kustom, perakitan rack server data center, instalasi fiber/LAN enterprise, dan PC workstation berperforma tinggi.
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 1.25rem 0 1.5rem; color: #475569; font-size: 0.92rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>✓ Desain PCB & Embedded Microcontroller</li>
+              <li>✓ Instalasi Rack Server & Jaringan Enterprise</li>
+              <li>✓ Custom PC Workstation & Industrial Rig</li>
+            </ul>
+            <div>
+              <a href="/services/hardware" class="btn btn-primary" style="font-size: 0.9rem; padding: 0.65rem 1.25rem;">
+                Detail Hardware →
+              </a>
+            </div>
           </div>
-          <div class="service-card">
-            <div class="service-icon" style="width: 3rem; height: 3rem; margin-bottom: 1.5rem; color: var(--color-primary);"><Icon name="globe" class="" /></div>
-            <h3 class="service-title">Arsitektur Cloud</h3>
-            <p class="service-desc">Infrastruktur cloud yang aman dan terukur untuk memastikan aplikasi Anda berjalan lancar 24/7.</p>
+
+          <!-- 3. Pembuatan IoT -->
+          <div class="service-card" id="iot">
+            <div class="service-icon"><Icon name="cpu" class="" /></div>
+            <h3 class="service-title">Pembuatan IoT</h3>
+            <p class="service-desc">
+              Integrasi sensor fisik cerdas dengan platform telemetri cloud real-time. Menghubungkan perangkat industri, smart farming, monitoring suhu/tekanan, dan otomasi berbasis SCADA.
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 1.25rem 0 1.5rem; color: #475569; font-size: 0.92rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>✓ Sensor Telemetri & Gateway LoRaWAN/MQTT</li>
+              <li>✓ Dashboard Monitoring & Kontrol Real-Time</li>
+              <li>✓ Otomasi Industri & Smart Agriculture</li>
+            </ul>
+            <div>
+              <a href="/services/iot" class="btn btn-primary" style="font-size: 0.9rem; padding: 0.65rem 1.25rem;">
+                Detail IoT →
+              </a>
+            </div>
           </div>
-          <div class="service-card">
-            <div class="service-icon" style="width: 3rem; height: 3rem; margin-bottom: 1.5rem; color: var(--color-primary);"><Icon name="shield-check" class="" /></div>
-            <h3 class="service-title">Keamanan Siber</h3>
-            <p class="service-desc">Audit dan solusi keamanan komprehensif untuk melindungi data bisnis berharga Anda.</p>
+
+          <!-- 4. Pembuatan Website -->
+          <div class="service-card" id="website">
+            <div class="service-icon"><Icon name="globe" class="" /></div>
+            <h3 class="service-title">Pembuatan Website</h3>
+            <p class="service-desc">
+              Pembangunan website modern dengan kecepatan loading ultra-cepat, visual memukau, responsif di seluruh perangkat, dan optimasi SEO menyeluruh untuk meraih peringkat teratas Google.
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 1.25rem 0 1.5rem; color: #475569; font-size: 0.92rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>✓ Company Profile & Portal Korporat</li>
+              <li>✓ Landing Page Konversi Tinggi</li>
+              <li>✓ Arsitektur Astro JS & Skor SEO 100/100</li>
+            </ul>
+            <div>
+              <a href="/services/website" class="btn btn-primary" style="font-size: 0.9rem; padding: 0.65rem 1.25rem;">
+                Detail Website →
+              </a>
+            </div>
           </div>
-          <div class="service-card">
-            <div class="service-icon" style="width: 3rem; height: 3rem; margin-bottom: 1.5rem; color: var(--color-primary);"><Icon name="bar-chart" class="" /></div>
-            <h3 class="service-title">Analisis Data</h3>
-            <p class="service-desc">Ubah data mentah Anda menjadi wawasan yang dapat ditindaklanjuti untuk keputusan bisnis yang lebih baik.</p>
+
+          <!-- 5. Pengelolaan Website -->
+          <div class="service-card" id="pengelolaan-website">
+            <div class="service-icon"><Icon name="shield-check" class="" /></div>
+            <h3 class="service-title">Pengelolaan Website</h3>
+            <p class="service-desc">
+              Layanan pemeliharaan teknis menyeluruh (maintenance) agar website bisnis Anda selalu aman, cepat, dan terbarui tanpa Anda perlu repot mengurus aspek teknis server.
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 1.25rem 0 1.5rem; color: #475569; font-size: 0.92rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>✓ Pembaruan Konten & Optimasi Kecepatan</li>
+              <li>✓ Backup Cloud Rutin & Pemulihan Cepat</li>
+              <li>✓ Monitoring Uptime 24/7 & Proteksi Keamanan</li>
+            </ul>
+            <div>
+              <a href="/contact" class="btn btn-secondary" style="font-size: 0.9rem; padding: 0.65rem 1.25rem;">
+                Konsultasi Pengelolaan →
+              </a>
+            </div>
           </div>
-          <div class="service-card">
-            <div class="service-icon" style="width: 3rem; height: 3rem; margin-bottom: 1.5rem; color: var(--color-primary);"><Icon name="zap" class="" /></div>
-            <h3 class="service-title">Pemasaran Digital</h3>
-            <p class="service-desc">Strategi berbasis data untuk meningkatkan kehadiran online dan menjangkau audiens target Anda.</p>
+
+          <!-- 6. Otomasi & AI Bisnis -->
+          <div class="service-card" id="otomasi-ai">
+            <div class="service-icon"><Icon name="bot" class="" /></div>
+            <h3 class="service-title">Otomasi & AI Bisnis</h3>
+            <p class="service-desc">
+              Integrasi kecerdasan buatan (AI), chatbot WhatsApp otomatis 24/7, dan otomatisasi alur kerja (workflow) untuk memangkas pekerjaan manual repetitif secara drastis.
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 1.25rem 0 1.5rem; color: #475569; font-size: 0.92rem; display: flex; flex-direction: column; gap: 0.5rem;">
+              <li>✓ AI Chatbot WhatsApp & CS Pintar 24/7</li>
+              <li>✓ Otomasi Alur Kerja (Workflow & Auto-Input Data)</li>
+              <li>✓ Auto-Generate Invoice & Integrasi API Sistem</li>
+            </ul>
+            <div>
+              <a href="/contact" class="btn btn-primary" style="font-size: 0.9rem; padding: 0.65rem 1.25rem;">
+                Konsultasi AI & Otomasi →
+              </a>
+            </div>
           </div>
+
         </div>
       </div>
     </section>

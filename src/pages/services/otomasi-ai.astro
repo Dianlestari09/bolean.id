@@ -1,0 +1,567 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+
+const aiSolutions = [
+  {
+    icon: 'bot',
+    badge: 'CUSTOMER SERVICE 24/7',
+    title: 'AI WhatsApp Chatbot Pintar',
+    desc: 'Asisten percakapan cerdas yang memahami bahasa alami (NLP) untuk melayani prospek pelanggan, menjawab katalog produk, hingga penjadwalan janji temu tanpa libur.',
+    features: ['Respon instan < 3 detik di nomor WhatsApp bisnis', 'Terintegrasi database produk, stok & harga real-time', 'Eskalasi mulus ke agen manusia bila diperlukan']
+  },
+  {
+    icon: 'settings',
+    badge: 'WORKFLOW & RPA',
+    title: 'Otomasi Alur Kerja & Integrasi Sistem',
+    desc: 'Hubungkan formulir website, CRM, spreadsheet, software akuntansi, dan pesan notifikasi tanpa perlu entri data manual yang rawan kesalahan ketik.',
+    features: ['Otomasi proses registrasi, leads & auto-follow up', 'Sinkronisasi data lintas aplikasi tanpa input berulang', 'Trigger pesan notifikasi WhatsApp & Email seketika']
+  },
+  {
+    icon: 'cpu',
+    badge: 'DOCUMENT AI & OCR',
+    title: 'Ekstraksi Cerdas Dokumen & Smart OCR',
+    desc: 'Teknologi computer vision & LLM untuk membaca dan mengekstrak data dari foto struk, invoice, tagihan supplier, maupun dokumen identitas langsung ke sistem ERP.',
+    features: ['Ekstraksi data terstruktur seketika dari file PDF/foto', 'Akurasi pembacaan karakter hingga 99%', 'Pangkas beban entri berkas administrasi perusahaan']
+  },
+  {
+    icon: 'database',
+    badge: 'FINANCIAL OPS',
+    title: 'Auto-Generate Invoice & Billing Gateway',
+    desc: 'Sistem penagihan otomatis yang menghasilkan invoice PDF dinamis, mengirimkan link pembayaran via WhatsApp/Email, dan merekonsiliasi status lunas.',
+    features: ['Pengiriman invoice otomatis tepat tanggal jatuh tempo', 'Integrasi Payment Gateway multi-bank & QRIS', 'Pencatatan mutasi kas real-time ke sistem pembukuan']
+  }
+];
+
+const processSteps = [
+  {
+    num: '01',
+    title: 'Audit & Analisis Alur Kerja',
+    desc: 'Kami membedah proses bisnis manual Anda untuk menemukan bottleneck dan peluang efisiensi biaya tertinggi.'
+  },
+  {
+    num: '02',
+    title: 'Blueprint & Pemilihan Model AI',
+    desc: 'Menentukan integrasi API, model AI (OpenAI / Claude / Local LLM), serta skenario trigger otomasi yang aman.'
+  },
+  {
+    num: '03',
+    title: 'Implementasi & Integrasi API',
+    desc: 'Menghubungkan sistem WhatsApp Business API, CRM, database, dan logika kecerdasan buatan dalam alur kerja terpadu.'
+  },
+  {
+    num: '04',
+    title: 'Pengujian & Pelatihan Tim',
+    desc: 'Uji coba ketahanan sistem dengan ribuan skenario percakapan dan simulasi data sebelum dioperasikan penuh.'
+  }
+];
+---
+
+<Layout 
+  title="Solusi Otomasi & AI Bisnis Terpadu | Bolean.id"
+  description="Layanan integrasi artificial intelligence (AI), chatbot WhatsApp 24/7 otomatis, dan otomasi workflow bisnis untuk memangkas kerja repetitif manual oleh Bolean."
+>
+  <Navbar />
+  <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
+
+    <!-- Hero Header -->
+    <section class="service-hero">
+      <div class="container">
+        <div class="service-hero-content">
+          <div class="service-badge">
+            <span class="badge-dot"></span>
+            <span>NEXT-GEN AI & WORKFLOW AUTOMATION</span>
+          </div>
+          <h1 class="service-hero-title">
+            Otomasi & Kecerdasan Buatan (AI) untuk <span>Efisiensi Bisnis Maksimal</span>
+          </h1>
+          <p class="service-hero-desc">
+            Pangkas ratusan jam kerja repetitif manual dengan asisten AI cerdas, integrasi alur kerja (workflow automation), dan bot WhatsApp terpadu yang bekerja tanpa lelah 24 jam sehari.
+          </p>
+          <div class="service-hero-actions">
+            <a 
+              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20solusi%20otomasi%20dan%20AI%20bisnis" 
+              target="_blank" 
+              class="btn btn-primary btn-hero"
+            >
+              Konsultasi AI & Otomasi <span>→</span>
+            </a>
+            <a href="#solutions" class="btn btn-outline btn-hero">
+              Jelajahi Solusi Unggulan ↓
+            </a>
+          </div>
+
+          <!-- Highlight Metric Badges -->
+          <div class="hero-stats-row">
+            <div class="hero-stat-card">
+              <span class="stat-number">70%</span>
+              <span class="stat-label">Pangkas Biaya Operasional</span>
+            </div>
+            <div class="hero-stat-card">
+              <span class="stat-number">&lt; 3 Detik</span>
+              <span class="stat-label">Respon Pelanggan 24/7</span>
+            </div>
+            <div class="hero-stat-card">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">Zero Human Error Input</span>
+            </div>
+            <div class="hero-stat-card">
+              <span class="stat-number">10x</span>
+              <span class="stat-label">Skalabilitas Transaksi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solutions Section (Balanced 2x2 Grid) -->
+    <section id="solutions" class="section section-gray">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">KAPABILITAS KAMI</span>
+          <h2 class="section-title">Solusi Cerdas untuk <span>Modernisasi Bisnis</span></h2>
+          <p class="section-desc">
+            Solusi AI praktis yang berfokus pada hasil nyata: meningkatkan omzet, mempercepat layanan pelanggan, dan menghemat biaya operasional.
+          </p>
+        </div>
+
+        <div class="solutions-grid">
+          {aiSolutions.map((sol) => (
+            <div class="solution-card">
+              <div class="solution-card-top">
+                <div class="solution-icon-wrap">
+                  <Icon name={sol.icon} class="" />
+                </div>
+                <span class="solution-tag">{sol.badge}</span>
+              </div>
+              <h3 class="solution-title">{sol.title}</h3>
+              <p class="solution-desc">{sol.desc}</p>
+              <ul class="solution-checklist">
+                {sol.features.map((item) => (
+                  <li>
+                    <span class="check-icon">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Process Workflow (4 Columns) -->
+    <section class="section section-light">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">LANGKAH PENGERJAAN</span>
+          <h2 class="section-title">Tahapan Implementasi <span>Otomasi & AI</span></h2>
+          <p class="section-desc">
+            Metode terukur dan terarah untuk memastikan sistem baru menyatu mulus dengan kegiatan operasional harian perusahaan.
+          </p>
+        </div>
+
+        <div class="process-steps-grid">
+          {processSteps.map((step) => (
+            <div class="process-step-card">
+              <div class="step-badge">{step.num}</div>
+              <h4 class="step-title">{step.title}</h4>
+              <p class="step-desc">{step.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ROI & Business Impact Section -->
+    <section class="section section-gray">
+      <div class="container">
+        <div class="roi-banner-box">
+          <div class="roi-text">
+            <span class="section-subtitle" style="color: #38ef7d; background: rgba(56, 239, 125, 0.1);">IMPAK BISNIS TERBUKTI</span>
+            <h2 style="color: white; font-size: 2.2rem; margin-top: 0.75rem; font-weight: 800;">
+              Jangan Biarkan Tim Anda Tenggelam dalam Tugas Repetitif
+            </h2>
+            <p style="color: #cbd5e1; font-size: 1.05rem; line-height: 1.6; margin-top: 1rem;">
+              Setiap jam yang dihabiskan untuk membalas pertanyaan yang sama atau menginput data manual adalah potensi pendapatan yang terbuang. Dengan AI & otomatisasi Bolean, bisnis Anda beroperasi lebih cepat dan efisien tanpa batas waktu.
+            </p>
+            <div style="margin-top: 2rem;">
+              <a 
+                href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20diskusi%20kebutuhan%20AI%20Chatbot%20dan%20Otomasi%20bisnis%20saya" 
+                target="_blank" 
+                class="btn btn-primary"
+                style="padding: 0.85rem 2rem; font-size: 1rem;"
+              >
+                Jadwalkan Demo & Konsultasi →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dedicated CTA Banner -->
+    <section class="section-cta-banner">
+      <div class="container">
+        <div class="cta-inner-box">
+          <div class="cta-content-side">
+            <span class="cta-pill">TRANSFORMASI DIGITAL</span>
+            <h2 class="cta-main-title">Siap Mengotomasi Bisnis Anda Bersama Bolean?</h2>
+            <p class="cta-sub-desc">
+              Ceritakan alur kerja bisnis Anda saat ini. Tim kami akan merancang solusi AI dan otomatisasi yang paling tepat guna dan hemat biaya untuk Anda.
+            </p>
+          </div>
+          <div class="cta-btn-side">
+            <a 
+              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20otomasi%20dan%20AI" 
+              target="_blank" 
+              class="btn-cta-giant"
+            >
+              KONSULTASI SEKARANG <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Base Service Hero */
+  .service-hero {
+    background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+    padding: 4.5rem 0 3.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: center;
+  }
+  .service-hero-content {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .service-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(13, 168, 158, 0.1);
+    color: var(--color-primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 0.45rem 1.25rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(13, 168, 158, 0.2);
+  }
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary);
+    border-radius: 50%;
+  }
+  .service-hero-title {
+    font-size: 2.85rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+  .service-hero-title span {
+    color: var(--color-primary);
+  }
+  .service-hero-desc {
+    font-size: 1.12rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 2.25rem;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .service-hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .btn-hero {
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+  }
+
+  /* Hero Stats */
+  .hero-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    max-width: 980px;
+    margin: 0 auto;
+    padding-top: 2.5rem;
+    border-top: 1px solid #e2e8f0;
+  }
+  .hero-stat-card {
+    background: white;
+    padding: 1.25rem 1rem;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    text-align: center;
+  }
+  .stat-number {
+    display: block;
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 0.35rem;
+    white-space: nowrap;
+  }
+  .stat-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+    line-height: 1.35;
+    display: block;
+  }
+
+  /* Solutions 2x2 Grid */
+  .section-desc {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    max-width: 620px;
+    margin: 0.75rem auto 0;
+    line-height: 1.6;
+  }
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 3.5rem;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .solution-card {
+    background: white;
+    padding: 2.5rem 2.25rem;
+    border-radius: 18px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  }
+  .solution-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(8, 39, 82, 0.08);
+    border-color: rgba(13, 168, 158, 0.4);
+  }
+  .solution-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+  .solution-icon-wrap {
+    width: 52px;
+    height: 52px;
+    background: rgba(13, 168, 158, 0.08);
+    color: var(--color-primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .solution-icon-wrap :global(svg) {
+    width: 26px;
+    height: 26px;
+  }
+  .solution-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    background: rgba(13, 168, 158, 0.1);
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+    letter-spacing: 0.8px;
+  }
+  .solution-title {
+    font-size: 1.3rem;
+    color: var(--color-secondary);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .solution-desc {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .solution-checklist {
+    list-style: none;
+    padding: 0;
+    margin: auto 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 1.25rem;
+  }
+  .solution-checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.9rem;
+    color: #334155;
+    line-height: 1.45;
+  }
+  .check-icon {
+    color: var(--color-primary);
+    font-weight: 800;
+  }
+
+  /* Process Steps (4 Columns) */
+  .process-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .process-step-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  }
+  .step-badge {
+    display: inline-block;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+  }
+  .step-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 0.5rem;
+  }
+  .step-desc {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* ROI Banner */
+  .roi-banner-box {
+    background: linear-gradient(135deg, #082752 0%, #0d386d 100%);
+    border-radius: 20px;
+    padding: 3.5rem;
+    max-width: 960px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(8, 39, 82, 0.15);
+  }
+  .roi-text {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  /* CTA Banner */
+  .section-cta-banner {
+    padding: 4rem 0 5rem;
+    background: linear-gradient(135deg, #082752 0%, #0c3b7a 100%);
+  }
+  .cta-inner-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .cta-pill {
+    display: inline-block;
+    background: rgba(13, 168, 158, 0.2);
+    color: #38ef7d;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+  }
+  .cta-main-title {
+    font-size: 2.2rem;
+    color: white;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    line-height: 1.25;
+  }
+  .cta-sub-desc {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0;
+  }
+  .btn-cta-giant {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--color-primary);
+    color: white;
+    font-weight: 800;
+    font-size: 1.05rem;
+    padding: 1.15rem 2.25rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(13, 168, 158, 0.4);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .btn-cta-giant:hover {
+    background: #0bb5aa;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(13, 168, 158, 0.5);
+  }
+
+  @media (max-width: 991px) {
+    .service-hero-title {
+      font-size: 2.3rem;
+    }
+    .hero-stats-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .solutions-grid {
+      grid-template-columns: 1fr;
+    }
+    .process-steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .roi-banner-box {
+      padding: 2.5rem 1.5rem;
+    }
+    .cta-inner-box {
+      flex-direction: column;
+      text-align: center;
+    }
+    .cta-sub-desc {
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-stats-row {
+      grid-template-columns: 1fr;
+    }
+    .process-steps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

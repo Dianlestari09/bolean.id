@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <circle cx="25" cy="30" r="20" fill="#e0f2fe"/>
+  <path d="M25 18 V42 M13 30 H37" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="25" cy="30" r="3" fill="#0369a1"/>
+  <text x="55" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#082752">PRIMA MEDIKA</text>
+  <text x="55" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="600" fill="#64748b" letter-spacing="1">HEALTHCARE</text>
+</svg>

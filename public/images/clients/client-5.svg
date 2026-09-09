@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <rect x="5" y="10" width="40" height="40" rx="10" fill="#fdf2f8"/>
+  <circle cx="25" cy="30" r="14" fill="#ec4899" opacity="0.15"/>
+  <path d="M18 25 C18 35 32 35 32 25 Z" fill="#b91c1c"/>
+  <path d="M32 26 C35 26 35 30 32 30" stroke="#b91c1c" stroke-width="2" fill="none"/>
+  <text x="55" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#082752">KOPI NUSANTARA</text>
+  <text x="55" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="600" fill="#64748b" letter-spacing="1">GROUP F&amp;B</text>
+</svg>

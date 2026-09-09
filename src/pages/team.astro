@@ -10,11 +10,10 @@ import Footer from "../components/Footer.astro";
     <section class="section section-light">
       <div class="container">
         <div class="section-header">
-          <span class="section-subtitle">Temui Para Ahli</span>
-          <h2 class="section-title">Tim Berdedikasi Kami</h2>
-          <p style="color: var(--color-text-muted); margin-top: 1rem;">
-            Sekelompok profesional penuh semangat yang berkomitmen untuk memberikan
-            solusi teknologi premium.
+          <span class="section-subtitle">TALENTA MUDA & BERPENGALAMAN</span>
+          <h2 class="section-title">Generasi Muda dengan Jam Terbang Teknologi Tinggi</h2>
+          <p style="color: var(--color-text-muted); margin-top: 1rem; max-width: 680px; margin-left: auto; margin-right: auto;">
+            Semangat anak muda dengan keahlian teknologi nyata. Tim kami sarat jam terbang dalam rekayasa software, IoT canggih, dan arsitektur sistem modern dengan eksekusi gesit dan presisi.
           </p>
         </div>
 
@@ -137,9 +136,13 @@ import Footer from "../components/Footer.astro";
     aspect-ratio: 4 / 5; /* Half body aspect ratio */
     border-radius: 1rem; /* Rounded corners on the image itself */
     overflow: hidden;
-    position: relative;
-    background-color: var(--color-surface); /* fallback color */
+    background-color: #082752;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.4s ease;
+  }
+
+  .team-card:hover .team-image-wrapper {
+    box-shadow: 0 15px 35px rgba(13, 168, 158, 0.25);
   }
 
   .team-photo {
@@ -147,11 +150,12 @@ import Footer from "../components/Footer.astro";
     height: 100%;
     object-fit: cover;
     object-position: center 10%; /* Focus on upper half */
-    transition: transform 0.6s ease;
+    transition: transform 0.6s ease, filter 0.4s ease;
   }
 
   .team-card:hover .team-photo {
     transform: scale(1.08);
+    filter: brightness(1.04) contrast(1.02);
   }
 
   .team-info {

@@ -1,57 +1,717 @@
 ---
-import Icon from '../../components/Icon.astro';
 import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import { allProjects } from '../../data/projects.js';
+
+const iotProjects = allProjects.filter(p => p.category.toLowerCase().includes('iot')).slice(0, 3);
+
+const iotSolutions = [
+  {
+    icon: 'activity',
+    badge: 'SMART SENSORS',
+    title: 'Sensor Telemetri & Smart Nodes',
+    desc: 'Pengembangan node sensor kustom untuk pemantauan fisik lingkungan secara kontinyu: suhu, kelembaban, getaran mekanis mesin, debit cairan, dan kualitas udara.',
+    features: ['Kalibrasi sensor berstandar industri presisi', 'Ketahanan cuaca & casing waterproof (IP67/IP68)', 'Baterai hemat daya dengan proteksi solar panel mini']
+  },
+  {
+    icon: 'wifi',
+    badge: 'CONNECTIVITY',
+    title: 'Gateway Industri & Jaringan Wireless',
+    desc: 'Penghubung komunikasi perangkat lapangan ke cloud menggunakan teknologi nirkabel jangkauan jauh LoRaWAN, seluler 4G LTE, NB-IoT, dan protokol Modbus RS485.',
+    features: ['Transmisi data aman via MQTT / HTTPS TLS', 'Penyimpanan cadangan lokal saat offline (Zero Data Loss)', 'Jangkauan LoRaWAN hingga radius berkilo-kilometer']
+  },
+  {
+    icon: 'bar-chart',
+    badge: 'MONITORING DASHBOARD',
+    title: 'Dashboard Monitoring Real-Time',
+    desc: 'Platform visualisasi analitik interaktif yang menyajikan grafik tren telemetri secara live, heatmap distribusi, kontrol aktuator jarak jauh, dan riwayat data.',
+    features: ['Pembaruan data live tanpa reload (WebSockets)', 'Notifikasi bahaya darurat instan ke WhatsApp & Email', 'Ekspor laporan riwayat ke format Excel dan PDF']
+  },
+  {
+    icon: 'cpu',
+    badge: 'SMART AUTOMATION',
+    title: 'Otomasi Industri & Smart Systems',
+    desc: 'Sistem kendali terpadu yang memicu tindakan aktuator secara otomatis saat sensor mendeteksi anomali: irigasi smart farming, pendingin cold chain, atau shut-off valve.',
+    features: ['Logika kontrol berbasis edge computing cepat', 'Integrasi sistem SCADA & PLC eksisting', 'Pengawasan keamanan operasional 24 jam nonstop']
+  }
+];
+
+const iotAdvantages = [
+  {
+    num: '01',
+    title: 'Zero Data Loss (Offline Buffer)',
+    desc: 'Node dan gateway menyimpan data telemetri secara lokal jika terjadi gangguan sinyal dan otomatis sinkronisasi ulang saat jaringan pulih.'
+  },
+  {
+    num: '02',
+    title: 'Ultra Low-Power Architecture',
+    desc: 'Optimalisasi siklus deep-sleep pada mikrokontroler memungkinkan node sensor beroperasi bertahun-tahun dengan baterai lithium atau panel surya mini.'
+  },
+  {
+    num: '03',
+    title: 'Enkripsi Standar Militer',
+    desc: 'Komunikasi data dari sensor fisik ke server cloud dienkripsi berlapis (AES-128 / TLS) untuk melindungi kerahasiaan operasional perusahaan Anda.'
+  },
+  {
+    num: '04',
+    title: 'Akses Fleksibel Multi-Device',
+    desc: 'Pantau seluruh sensor dan kontrol aktuator dari mana saja melalui smartphone Android, iPhone, tablet, maupun monitor dashboard ruang kontrol.'
+  }
+];
+
+const iotStages = [
+  { num: '01', title: 'Studi Lapangan & Sensor', desc: 'Pemilihan jenis sensor, topologi jarak, dan pemetaan rintangan geografis di lokasi proyek.' },
+  { num: '02', title: 'Rancang Hardware & Firmware', desc: 'Pembuatan modul PCB, pemograman firmware mikrokontroler, dan kalibrasi akurasi sensor.' },
+  { num: '03', title: 'Integrasi Cloud & Dashboard', desc: 'Penyusunan broker MQTT, basis data time-series, dan perancangan antarmuka visualisasi web.' },
+  { num: '04', title: 'Instalasi & Commissioning', desc: 'Instalasi fisik sensor di lokasi pabrik/lahan, verifikasi kestabilan sinyal, dan serah terima sistem.' }
+];
 ---
 
-<Layout title="IoT Integration | Bolean">
+<Layout 
+  title="Solusi Integrasi IoT & Otomasi Cerdas Industri | Bolean.id"
+  description="Layanan perancangan Internet of Things (IoT) end-to-end: sensor telemetri pintar, gateway LoRaWAN/4G, dashboard data cloud real-time, dan otomasi industri oleh Bolean."
+>
   <Navbar />
   <main style="min-height: calc(100vh - 80px); padding-top: 80px;">
-    <section class="section section-light">
+
+    <!-- Hero Header -->
+    <section class="service-hero">
       <div class="container">
-        <div class="section-header">
-          <span class="section-subtitle">Layanan Kami</span>
-          <h2 class="section-title">Integrasi IoT</h2>
-          <p style="color: var(--color-text-muted); margin-top: 1rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-            Hubungkan perangkat fisik Anda ke dunia digital. Kami menyediakan solusi Internet of Things ujung-ke-ujung (end-to-end) untuk otomatisasi cerdas.
+        <div class="service-hero-content">
+          <div class="service-badge">
+            <span class="badge-dot"></span>
+            <span>INTERNET OF THINGS & AUTOMATION</span>
+          </div>
+          <h1 class="service-hero-title">
+            Hubungkan Dunia Fisik ke Digital dengan <span>Ekosistem IoT Cerdas</span>
+          </h1>
+          <p class="service-hero-desc">
+            Kendalikan dan pantau aset industri Anda secara real-time dari mana saja. Dari sensor telemetri lingkungan, gateway LoRaWAN berdaya jangkau luas, hingga dashboard pemantauan cloud dan otomasi aktuator otomatis.
           </p>
-        </div>
-        
-        <div class="service-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
-          <a href="/services/iot/sensors" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
-            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
-              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="activity" class="" /></div>
+          <div class="service-hero-actions">
+            <a 
+              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20solusi%20integrasi%20IoT%20dan%20telemetri" 
+              target="_blank" 
+              class="btn btn-primary btn-hero"
+            >
+              Konsultasi Solusi IoT Gratis <span>→</span>
+            </a>
+            <a href="#solutions" class="btn btn-outline btn-hero">
+              Lihat Solusi IoT Kami ↓
+            </a>
+          </div>
+
+          <!-- Highlight Metric Badges -->
+          <div class="hero-stats-row">
+            <div class="hero-stat-card">
+              <span class="stat-number">&lt; 1 Detik</span>
+              <span class="stat-label">Live Telemetry Latency</span>
             </div>
-            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Sensor Pintar</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.6;">Penerapan sensor industri dan komersial untuk pengumpulan data secara real-time dan pemantauan lingkungan yang berkelanjutan.</p>
-          </a>
-          
-          <a href="/services/iot/dashboards" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
-            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
-              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="bar-chart" class="" /></div>
+            <div class="hero-stat-card">
+              <span class="stat-number">LoRaWAN & 4G</span>
+              <span class="stat-label">Long Range Wireless</span>
             </div>
-            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Dashboard Data</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.6;">Platform terpusat untuk memvisualisasikan data IoT, memungkinkan Anda membuat keputusan berdasarkan data di mana saja.</p>
-          </a>
-          
-          <a href="/services/iot/automation" class="service-feature-card" style="display: block; text-decoration: none; color: inherit; background: white; padding: 2.5rem; border-radius: var(--border-radius-lg); box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform var(--transition-fast);">
-            <div style="width: 50px; height: 50px; background: rgba(13, 168, 158, 0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
-              <div style="width: 28px; height: 28px; color: var(--color-primary);"><Icon name="cpu" class="" /></div>
+            <div class="hero-stat-card">
+              <span class="stat-number">Zero Loss</span>
+              <span class="stat-label">Offline Buffer Storage</span>
             </div>
-            <h3 style="color: var(--color-secondary); margin-bottom: 1rem; font-size: 1.3rem;">Sistem Otomatis</h3>
-            <p style="color: var(--color-text-muted); line-height: 1.6;">Otomatisasi sistem penuh dengan memungkinkan perangkat keras merespons data sensor secara otomatis tanpa campur tangan manusia.</p>
-          </a>
+            <div class="hero-stat-card">
+              <span class="stat-number">24/7 Live</span>
+              <span class="stat-label">Cloud Alert & Control</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- Solutions Section (Balanced 2x2 Grid) -->
+    <section id="solutions" class="section section-gray">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">KAPABILITAS END-TO-END</span>
+          <h2 class="section-title">Solusi IoT <span>Berstandar Industri</span></h2>
+          <p class="section-desc">
+            Kami menyediakan solusi menyeluruh mulai dari pemilihan sensor fisik, pemrograman firmware, jaringan gateway, hingga aplikasi monitoring cloud.
+          </p>
+        </div>
+
+        <div class="solutions-grid">
+          {iotSolutions.map((sol) => (
+            <div class="solution-card">
+              <div class="solution-card-top">
+                <div class="solution-icon-wrap">
+                  <Icon name={sol.icon} class="" />
+                </div>
+                <span class="solution-tag">{sol.badge}</span>
+              </div>
+              <h3 class="solution-title">{sol.title}</h3>
+              <p class="solution-desc">{sol.desc}</p>
+              <ul class="solution-checklist">
+                {sol.features.map((item) => (
+                  <li>
+                    <span class="check-icon">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Advantages Section (4 Columns) -->
+    <section class="section section-light">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">KEUNGGULAN SISTEM KAMI</span>
+          <h2 class="section-title">Teknologi IoT yang <span>Andal di Lapangan</span></h2>
+          <p class="section-desc">
+            Dirancang khusus untuk menghadapi kondisi cuaca ekstrem, fluktuasi sinyal lapangan, dan lingkungan industri yang keras.
+          </p>
+        </div>
+
+        <div class="advantages-grid-4">
+          {iotAdvantages.map((adv) => (
+            <div class="advantage-card-4">
+              <div class="adv-badge-4">{adv.num}</div>
+              <h4 class="adv-title-4">{adv.title}</h4>
+              <p class="adv-desc-4">{adv.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Process Workflow (4 Columns) -->
+    <section class="section section-gray">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-subtitle">ALUR KERJA</span>
+          <h2 class="section-title">Tahapan Implementasi <span>Proyek IoT</span></h2>
+          <p class="section-desc">
+            Dari pembuktian konsep (Proof of Concept) hingga penyebaran massal perangkat pintar di seluruh unit bisnis Anda.
+          </p>
+        </div>
+
+        <div class="process-steps-grid">
+          {iotStages.map((st) => (
+            <div class="process-step-card">
+              <div class="step-badge">{st.num}</div>
+              <h4 class="step-title">{st.title}</h4>
+              <p class="step-desc">{st.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Showcase Projects Section -->
+    {iotProjects.length > 0 && (
+      <section class="section section-light">
+        <div class="container">
+          <div class="section-header-flex">
+            <div>
+              <span class="section-subtitle">HASIL IMPLEMENTASI IOT</span>
+              <h2 class="section-title">Studi Kasus <span>Sistem IoT Nyata</span></h2>
+            </div>
+            <a href="/portofolio" class="btn btn-outline">Lihat Semua Portofolio →</a>
+          </div>
+
+          <div class="portfolio-cards-grid">
+            {iotProjects.map((p) => (
+              <a href={`/projects/${p.slug}`} class="portfolio-item-card">
+                <div class="portfolio-item-thumb">
+                  <img src={p.image} alt={p.title} loading="lazy" />
+                  <span class="portfolio-badge">{p.category}</span>
+                </div>
+                <div class="portfolio-item-info">
+                  <h3 class="portfolio-item-title">{p.title}</h3>
+                  <p class="portfolio-item-desc">{p.description}</p>
+                  <span class="portfolio-view-link">Lihat Studi Kasus <span>→</span></span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Dedicated CTA Banner -->
+    <section class="section-cta-banner">
+      <div class="container">
+        <div class="cta-inner-box">
+          <div class="cta-content-side">
+            <span class="cta-pill">TELEMETRI CERDAS</span>
+            <h2 class="cta-main-title">Ingin Memantau Mesin atau Aset Lapangan Anda?</h2>
+            <p class="cta-sub-desc">
+              Diskusikan kebutuhan sensor, jangkauan jarak, dan otomasi industri Anda bersama tim engineer IoT Bolean. Dapatkan konsultasi teknis awal gratis.
+            </p>
+          </div>
+          <div class="cta-btn-side">
+            <a 
+              href="https://wa.me/6281259145879?text=Halo%20Bolean,%20saya%20ingin%20konsultasi%20solusi%20IoT" 
+              target="_blank" 
+              class="btn-cta-giant"
+            >
+              KONSULTASI IOT <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
   <Footer />
 </Layout>
 
 <style>
-  .service-feature-card:hover {
+  /* Base Service Hero */
+  .service-hero {
+    background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+    padding: 4.5rem 0 3.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: center;
+  }
+  .service-hero-content {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .service-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(13, 168, 158, 0.1);
+    color: var(--color-primary);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 0.45rem 1.25rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(13, 168, 158, 0.2);
+  }
+  .badge-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary);
+    border-radius: 50%;
+  }
+  .service-hero-title {
+    font-size: 2.85rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+  .service-hero-title span {
+    color: var(--color-primary);
+  }
+  .service-hero-desc {
+    font-size: 1.12rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 2.25rem;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .service-hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .btn-hero {
+    font-size: 1rem;
+    padding: 0.85rem 2rem;
+  }
+
+  /* Hero Stats */
+  .hero-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    max-width: 980px;
+    margin: 0 auto;
+    padding-top: 2.5rem;
+    border-top: 1px solid #e2e8f0;
+  }
+  .hero-stat-card {
+    background: white;
+    padding: 1.25rem 1rem;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    text-align: center;
+  }
+  .stat-number {
+    display: block;
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 0.35rem;
+    white-space: nowrap;
+  }
+  .stat-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 600;
+    line-height: 1.35;
+    display: block;
+  }
+
+  /* Solutions 2x2 Grid */
+  .section-desc {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    max-width: 620px;
+    margin: 0.75rem auto 0;
+    line-height: 1.6;
+  }
+  .solutions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 3.5rem;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .solution-card {
+    background: white;
+    padding: 2.5rem 2.25rem;
+    border-radius: 18px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  }
+  .solution-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+    box-shadow: 0 15px 35px rgba(8, 39, 82, 0.08);
+    border-color: rgba(13, 168, 158, 0.4);
+  }
+  .solution-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+  .solution-icon-wrap {
+    width: 52px;
+    height: 52px;
+    background: rgba(13, 168, 158, 0.08);
+    color: var(--color-primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .solution-icon-wrap :global(svg) {
+    width: 26px;
+    height: 26px;
+  }
+  .solution-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    background: rgba(13, 168, 158, 0.1);
+    padding: 0.3rem 0.75rem;
+    border-radius: 50px;
+    letter-spacing: 0.8px;
+  }
+  .solution-title {
+    font-size: 1.3rem;
+    color: var(--color-secondary);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .solution-desc {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .solution-checklist {
+    list-style: none;
+    padding: 0;
+    margin: auto 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 1.25rem;
+  }
+  .solution-checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.9rem;
+    color: #334155;
+    line-height: 1.45;
+  }
+  .check-icon {
+    color: var(--color-primary);
+    font-weight: 800;
+  }
+
+  /* Advantages Grid 4 */
+  .advantages-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .advantage-card-4 {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  }
+  .adv-badge-4 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+  }
+  .adv-title-4 {
+    font-size: 1.08rem;
+    color: var(--color-secondary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .adv-desc-4 {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Process Steps (4 Columns) */
+  .process-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 3.5rem;
+  }
+  .process-step-card {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  }
+  .step-badge {
+    display: inline-block;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+  }
+  .step-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 0.5rem;
+  }
+  .step-desc {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Portfolio Section */
+  .section-header-flex {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .portfolio-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .portfolio-item-card {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  }
+  .portfolio-item-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+  }
+  .portfolio-item-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/10;
+    background: #082752;
+    overflow: hidden;
+  }
+  .portfolio-item-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .portfolio-item-card:hover .portfolio-item-thumb img {
+    transform: scale(1.05);
+  }
+  .portfolio-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(8, 39, 82, 0.85);
+    color: #38ef7d;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    backdrop-filter: blur(4px);
+  }
+  .portfolio-item-info {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .portfolio-item-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-secondary);
+    margin-bottom: 0.5rem;
+  }
+  .portfolio-item-desc {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+    flex-grow: 1;
+  }
+  .portfolio-view-link {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  /* CTA Banner */
+  .section-cta-banner {
+    padding: 4rem 0 5rem;
+    background: linear-gradient(135deg, #082752 0%, #0c3b7a 100%);
+  }
+  .cta-inner-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .cta-pill {
+    display: inline-block;
+    background: rgba(13, 168, 158, 0.2);
+    color: #38ef7d;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 0.35rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+  }
+  .cta-main-title {
+    font-size: 2.2rem;
+    color: white;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    line-height: 1.25;
+  }
+  .cta-sub-desc {
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0;
+  }
+  .btn-cta-giant {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--color-primary);
+    color: white;
+    font-weight: 800;
+    font-size: 1.05rem;
+    padding: 1.15rem 2.25rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(13, 168, 158, 0.4);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+  .btn-cta-giant:hover {
+    background: #0bb5aa;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(13, 168, 158, 0.5);
+  }
+
+  @media (max-width: 991px) {
+    .service-hero-title {
+      font-size: 2.3rem;
+    }
+    .hero-stats-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .solutions-grid {
+      grid-template-columns: 1fr;
+    }
+    .advantages-grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .process-steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .portfolio-cards-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .cta-inner-box {
+      flex-direction: column;
+      text-align: center;
+    }
+    .cta-sub-desc {
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-stats-row {
+      grid-template-columns: 1fr;
+    }
+    .advantages-grid-4 {
+      grid-template-columns: 1fr;
+    }
+    .process-steps-grid {
+      grid-template-columns: 1fr;
+    }
+    .portfolio-cards-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

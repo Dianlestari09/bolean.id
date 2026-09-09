@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <rect x="5" y="10" width="40" height="40" rx="10" fill="#f5f3ff"/>
+  <path d="M12 25 L25 18 L38 25 L25 32 Z" fill="#7c3aed"/>
+  <path d="M17 28 V36 C17 39 33 39 33 36 V28" fill="none" stroke="#7c3aed" stroke-width="2"/>
+  <text x="55" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#082752">EDUSMART</text>
+  <text x="55" y="45" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="600" fill="#64748b" letter-spacing="1">ACADEMY</text>
+</svg>

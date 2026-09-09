@@ -105,6 +105,21 @@ export const allProjects = [
     technologies: ['Intel Core/Xeon', 'AMD Ryzen', 'NVIDIA Quadro/RTX', 'SSD NVMe', 'Windows 11 Pro']
   },
   {
+    title: "Data Center & Rack Server Setup",
+    slug: "datacenter-infrastructure",
+    category: "Hardware - Server",
+    serviceId: "server",
+    image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    description: "Instalasi server rak modular berspesifikasi tinggi dengan sistem redundansi daya ganda untuk pusat data perusahaan.",
+    features: ["Rak Server Modular", "Sistem Pendinginan Presisi", "Pencadangan Daya UPS Ganda", "Manajemen Kabel Terstruktur"],
+    benefits: [
+      { icon: 'database', title: 'Stabilitas Maksimal', desc: 'Menjaga server tetap dingin dan beroperasi tanpa henti.' },
+      { icon: 'shield', title: 'Keamanan Fisik & Data', desc: 'Dilengkapi proteksi akses biometrik dan sistem pemadam api otomatis.' },
+      { icon: 'zap', title: 'Efisiensi Energi', desc: 'Manajemen daya cerdas yang menekan biaya konsumsi listrik.' }
+    ],
+    technologies: ['APC Schneider', 'Dell PowerEdge', 'Cisco Nexus', 'Cat6A/Fiber Optic', 'Ubuntu Server']
+  },
+  {
     title: "Industrial Environment Sensors",
     slug: "industrial-sensors",
     category: "IoT Integration - Sensors",
@@ -148,5 +163,112 @@ export const allProjects = [
       { icon: 'zap', title: 'Respon Super Cepat', desc: 'Sistem bereaksi terhadap pemicu lingkungan dalam hitungan milidetik.' }
     ],
     technologies: ['PLC Siemens', 'SCADA', 'Edge Computing', 'Python', 'C++']
+  },
+  {
+    title: "Smart Agriculture Telemetry",
+    slug: "smart-agriculture-iot",
+    category: "IoT Integration - Automation",
+    serviceId: "automation",
+    image: "https://images.unsplash.com/photo-1628352081506-83c43123ed6d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    description: "Sistem irigasi pintar dan telemetri tanah otomatis berbasis tenaga surya untuk perkebunan modern.",
+    features: ["Sensor Kelembaban Tanah", "Irigasi Otomatis Berjadwal", "Daya Tenaga Surya (Solar Panel)", "Aplikasi Mobile Petani"],
+    benefits: [
+      { icon: 'trending-up', title: 'Hemat Penggunaan Air', desc: 'Mengurangi pemborosan air hingga 40% dengan irigasi presisi.' },
+      { icon: 'activity', title: 'Peningkatan Hasil Panen', desc: 'Kondisi tanaman selalu terjaga pada nutrisi dan kelembaban optimal.' },
+      { icon: 'globe', title: 'Operasional Mandiri', desc: 'Bekerja otomatis di area pelosok tanpa tergantung kabel listrik PLN.' }
+    ],
+    technologies: ['ESP32 Solar', 'LoRa', 'Node.js', 'Flutter App', 'PostgreSQL']
+  },
+  {
+    title: "Cloud POS & Multi-Outlet System",
+    slug: "pos-restaurant-system",
+    category: "Software - Web",
+    serviceId: "web",
+    image: "https://images.unsplash.com/photo-1556742049-0a67c5574f73?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    description: "Aplikasi kasir (POS) berbasis cloud untuk manajemen pesanan, stok real-time, dan multi-cabang.",
+    features: ["Sinkronisasi Multi-Outlet", "Integrasi QRIS & EDC", "Laporan Penjualan Real-Time", "Manajemen Resep & Stok"],
+    benefits: [
+      { icon: 'zap', title: 'Transaksi Cepat', desc: 'Proses kasir kilat tanpa antrean panjang.' },
+      { icon: 'pie-chart', title: 'Laporan Otomatis', desc: 'Pemilik memantau omzet seluruh cabang dari satu layar.' },
+      { icon: 'shield', title: 'Data Aman', desc: 'Pencadangan data transaksi otomatis ke server cloud.' }
+    ],
+    technologies: ['Vue.js', 'Node.js', 'PostgreSQL', 'Tailwind CSS', 'PWA']
+  },
+  {
+    title: "Telemedicine & Clinic Booking Platform",
+    slug: "health-telemedicine-app",
+    category: "Software - Mobile",
+    serviceId: "mobile",
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    description: "Aplikasi konsultasi dokter online, jadwal janji temu klinik, dan rekam medis digital terenkripsi.",
+    features: ["Video Call Konsultasi", "Jadwal Dokter Dinamis", "Integrasi Resep Digital", "Rekam Medis Terenkripsi"],
+    benefits: [
+      { icon: 'activity', title: 'Kemudahan Pasien', desc: 'Daftar berobat tanpa perlu antre fisik di klinik.' },
+      { icon: 'lock', title: 'Privasi Terjaga', desc: 'Enkripsi end-to-end untuk seluruh riwayat kesehatan.' },
+      { icon: 'bell', title: 'Pengingat Otomatis', desc: 'Notifikasi jadwal kontrol dan minum obat tepat waktu.' }
+    ],
+    technologies: ['Flutter', 'WebRTC', 'Firebase', 'Go', 'Docker']
+  },
+  {
+    title: "Enterprise LAN & Fiber Cabling",
+    slug: "office-lan-fiber-infrastructure",
+    category: "Hardware - Networking",
+    serviceId: "networking",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    description: "Instalasi jalur kabel fiber optik dan jaringan LAN berkecepatan 10Gbps untuk gedung perkantoran bertingkat.",
+    features: ["Kabel Fiber Optic 10Gbps", "Patch Panel Terstruktur", "Testing Fluke Terkalibrasi", "Garansi Instalasi 3 Tahun"],
+    benefits: [
+      { icon: 'zap', title: 'Kecepatan Maksimal', desc: 'Transfer file besar antar-departemen dalam hitungan detik.' },
+      { icon: 'globe', title: 'Koneksi Stabil', desc: 'Bebas interferensi gelombang elektromagnetik antar lantai.' },
+      { icon: 'award', title: 'Standar Industri', desc: 'Pemasangan rapi sesuai standar sertifikasi TIA/EIA.' }
+    ],
+    technologies: ['Corning Fiber', 'Panduit', 'Cat6A Shielded', 'Fluke Tester', 'Cisco Switch']
+  },
+  {
+    title: "AI CCTV & Biometric Security Setup",
+    slug: "cyber-security-surveillance",
+    category: "Hardware - Workstation",
+    serviceId: "workstation",
+    image: "https://images.unsplash.com/photo-1557597774-9d273605dfa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    description: "Sistem pengawasan keamanan pintar dengan kamera pendeteksi wajah AI dan akses pintu biometrik.",
+    features: ["Kamera AI 4K", "Pengenalan Wajah & Plat Nomor", "Akses Pintu RFID & Fingerprint", "Pusat Kontrol NVR"],
+    benefits: [
+      { icon: 'shield', title: 'Keamanan 24/7', desc: 'Deteksi dini penyusup dengan notifikasi alarm instan.' },
+      { icon: 'monitor', title: 'Pemantauan Terpusat', desc: 'Satu layar kendali untuk puluhan titik kamera gedung.' },
+      { icon: 'database', title: 'Penyimpanan Panjang', desc: 'Penyimpanan rekaman hingga 90 hari dengan kompresi H.265+.' }
+    ],
+    technologies: ['Hikvision AI', 'Dahua', 'ZKTeco', 'Synology NAS', 'Seagate SkyHawk']
+  },
+  {
+    title: "Cold Chain GPS & Temp Telemetry",
+    slug: "cold-chain-logistics-iot",
+    category: "IoT Integration - Sensors",
+    serviceId: "sensors",
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    description: "Pelacak armada logistik berpendingin dengan sensor suhu dan lokasi GPS real-time untuk menjaga kualitas muatan.",
+    features: ["Sensor Suhu & Kelembaban", "Pelacakan GPS Armada", "Peringatan Anomali Suhu", "Baterai Cadangan Internal"],
+    benefits: [
+      { icon: 'trending-up', title: 'Kualitas Terjaga', desc: 'Mencegah kerusakan produk makanan beku dan obat-obatan.' },
+      { icon: 'radio', title: 'Live Telemetri', desc: 'Pemantauan posisi dan suhu truk langsung dari dashboard.' },
+      { icon: 'bell', title: 'Alarm Otomatis', desc: 'Pemberitahuan kilat bila pintu pendingin terbuka terlalu lama.' }
+    ],
+    technologies: ['Teltonika GPS', 'BLE Temperature Sensor', 'MQTT', 'Node.js', 'Grafana']
+  },
+  {
+    title: "Smart Water Metering & Flood Detection",
+    slug: "smart-water-flow-management",
+    category: "IoT Integration - Dashboards",
+    serviceId: "dashboards",
+    image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    description: "Sistem pemantauan debit air, deteksi kebocoran pipa, dan peringatan dini banjir berbasis sensor ultrasonik.",
+    features: ["Sensor Ultrasonik Level Air", "Flow Meter Digital", "Transmisi NB-IoT", "Dashboard Peringatan Dini"],
+    benefits: [
+      { icon: 'alert-triangle', title: 'Pencegahan Banjir', desc: 'Deteksi kenaikan level air sebelum meluap ke pemukiman.' },
+      { icon: 'pie-chart', title: 'Efisiensi Air', desc: 'Mendeteksi titik pipa bocor secara cepat dan akurat.' },
+      { icon: 'battery', title: 'Daya Hemat', desc: 'Konsumsi baterai minimal yang tahan hingga 5 tahun operasional.' }
+    ],
+    technologies: ['NB-IoT', 'Ultrasonic Sensor', 'InfluxDB', 'React Dashboard', 'Python']
   }
 ];
+
+
